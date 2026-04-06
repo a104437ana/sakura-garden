@@ -287,7 +287,7 @@
     }
     .day-cell:hover { transform: scale(1.4); z-index: 10; }
     .day-cell.zero {
-      background: rgba(84, 255, 84, 0.165);
+      background: rgba(124, 255, 68, 0.579);
       border: none;
     }
     .legend {
@@ -533,14 +533,18 @@
     }
 
     function makePetal(level) {
-      const isDark = currentTheme === 'dark';
-      const fc = isDark ? PETAL_DARK[level]  : PETAL_LIGHT[level];
-      const cc = isDark ? CENTER_DARK[level] : CENTER_LIGHT[level];
+      const fc = PETAL_LIGHT[level];
+      const cc = CENTER_LIGHT[level];
+
       let petals = '';
       for (let a = 0; a < 5; a++) {
         petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a*72})"/>`;
       }
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">${petals}<circle cx="0" cy="0" r="1.8" fill="${cc}"/></svg>`;
+
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">
+        ${petals}
+        <circle cx="0" cy="0" r="1.8" fill="${cc}"/>
+      </svg>`;
     }
 
     function buildGraph(weeks) {
