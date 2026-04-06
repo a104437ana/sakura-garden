@@ -1,5 +1,4 @@
 # 🌸 sakura garden
-[![Star](https://img.shields.io/badge/⭐%20Star%20on%20GitHub-pink?style=for-the-badge)](https://github.com/a104437ana/sakura-garden)
 ## A GitHub contributions garden for your README or portfolio
 
 Turn your GitHub activity into a visual garden where commits bloom as flowers 🌸 and empty days stay green 🌿
