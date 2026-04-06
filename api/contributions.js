@@ -5,7 +5,6 @@ export const config = {
 export default async function handler(req) {
   const { searchParams } = new URL(req.url);
   const username = searchParams.get('username');
-  const year = searchParams.get('year') || new Date().getFullYear();
 
   if (!username) {
     return new Response(JSON.stringify({ error: 'Username is required' }), {
@@ -39,8 +38,12 @@ export default async function handler(req) {
     }
   `;
 
-  const from = `${year}-01-01T00:00:00Z`;
-  const to = `${year}-12-31T23:59:59Z`;
+  const toDate = new Date();
+  const fromDate = new Date();
+  fromDate.setDate(toDate.getDate() - 365);
+
+  const from = fromDate.toISOString();
+  const to = toDate.toISOString();
 
   try {
     const response = await fetch('https://api.github.com/graphql', {

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌸 sakura garden</title>
-  <meta name="description" content="Beautiful GitHub contribution graphs with 🌸 instead of squares. Light & dark mode embeds for your README." />
+  <title>sakura garden</title>
+  <meta name="description" content="Beautiful GitHub contribution graphs with 🌸 instead of squares. Embed in your README." />
   <meta property="og:title" content="sakura garden" />
   <meta property="og:description" content="Your GitHub contributions, but make it bloom 🌸" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
-
+  <link rel="icon" href="/public/favicon.ico"/>
   <style>
     :root {
       --bg: #fdf6f0;
@@ -174,26 +174,6 @@
     .search-btn:hover { opacity: 0.85; transform: translateY(-1px); }
     .search-btn:active { transform: translateY(0); }
 
-    .year-select {
-      display: flex;
-      justify-content: center;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.5rem;
-    }
-    .year-btn {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.3rem 0.75rem;
-      cursor: pointer;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--text2);
-      transition: all 0.2s;
-    }
-    .year-btn:hover, .year-btn.active { border-color: var(--accent); color: var(--accent); background: var(--shadow); }
-
     /* Result card */
     #result { margin-top: 2rem; }
 
@@ -292,19 +272,16 @@
       width: 13px;
       height: 13px;
       border-radius: 2px;
+      border: 1px solid var(--border);
       font-size: 10px;
       line-height: 13px;
       text-align: center;
       cursor: default;
       transition: transform 0.1s;
       position: relative;
+      background: transparent;
     }
     .day-cell:hover { transform: scale(1.4); z-index: 10; }
-    .day-cell[data-level="0"] { background: var(--cell-0); }
-    .day-cell[data-level="1"] { background: var(--cell-1); }
-    .day-cell[data-level="2"] { background: var(--cell-2); }
-    .day-cell[data-level="3"] { background: var(--cell-3); }
-    .day-cell[data-level="4"] { background: var(--cell-4); }
 
     /* Export section */
     .export-section {
@@ -465,7 +442,7 @@
 
     <section class="hero">
       <h1>your contributions,<br/>but make it <em>bloom</em></h1>
-      <p>beautiful 🌸 contribution graphs for your GitHub README<br/>light &amp; dark mode · svg embeds · instant download</p>
+      <p>beautiful contribution graph 🌸<br/>light &amp; dark mode · svg embeds · instant download</p>
 
       <div class="search-wrap">
         <input class="search-input" type="text" id="usernameInput"
@@ -474,7 +451,6 @@
         <button class="search-btn" onclick="search()">bloom →</button>
       </div>
 
-      <div class="year-select" id="yearSelect"></div>
     </section>
 
     <div id="result"></div>
@@ -490,7 +466,6 @@
     // ─────────────────────────────────────────────────────────────────────────
 
     let currentTheme = 'light';
-    let currentYear = new Date().getFullYear();
     let currentData = null;
     let currentUsername = '';
 
@@ -510,25 +485,6 @@
     }
     spawnPetals();
 
-    // Year selector
-    function buildYearSelector() {
-      const wrap = document.getElementById('yearSelect');
-      const thisYear = new Date().getFullYear();
-      for (let y = thisYear; y >= thisYear - 4; y--) {
-        const btn = document.createElement('button');
-        btn.className = 'year-btn' + (y === currentYear ? ' active' : '');
-        btn.textContent = y;
-        btn.onclick = () => {
-          currentYear = y;
-          document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          if (currentUsername) search();
-        };
-        wrap.appendChild(btn);
-      }
-    }
-    buildYearSelector();
-
     // Theme
     function toggleTheme() {
       currentTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -547,7 +503,7 @@
       result.innerHTML = `<div class="loader"><span class="spinner">🌸</span>fetching blooms for ${username}…</div>`;
 
       try {
-        const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}&year=${currentYear}`);
+        const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}`);
         const data = await res.json();
         if (data.error) throw new Error(data.error);
         currentData = data;
@@ -563,45 +519,44 @@
       const total = cal.totalContributions;
 
       const streakData = calcStreak(cal.weeks);
-      const maxDay = calcMax(cal.weeks);
 
       document.getElementById('result').innerHTML = `
         <div class="profile-row">
           <img class="avatar" src="${user.avatarUrl}" alt="${user.login}" />
           <div>
             <div class="profile-name">${user.name || user.login}</div>
-            <div class="profile-sub">@${user.login} · ${currentYear}</div>
+            <div class="profile-sub">@${user.login}</div>
           </div>
         </div>
         <div class="stats-row">
           <div class="stat"><strong>${total.toLocaleString()}</strong>contributions</div>
           <div class="stat"><strong>${streakData.longest}</strong>longest streak</div>
-          <div class="stat"><strong>${maxDay}</strong>best day</div>
         </div>
         <div class="graph-container" id="graphContainer">
-          <div class="graph-label">contribution activity · ${currentYear}</div>
+          <div class="graph-label">contribution activity</div>
           ${buildGraph(cal.weeks)}
           <div class="legend">
-            less
-            <div class="legend-cells">
-              ${[0,1,2,3,4].map(l => `<div class="legend-cell" style="background:var(--cell-${l})"></div>`).join('')}
-            </div>
-            more · hover for details
+            hover for details
           </div>
         </div>
         <div class="export-section">
-          <h3>✦ embed in your readme</h3>
-          <div class="embed-tabs">
-            <button class="embed-tab active" onclick="switchTab(this,'light')">☀ light</button>
-            <button class="embed-tab" onclick="switchTab(this,'dark')">🌙 dark</button>
-          </div>
+          <h3>✦ add to your readme</h3>
           <div class="embed-code" id="embedCode">
-            ${getEmbedMarkdown(username, 'light')}
+            &lt;picture&gt;
+  &lt;source 
+    srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&theme=dark" 
+    media="(prefers-color-scheme: dark)" 
+  /&gt;
+  &lt;source 
+    srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&theme=light" 
+    media="(prefers-color-scheme: light)" 
+  /&gt;
+  &lt;img 
+    src="https://sakura-garden.vercel.app/api/svg?username=${username}&theme=light" 
+    alt="sakura contributions"
+  /&gt;
+&lt;/picture&gt;
             <button class="copy-btn" onclick="copyEmbed()">copy</button>
-          </div>
-          <div class="dl-buttons">
-            <button class="dl-btn" onclick="downloadSVG('light')">⬇ download light svg</button>
-            <button class="dl-btn" onclick="downloadSVG('dark')">⬇ download dark svg</button>
           </div>
         </div>
       `;
@@ -650,7 +605,7 @@
         week.contributionDays.forEach(day => {
           const level = getLevel(day.contributionCount);
           const emoji = day.contributionCount > 0 ? '🌸' : '';
-          weeksHtml += `<div class="day-cell" data-level="${level}" data-count="${day.contributionCount}" data-date="${day.date}">${emoji}</div>`;
+          weeksHtml += `<div class="day-cell" data-level="0" data-count="${day.contributionCount}" data-date="${day.date}">${emoji}</div>`;
         });
         weeksHtml += '</div>';
       });
@@ -708,11 +663,25 @@
     function updateEmbedCodes() {
       const el = document.getElementById('embedCode');
       if (!el) return;
-      el.innerHTML = getEmbedMarkdown(currentUsername, activeEmbedTheme) + `<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
+      el.innerHTML = `&lt;picture&gt;
+  &lt;source 
+    srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=dark" 
+    media="(prefers-color-scheme: dark)" 
+  /&gt;
+  &lt;source 
+    srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=light" 
+    media="(prefers-color-scheme: light)" 
+  /&gt;
+  &lt;img 
+    src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=light" 
+    alt="sakura contributions"
+  /&gt;
+&lt;/picture&gt;
+            <button class="copy-btn" onclick="copyEmbed()">copy</button>`;
     }
 
     function getEmbedMarkdown(username, theme) {
-      const url = `${API_BASE.replace('/api/contributions', '')}/api/svg?username=${username}&year=${currentYear}&theme=${theme}`;
+      const url = `${API_BASE.replace('/api/contributions', '')}/api/svg?username=${username}&theme=${theme}`;
       return `[![${username}'s sakura contributions](${url})](https://sakura.garden)`;
     }
 
@@ -732,20 +701,20 @@
       const blob = new Blob([svg], { type: 'image/svg+xml' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `sakura-${currentUsername}-${currentYear}-${theme}.svg`;
+      a.download = `sakura-${currentUsername}-${theme}.svg`;
       a.click();
     }
 
     function generateSVG(weeks, theme, username, total) {
       const isDark = theme === 'dark';
       const colors = isDark
-        ? { bg: '#0d0709', text: '#fdf0f5', text2: '#c0899a', accent: '#ff6b9d',
+        ? { bg: 'transparent', text: '#fdf0f5', text2: '#c0899a', accent: '#ff6b9d',
             c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
-        : { bg: '#fdf6f0', text: '#1a0a00', text2: '#7a5a4a', accent: '#e8547a',
+        : { bg: 'transparent', text: '#1a0a00', text2: '#7a5a4a', accent: '#e8547a',
             c0: '#f5e6e0', c1: '#ffc8d8', c2: '#ff8fab', c3: '#e8547a', c4: '#c2185b', border: '#f0ddd5' };
 
       const cellSize = 11, gap = 2, step = cellSize + gap;
-      const paddingLeft = 28, paddingTop = 52, paddingRight = 20, paddingBottom = 36;
+      const paddingLeft = 28, paddingTop = 32, paddingRight = 20, paddingBottom = 36;
       const graphW = weeks.length * step;
       const W = graphW + paddingLeft + paddingRight;
       const H = 7 * step + paddingTop + paddingBottom;
@@ -765,12 +734,9 @@
           const dow = new Date(day.date).getDay();
           const x = paddingLeft + wi * step;
           const y = paddingTop + dow * step;
-          const level = getLevel(day.contributionCount);
-          const col = levelColor(level);
+          cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="none" stroke="${colors.border}" stroke-width="1" />`;
           if (day.contributionCount > 0) {
             cells += `<text x="${x + cellSize/2}" y="${y + cellSize - 1}" text-anchor="middle" font-size="9" dominant-baseline="auto">🌸</text>`;
-          } else {
-            cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="${col}" />`;
           }
         });
       });
@@ -790,14 +756,9 @@
       return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" rx="10" fill="${colors.bg}" />
   <rect x="0.5" y="0.5" width="${W-1}" height="${H-1}" rx="9.5" fill="none" stroke="${colors.border}" />
-  <text x="${paddingLeft}" y="22" font-size="13" font-family="Georgia,serif" font-style="italic" fill="${colors.accent}">sakura.garden</text>
-  <text x="${W - paddingRight}" y="22" font-size="10" font-family="monospace" fill="${colors.text2}" text-anchor="end">@${username} · ${currentYear} · ${total} contributions</text>
   ${monthLabels}
   ${dayLabels}
   ${cells}
-  <!-- Legend -->
-  ${[0,1,2,3,4].map((l,i) => `<rect x="${paddingLeft + i * (cellSize+2)}" y="${H - 20}" width="${cellSize}" height="${cellSize}" rx="2" fill="${levelColor(l)}" />`).join('')}
-  <text x="${paddingLeft + 5*(cellSize+2) + 4}" y="${H - 11}" font-size="8" fill="${colors.text2}" font-family="monospace">more blooms →</text>
 </svg>`;
     }
   </script>
