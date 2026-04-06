@@ -55,7 +55,6 @@
       transition: background 0.4s, color 0.4s;
     }
 
-    /* Floating petals background */
     .petals {
       position: fixed;
       top: 0; left: 0;
@@ -76,7 +75,6 @@
       100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Layout */
     .wrapper {
       position: relative;
       z-index: 1;
@@ -85,7 +83,6 @@
       padding: 2rem 1.5rem 4rem;
     }
 
-    /* Header */
     header {
       display: flex;
       align-items: center;
@@ -116,7 +113,6 @@
     }
     .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* Hero */
     .hero {
       text-align: center;
       margin-bottom: 3rem;
@@ -138,7 +134,6 @@
       line-height: 1.7;
     }
 
-    /* Search */
     .search-wrap {
       display: flex;
       gap: 0.6rem;
@@ -174,7 +169,6 @@
     .search-btn:hover { opacity: 0.85; transform: translateY(-1px); }
     .search-btn:active { transform: translateY(0); }
 
-    /* Result card */
     #result { margin-top: 2rem; }
 
     .profile-row {
@@ -201,10 +195,7 @@
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
-    .stat {
-      font-size: 0.8rem;
-      color: var(--text2);
-    }
+    .stat { font-size: 0.8rem; color: var(--text2); }
     .stat strong {
       display: block;
       font-size: 1.4rem;
@@ -221,6 +212,7 @@
       padding: 1.5rem;
       overflow-x: auto;
       box-shadow: 0 4px 24px var(--shadow);
+      -webkit-overflow-scrolling: touch;
     }
     .graph-label {
       font-size: 0.7rem;
@@ -229,35 +221,47 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
-    .month-labels {
-      display: flex;
-      padding-left: 1.8rem;
-      margin-bottom: 0.3rem;
-      min-width: 640px;
+
+    /* The scroll container — everything inside here has a fixed pixel width */
+    .graph-scroll {
+      display: inline-block; /* shrink-wraps to content width */
+      min-width: 100%;
+    }
+
+    /* Month labels: positioned absolutely over the weeks grid */
+    .month-row {
+      position: relative;
+      height: 14px;
+      /* left-pad to align with where the weeks start (after day-labels) */
+      margin-left: 24px;
     }
     .month-label {
-      font-size: 0.65rem;
+      position: absolute;
+      font-size: 0.62rem;
       color: var(--text2);
-      flex: 1;
+      white-space: nowrap;
+      top: 0;
     }
+
     .graph-body {
       display: flex;
       gap: 0;
-      min-width: 640px;
     }
     .day-labels {
       display: flex;
       flex-direction: column;
       gap: 2px;
       margin-right: 4px;
-      padding-top: 0;
+      width: 20px;
+      flex-shrink: 0;
     }
     .day-label {
       font-size: 0.6rem;
       color: var(--text2);
-      width: 1.4rem;
+      width: 20px;
       height: 13px;
       line-height: 13px;
+      text-align: right;
     }
     .weeks {
       display: flex;
@@ -283,6 +287,15 @@
     }
     .day-cell:hover { transform: scale(1.4); z-index: 10; }
 
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      font-size: 0.65rem;
+      color: var(--text2);
+    }
+
     /* Export section */
     .export-section {
       margin-top: 2rem;
@@ -298,23 +311,6 @@
       margin-bottom: 1rem;
       color: var(--text);
     }
-    .embed-tabs {
-      display: flex;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-    }
-    .embed-tab {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.3rem 0.75rem;
-      cursor: pointer;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--text2);
-      transition: all 0.2s;
-    }
-    .embed-tab:hover, .embed-tab.active { border-color: var(--accent); color: var(--accent); }
 
     .embed-code {
       background: var(--bg);
@@ -343,28 +339,6 @@
     }
     .copy-btn:hover { opacity: 0.8; }
 
-    .dl-buttons {
-      display: flex;
-      gap: 0.6rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-    .dl-btn {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--text2);
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .dl-btn:hover { border-color: var(--accent); color: var(--accent); }
-
     /* Loading & error */
     .loader {
       text-align: center;
@@ -390,21 +364,6 @@
     }
     [data-theme="dark"] .error-msg { background: #1a0d12; }
 
-    /* Legend */
-    .legend {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.75rem;
-      font-size: 0.65rem;
-      color: var(--text2);
-    }
-    .legend-cells { display: flex; gap: 2px; }
-    .legend-cell {
-      width: 11px; height: 11px;
-      border-radius: 2px;
-    }
-
     /* Tooltip */
     .tooltip {
       position: fixed;
@@ -428,12 +387,6 @@
     }
     footer a { color: var(--accent); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .graph-container {
-        overflow-x: auto;
-      }
-    }
   </style>
 </head>
 <body>
@@ -456,7 +409,6 @@
                onkeydown="if(event.key==='Enter') search()" />
         <button class="search-btn" onclick="search()">bloom →</button>
       </div>
-
     </section>
 
     <div id="result"></div>
@@ -467,9 +419,10 @@
   </div>
 
   <script>
-    // ─── Config ──────────────────────────────────────────────────────────────
     const API_BASE = 'https://sakura-garden.vercel.app/api/contributions';
-    // ─────────────────────────────────────────────────────────────────────────
+
+    const CELL = 13, GAP = 2, STEP = CELL + GAP;
+    const DAY_LABEL_W = 24; // px — must match .day-labels width + margin-right
 
     let currentTheme = 'light';
     let currentData = null;
@@ -523,7 +476,6 @@
       const user = data.user;
       const cal = user.contributionsCollection.contributionCalendar;
       const total = cal.totalContributions;
-
       const streakData = calcStreak(cal.weeks);
 
       document.getElementById('result').innerHTML = `
@@ -541,28 +493,16 @@
         <div class="graph-container" id="graphContainer">
           <div class="graph-label">contribution activity</div>
           ${buildGraph(cal.weeks)}
-          <div class="legend">
-            hover for details
-          </div>
+          <div class="legend">hover for details</div>
         </div>
         <div class="export-section">
           <h3>✦ add it to your README or portfolio</h3>
           <div class="embed-code" id="embedCode">
-            &lt;picture&gt;
-  &lt;source 
-    srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&theme=dark" 
-    media="(prefers-color-scheme: dark)" 
-  /&gt;
-  &lt;source 
-    srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&theme=light" 
-    media="(prefers-color-scheme: light)" 
-  /&gt;
-  &lt;img 
-    src="https://sakura-garden.vercel.app/api/svg?username=${username}&theme=light" 
-    alt="sakura contributions"
-  /&gt;
-&lt;/picture&gt;
-            <button class="copy-btn" onclick="copyEmbed()">copy</button>
+&lt;picture&gt;
+  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=dark" media="(prefers-color-scheme: dark)" /&gt;
+  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" media="(prefers-color-scheme: light)" /&gt;
+  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" alt="sakura contributions" /&gt;
+&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>
           </div>
         </div>
         <div class="export-section">
@@ -577,58 +517,53 @@
     const DAYS   = ['','Mon','','Wed','','Fri',''];
 
     function buildGraph(weeks) {
-      // Month labels
-      let monthLabels = '<div class="month-labels">';
+      // ── Month labels (absolutely positioned by week index) ──────────────────
+      let monthRowHtml = '<div class="month-row">';
       let lastMonth = -1;
-      weeks.forEach(week => {
+      weeks.forEach((week, wi) => {
         const firstDay = week.contributionDays.find(d => d.date);
-        if (firstDay) {
-          const m = new Date(firstDay.date).getMonth();
-          if (m !== lastMonth) {
-            monthLabels += `<div class="month-label">${MONTHS[m]}</div>`;
-            lastMonth = m;
-          } else {
-            monthLabels += `<div class="month-label"></div>`;
-          }
+        if (!firstDay) return;
+        const m = new Date(firstDay.date).getMonth();
+        if (m !== lastMonth) {
+          // left = week-index * STEP pixels
+          const left = wi * STEP;
+          monthRowHtml += `<span class="month-label" style="left:${left}px">${MONTHS[m]}</span>`;
+          lastMonth = m;
         }
       });
-      monthLabels += '</div>';
+      monthRowHtml += '</div>';
 
-      // Day labels
+      // ── Day labels ───────────────────────────────────────────────────────────
       let dayLabels = '<div class="day-labels">';
       DAYS.forEach(d => { dayLabels += `<div class="day-label">${d}</div>`; });
       dayLabels += '</div>';
 
-      // Weeks
+      // ── Weeks grid ──────────────────────────────────────────────────────────
       let weeksHtml = '<div class="weeks">';
       weeks.forEach(week => {
         weeksHtml += '<div class="week">';
-        // Fill empty days at start
         const firstDay = week.contributionDays[0];
         if (firstDay) {
-          const weekday = new Date(firstDay.date).getDay(); // 0=sun
+          const weekday = new Date(firstDay.date).getDay(); // 0=Sun
           for (let i = 0; i < weekday; i++) {
-            weeksHtml += `<div class="day-cell" data-level="0" style="visibility:hidden"></div>`;
+            weeksHtml += `<div class="day-cell" style="visibility:hidden"></div>`;
           }
         }
         week.contributionDays.forEach(day => {
-          const level = getLevel(day.contributionCount);
           const emoji = day.contributionCount > 0 ? '🌸' : '';
-          weeksHtml += `<div class="day-cell" data-level="0" data-count="${day.contributionCount}" data-date="${day.date}">${emoji}</div>`;
+          weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}">${emoji}</div>`;
         });
         weeksHtml += '</div>';
       });
       weeksHtml += '</div>';
 
-      return `${monthLabels}<div class="graph-body">${dayLabels}${weeksHtml}</div>`;
-    }
-
-    function getLevel(count) {
-      if (count === 0) return 0;
-      if (count <= 2) return 1;
-      if (count <= 5) return 2;
-      if (count <= 9) return 3;
-      return 4;
+      // ── Wrap in a scroll container so month labels and grid share the same
+      //    coordinate space and scroll together ─────────────────────────────
+      return `
+        <div class="graph-scroll">
+          ${monthRowHtml}
+          <div class="graph-body">${dayLabels}${weeksHtml}</div>
+        </div>`;
     }
 
     function setupTooltips() {
@@ -655,119 +590,26 @@
       return { longest };
     }
 
-    function calcMax(weeks) {
-      return Math.max(...weeks.flatMap(w => w.contributionDays).map(d => d.contributionCount));
-    }
-
-    // Embed codes
-    let activeEmbedTheme = 'light';
-
-    function switchTab(btn, theme) {
-      activeEmbedTheme = theme;
-      document.querySelectorAll('.embed-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      updateEmbedCodes();
-    }
-
     function updateEmbedCodes() {
       const el = document.getElementById('embedCode');
-      if (!el) return;
-      el.innerHTML = `&lt;picture&gt;
-  &lt;source 
-    srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=dark" 
-    media="(prefers-color-scheme: dark)" 
-  /&gt;
-  &lt;source 
-    srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=light" 
-    media="(prefers-color-scheme: light)" 
-  /&gt;
-  &lt;img 
-    src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=light" 
-    alt="sakura contributions"
-  /&gt;
-&lt;/picture&gt;
-            <button class="copy-btn" onclick="copyEmbed()">copy</button>`;
-    }
-
-    function getEmbedMarkdown(username, theme) {
-      const url = `${API_BASE.replace('/api/contributions', '')}/api/svg?username=${username}&theme=${theme}`;
-      return `[![${username}'s sakura contributions](${url})](https://sakura.garden)`;
+      if (!el || !currentUsername) return;
+      el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" /&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" /&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
     }
 
     function copyEmbed() {
       const el = document.getElementById('embedCode');
-      const text = el.childNodes[0].textContent.trim();
+      // grab all text nodes, skip the button
+      const text = Array.from(el.childNodes)
+        .filter(n => n.nodeType === Node.TEXT_NODE)
+        .map(n => n.textContent)
+        .join('')
+        .trim()
+        // unescape HTML entities so the copied text is real HTML
+        .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
       navigator.clipboard.writeText(text);
-      document.querySelector('.copy-btn').textContent = 'copied!';
-      setTimeout(() => { const btn = document.querySelector('.copy-btn'); if(btn) btn.textContent = 'copy'; }, 1500);
-    }
-
-    // SVG download
-    function downloadSVG(theme) {
-      if (!currentData) return;
-      const cal = currentData.user.contributionsCollection.contributionCalendar;
-      const svg = generateSVG(cal.weeks, theme, currentUsername, cal.totalContributions);
-      const blob = new Blob([svg], { type: 'image/svg+xml' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `sakura-${currentUsername}-${theme}.svg`;
-      a.click();
-    }
-
-    function generateSVG(weeks, theme, username, total) {
-      const isDark = theme === 'dark';
-      const colors = isDark
-        ? { bg: 'transparent', text: '#fdf0f5', text2: '#c0899a', accent: '#ff6b9d',
-            c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
-        : { bg: 'transparent', text: '#1a0a00', text2: '#7a5a4a', accent: '#e8547a',
-            c0: '#f5e6e0', c1: '#ffc8d8', c2: '#ff8fab', c3: '#e8547a', c4: '#c2185b', border: '#f0ddd5' };
-
-      const cellSize = 11, gap = 2, step = cellSize + gap;
-      const paddingLeft = 28, paddingTop = 32, paddingRight = 20, paddingBottom = 36;
-      const graphW = weeks.length * step;
-      const W = graphW + paddingLeft + paddingRight;
-      const H = 7 * step + paddingTop + paddingBottom;
-
-      const levelColor = l => [colors.c0, colors.c1, colors.c2, colors.c3, colors.c4][l];
-
-      let cells = '';
-      let monthMarkers = {};
-
-      weeks.forEach((week, wi) => {
-        const firstDay = week.contributionDays[0];
-        if (firstDay) {
-          const m = new Date(firstDay.date).getMonth();
-          if (!monthMarkers[m]) monthMarkers[m] = wi;
-        }
-        week.contributionDays.forEach(day => {
-          const dow = new Date(day.date).getDay();
-          const x = paddingLeft + wi * step;
-          const y = paddingTop + dow * step;
-          cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="none" stroke="${colors.border}" stroke-width="1" />`;
-          if (day.contributionCount > 0) {
-            cells += `<text x="${x + cellSize/2}" y="${y + cellSize - 1}" text-anchor="middle" font-size="9" dominant-baseline="auto">🌸</text>`;
-          }
-        });
-      });
-
-      let monthLabels = '';
-      Object.entries(monthMarkers).forEach(([m, wi]) => {
-        const x = paddingLeft + wi * step;
-        monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${colors.text2}" font-family="monospace">${MONTHS[m]}</text>`;
-      });
-
-      const dayNames = ['','Mon','','Wed','','Fri',''];
-      let dayLabels = '';
-      dayNames.forEach((d, i) => {
-        if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${colors.text2}" font-family="monospace" text-anchor="end">${d}</text>`;
-      });
-
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-  <rect width="${W}" height="${H}" rx="10" fill="${colors.bg}" />
-  ${monthLabels}
-  ${dayLabels}
-  ${cells}
-</svg>`;
+      const btn = el.querySelector('.copy-btn');
+      btn.textContent = 'copied!';
+      setTimeout(() => { if (btn) btn.textContent = 'copy'; }, 1500);
     }
   </script>
 </body>
