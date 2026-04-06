@@ -15,16 +15,10 @@ function getLevel(count) {
 function generateSVG(weeks, theme, username, total, year) {
   const isDark = theme === 'dark';
   const colors = isDark
-    ? { bg: '#0d0709', text: '#fdf0f5', text2: '#c0899a', accent: '#ff6b9d',
+    ? { bg: 'transparent', text: '#fdf0f5', text2: '#c0899a', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
-    : { bg: '#fdf6f0', text: '#1a0a00', text2: '#7a5a4a', accent: '#e8547a',
+    : { bg: 'transparent', text: '#1a0a00', text2: '#7a5a4a', accent: '#e8547a',
         c0: '#f5e6e0', c1: '#ffc8d8', c2: '#ff8fab', c3: '#e8547a', c4: '#c2185b', border: '#f0ddd5' };
-
-  const cellSize = 11, gap = 2, step = cellSize + gap;
-  const paddingLeft = 28, paddingTop = 52, paddingRight = 20, paddingBottom = 36;
-  const graphW = weeks.length * step;
-  const W = graphW + paddingLeft + paddingRight;
-  const H = 7 * step + paddingTop + paddingBottom;
 
   const flowerPetal = isDark
     ? ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab']
@@ -36,14 +30,19 @@ function generateSVG(weeks, theme, username, total, year) {
   function flower(cx, cy, level) {
     const fc = flowerPetal[level];
     const cc = flowerCenter[level];
-    const pr = 2.2, py = 3.2;
     let out = `<g transform="translate(${cx},${cy})">`;
     for (let a = 0; a < 5; a++) {
-      out += `<ellipse cx="0" cy="-${py}" rx="${pr}" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
+      out += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
     }
     out += `<circle cx="0" cy="0" r="1.8" fill="${cc}"/></g>`;
     return out;
   }
+
+  const cellSize = 11, gap = 2, step = cellSize + gap;
+  const paddingLeft = 28, paddingTop = 32, paddingRight = 20, paddingBottom = 36;
+  const graphW = weeks.length * step;
+  const W = graphW + paddingLeft + paddingRight;
+  const H = 7 * step + paddingTop + paddingBottom;
 
   let cells = '';
   let monthMarkers = {};
@@ -58,19 +57,18 @@ function generateSVG(weeks, theme, username, total, year) {
       const dow = new Date(day.date).getDay();
       const x = paddingLeft + wi * step;
       const y = paddingTop + dow * step;
-      const level = getLevel(day.contributionCount);
       if (day.contributionCount > 0) {
-        cells += flower(x + cellSize / 2, y + cellSize / 2, level);
+        cells += flower(x + cellSize / 2, y + cellSize / 2, getLevel(day.contributionCount));
       } else {
-        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="none" stroke="${colors.border}" stroke-width="1"/>`;
+        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="none" stroke="${colors.border}" stroke-width="1" />`;
       }
     });
   });
 
   let monthLabels = '';
   Object.entries(monthMarkers).forEach(([m, wi]) => {
-    const x = paddingLeft + Number(wi) * step;
-    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${colors.text2}" font-family="monospace">${MONTHS[Number(m)]}</text>`;
+    const x = paddingLeft + wi * step;
+    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${colors.text2}" font-family="monospace">${MONTHS[m]}</text>`;
   });
 
   const dayNames = ['','Mon','','Wed','','Fri',''];
@@ -79,22 +77,11 @@ function generateSVG(weeks, theme, username, total, year) {
     if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${colors.text2}" font-family="monospace" text-anchor="end">${d}</text>`;
   });
 
-  const levelColor = l => [colors.c0, colors.c1, colors.c2, colors.c3, colors.c4][l];
-  const legend = [1,2,3,4].map((l,i) => {
-    const lx = paddingLeft + i * (cellSize + 4) + cellSize / 2;
-    const ly = H - 20 + cellSize / 2;
-    return flower(lx, ly, l);
-  }).join('') + `<text x="${paddingLeft + 4*(cellSize+4) + 4}" y="${H - 11}" font-size="8" fill="${colors.text2}" font-family="monospace">more blooms →</text>`;
-
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" rx="10" fill="${colors.bg}" />
-  <rect x="0.5" y="0.5" width="${W-1}" height="${H-1}" rx="9.5" fill="none" stroke="${colors.border}" />
-  <text x="${paddingLeft}" y="22" font-size="13" font-family="Georgia,serif" font-style="italic" fill="${colors.accent}">sakura.garden</text>
-  <text x="${W - paddingRight}" y="22" font-size="10" font-family="monospace" fill="${colors.text2}" text-anchor="end">@${username} · ${year} · ${total} contributions</text>
   ${monthLabels}
   ${dayLabels}
   ${cells}
-  ${legend}
 </svg>`;
 }
 
@@ -103,12 +90,19 @@ export default async function handler(req) {
   const username = searchParams.get('username');
   const year = searchParams.get('year') || new Date().getFullYear();
   const theme = searchParams.get('theme') === 'dark' ? 'dark' : 'light';
-  // &half=1 → last 26 weeks only (fits narrow screens / README mobile view)
-  const half = searchParams.get('half') === '1';
 
   if (!username) {
     return new Response('Username required', { status: 400 });
   }
+
+  const today = new Date();
+  const oneYearAgo = new Date(today);
+  oneYearAgo.setDate(today.getDate() - 365);
+  const fromDate = oneYearAgo.toISOString();
+  const toDate = today.toISOString();
+  const fromYear = oneYearAgo.getFullYear();
+  const toYear = today.getFullYear();
+  const yearRange = fromYear === toYear ? `${toYear}` : `${fromYear} - ${toYear}`;
 
   const query = `
     query($username: String!, $from: DateTime!, $to: DateTime!) {
@@ -140,8 +134,8 @@ export default async function handler(req) {
         query,
         variables: {
           username,
-          from: `${year}-01-01T00:00:00Z`,
-          to: `${year}-12-31T23:59:59Z`,
+          from: fromDate,
+          to: toDate,
         },
       }),
     });
@@ -152,14 +146,7 @@ export default async function handler(req) {
     }
 
     const cal = data.data.user.contributionsCollection.contributionCalendar;
-    let weeks = cal.weeks;
-
-    // For the mobile/half variant, keep only the last 26 weeks
-    if (half) {
-      weeks = weeks.slice(-26);
-    }
-
-    const svg = generateSVG(weeks, theme, username, cal.totalContributions, year);
+    const svg = generateSVG(cal.weeks, theme, username, cal.totalContributions, year);
 
     return new Response(svg, {
       status: 200,
