@@ -516,6 +516,30 @@
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const DAYS   = ['','Mon','','Wed','','Fri',''];
 
+    const PETAL_LIGHT  = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
+    const CENTER_LIGHT = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
+    const PETAL_DARK   = ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab'];
+    const CENTER_DARK  = ['', '#3d0f1f', '#7a0e38', '#c2185b', '#ffaacc'];
+
+    function getLevel(count) {
+      if (count === 0) return 0;
+      if (count <= 2) return 1;
+      if (count <= 5) return 2;
+      if (count <= 9) return 3;
+      return 4;
+    }
+
+    function makePetal(level) {
+      const isDark = currentTheme === 'dark';
+      const fc = isDark ? PETAL_DARK[level]  : PETAL_LIGHT[level];
+      const cc = isDark ? CENTER_DARK[level] : CENTER_LIGHT[level];
+      let petals = '';
+      for (let a = 0; a < 5; a++) {
+        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a*72})"/>`;
+      }
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">${petals}<circle cx="0" cy="0" r="1.8" fill="${cc}"/></svg>`;
+    }
+
     function buildGraph(weeks) {
       // ── Month labels (absolutely positioned by week index) ──────────────────
       let monthRowHtml = '<div class="month-row">';
@@ -550,8 +574,12 @@
           }
         }
         week.contributionDays.forEach(day => {
-          const emoji = day.contributionCount > 0 ? '🌸' : '';
-          weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}">${emoji}</div>`;
+          if (day.contributionCount > 0) {
+            const level = getLevel(day.contributionCount);
+            weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none">${makePetal(level)}</div>`;
+          } else {
+            weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
+          }
         });
         weeksHtml += '</div>';
       });
