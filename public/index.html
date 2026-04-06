@@ -286,7 +286,10 @@
       background: transparent;
     }
     .day-cell:hover { transform: scale(1.4); z-index: 10; }
-
+    .day-cell.zero {
+      background: rgba(84, 255, 84, 0.165);
+      border: none;
+    }
     .legend {
       display: flex;
       align-items: center;
@@ -578,7 +581,7 @@
             const level = getLevel(day.contributionCount);
             weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none">${makePetal(level)}</div>`;
           } else {
-            weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
+            weeksHtml += `<div class="day-cell zero" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
           }
         });
         weeksHtml += '</div>';
