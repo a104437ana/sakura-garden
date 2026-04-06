@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sakura.garden — GitHub Contributions</title>
+  <meta name="description" content="Beautiful GitHub contribution graphs with 🌸 instead of squares. Light & dark mode embeds for your README." />
+  <meta property="og:title" content="sakura.garden" />
+  <meta property="og:description" content="Your GitHub contributions, but make it bloom 🌸" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #fdf6f0;
+      --bg2: #fff9f5;
+      --text: #1a0a00;
+      --text2: #7a5a4a;
+      --accent: #e8547a;
+      --accent2: #f9a8c0;
+      --border: #f0ddd5;
+      --cell-0: #f5e6e0;
+      --cell-1: #ffc8d8;
+      --cell-2: #ff8fab;
+      --cell-3: #e8547a;
+      --cell-4: #c2185b;
+      --shadow: rgba(232, 84, 122, 0.12);
+      --card: #ffffff;
+    }
+    [data-theme="dark"] {
+      --bg: #0d0709;
+      --bg2: #120b0e;
+      --text: #fdf0f5;
+      --text2: #c0899a;
+      --accent: #ff6b9d;
+      --accent2: #ff8fab;
+      --border: #2a1520;
+      --cell-0: #1a0d12;
+      --cell-1: #6b1f35;
+      --cell-2: #c2185b;
+      --cell-3: #e8547a;
+      --cell-4: #ff8fab;
+      --shadow: rgba(255, 107, 157, 0.15);
+      --card: #180d11;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* Floating petals background */
+    .petals {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0.18;
+      animation: fall linear infinite;
+      top: -2rem;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(-2rem) rotate(0deg); opacity: 0.18; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Layout */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+    .logo span { font-style: normal; font-size: 1rem; color: var(--text2); }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text2);
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero p {
+      color: var(--text2);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    /* Search */
+    .search-wrap {
+      display: flex;
+      gap: 0.6rem;
+      max-width: 480px;
+      margin: 2rem auto;
+    }
+    .search-input {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input::placeholder { color: var(--text2); opacity: 0.6; }
+    .search-input:focus { border-color: var(--accent); }
+    .search-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.4rem;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .search-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .search-btn:active { transform: translateY(0); }
+
+    .year-select {
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+    .year-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text2);
+      transition: all 0.2s;
+    }
+    .year-btn:hover, .year-btn.active { border-color: var(--accent); color: var(--accent); background: var(--shadow); }
+
+    /* Result card */
+    #result { margin-top: 2rem; }
+
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--accent2);
+    }
+    .profile-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .profile-sub { font-size: 0.78rem; color: var(--text2); }
+
+    .stats-row {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .stat {
+      font-size: 0.8rem;
+      color: var(--text2);
+    }
+    .stat strong {
+      display: block;
+      font-size: 1.4rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    /* Graph */
+    .graph-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      overflow-x: auto;
+      box-shadow: 0 4px 24px var(--shadow);
+    }
+    .graph-label {
+      font-size: 0.7rem;
+      color: var(--text2);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .month-labels {
+      display: flex;
+      padding-left: 1.8rem;
+      margin-bottom: 0.3rem;
+      min-width: 640px;
+    }
+    .month-label {
+      font-size: 0.65rem;
+      color: var(--text2);
+      flex: 1;
+    }
+    .graph-body {
+      display: flex;
+      gap: 0;
+      min-width: 640px;
+    }
+    .day-labels {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-right: 4px;
+      padding-top: 0;
+    }
+    .day-label {
+      font-size: 0.6rem;
+      color: var(--text2);
+      width: 1.4rem;
+      height: 13px;
+      line-height: 13px;
+    }
+    .weeks {
+      display: flex;
+      gap: 2px;
+    }
+    .week {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .day-cell {
+      width: 13px;
+      height: 13px;
+      border-radius: 2px;
+      font-size: 10px;
+      line-height: 13px;
+      text-align: center;
+      cursor: default;
+      transition: transform 0.1s;
+      position: relative;
+    }
+    .day-cell:hover { transform: scale(1.4); z-index: 10; }
+    .day-cell[data-level="0"] { background: var(--cell-0); }
+    .day-cell[data-level="1"] { background: var(--cell-1); }
+    .day-cell[data-level="2"] { background: var(--cell-2); }
+    .day-cell[data-level="3"] { background: var(--cell-3); }
+    .day-cell[data-level="4"] { background: var(--cell-4); }
+
+    /* Export section */
+    .export-section {
+      margin-top: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .export-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .embed-tabs {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .embed-tab {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text2);
+      transition: all 0.2s;
+    }
+    .embed-tab:hover, .embed-tab.active { border-color: var(--accent); color: var(--accent); }
+
+    .embed-code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.72rem;
+      color: var(--text2);
+      word-break: break-all;
+      line-height: 1.6;
+      position: relative;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.65rem;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      transition: opacity 0.2s;
+    }
+    .copy-btn:hover { opacity: 0.8; }
+
+    .dl-buttons {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .dl-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text2);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .dl-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Loading & error */
+    .loader {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text2);
+      font-size: 0.85rem;
+    }
+    .loader .spinner {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-msg {
+      background: #fff0f3;
+      border: 1px solid #ffc0cb;
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+    [data-theme="dark"] .error-msg { background: #1a0d12; }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      font-size: 0.65rem;
+      color: var(--text2);
+    }
+    .legend-cells { display: flex; gap: 2px; }
+    .legend-cell {
+      width: 11px; height: 11px;
+      border-radius: 2px;
+    }
+
+    /* Tooltip */
+    .tooltip {
+      position: fixed;
+      background: var(--text);
+      color: var(--bg);
+      padding: 0.35rem 0.65rem;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      pointer-events: none;
+      z-index: 100;
+      display: none;
+      white-space: nowrap;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: var(--text2);
+      font-size: 0.72rem;
+      line-height: 1.8;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="petals" id="petals"></div>
+  <div class="tooltip" id="tooltip"></div>
+
+  <div class="wrapper">
+    <header>
+      <div class="logo">sakura<span>.garden</span></div>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀ light mode</button>
+    </header>
+
+    <section class="hero">
+      <h1>your contributions,<br/>but make it <em>bloom</em></h1>
+      <p>beautiful 🌸 contribution graphs for your GitHub README<br/>light &amp; dark mode · svg embeds · instant download</p>
+
+      <div class="search-wrap">
+        <input class="search-input" type="text" id="usernameInput"
+               placeholder="github username" autocomplete="off"
+               onkeydown="if(event.key==='Enter') search()" />
+        <button class="search-btn" onclick="search()">bloom →</button>
+      </div>
+
+      <div class="year-select" id="yearSelect"></div>
+    </section>
+
+    <div id="result"></div>
+
+    <footer>
+      made with 🌸 · <a href="https://github.com/YOUR_USERNAME/sakura-garden" target="_blank">star on github</a> · open source
+    </footer>
+  </div>
+
+  <script>
+    // ─── Config ──────────────────────────────────────────────────────────────
+    const API_BASE = 'https://YOUR_VERCEL_PROJECT.vercel.app/api/contributions';
+    // ─────────────────────────────────────────────────────────────────────────
+
+    let currentTheme = 'light';
+    let currentYear = new Date().getFullYear();
+    let currentData = null;
+    let currentUsername = '';
+
+    // Petals
+    function spawnPetals() {
+      const container = document.getElementById('petals');
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        p.textContent = '🌸';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 14) + 's';
+        p.style.animationDelay = (Math.random() * 20) + 's';
+        p.style.fontSize = (0.7 + Math.random() * 0.8) + 'rem';
+        container.appendChild(p);
+      }
+    }
+    spawnPetals();
+
+    // Year selector
+    function buildYearSelector() {
+      const wrap = document.getElementById('yearSelect');
+      const thisYear = new Date().getFullYear();
+      for (let y = thisYear; y >= thisYear - 4; y--) {
+        const btn = document.createElement('button');
+        btn.className = 'year-btn' + (y === currentYear ? ' active' : '');
+        btn.textContent = y;
+        btn.onclick = () => {
+          currentYear = y;
+          document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (currentUsername) search();
+        };
+        wrap.appendChild(btn);
+      }
+    }
+    buildYearSelector();
+
+    // Theme
+    function toggleTheme() {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'dark' : '');
+      document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '🌙 dark mode' : '☀ light mode';
+      if (currentData) updateEmbedCodes();
+    }
+
+    // Search
+    async function search() {
+      const username = document.getElementById('usernameInput').value.trim();
+      if (!username) return;
+      currentUsername = username;
+
+      const result = document.getElementById('result');
+      result.innerHTML = `<div class="loader"><span class="spinner">🌸</span>fetching blooms for ${username}…</div>`;
+
+      try {
+        const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}&year=${currentYear}`);
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        currentData = data;
+        renderResult(data, username);
+      } catch (err) {
+        result.innerHTML = `<div class="error-msg">couldn't find <strong>${username}</strong> — check the username and try again.</div>`;
+      }
+    }
+
+    function renderResult(data, username) {
+      const user = data.user;
+      const cal = user.contributionsCollection.contributionCalendar;
+      const total = cal.totalContributions;
+
+      const streakData = calcStreak(cal.weeks);
+      const maxDay = calcMax(cal.weeks);
+
+      document.getElementById('result').innerHTML = `
+        <div class="profile-row">
+          <img class="avatar" src="${user.avatarUrl}" alt="${user.login}" />
+          <div>
+            <div class="profile-name">${user.name || user.login}</div>
+            <div class="profile-sub">@${user.login} · ${currentYear}</div>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><strong>${total.toLocaleString()}</strong>contributions</div>
+          <div class="stat"><strong>${streakData.longest}</strong>longest streak</div>
+          <div class="stat"><strong>${maxDay}</strong>best day</div>
+        </div>
+        <div class="graph-container" id="graphContainer">
+          <div class="graph-label">contribution activity · ${currentYear}</div>
+          ${buildGraph(cal.weeks)}
+          <div class="legend">
+            less
+            <div class="legend-cells">
+              ${[0,1,2,3,4].map(l => `<div class="legend-cell" style="background:var(--cell-${l})"></div>`).join('')}
+            </div>
+            more · hover for details
+          </div>
+        </div>
+        <div class="export-section">
+          <h3>✦ embed in your readme</h3>
+          <div class="embed-tabs">
+            <button class="embed-tab active" onclick="switchTab(this,'light')">☀ light</button>
+            <button class="embed-tab" onclick="switchTab(this,'dark')">🌙 dark</button>
+          </div>
+          <div class="embed-code" id="embedCode">
+            ${getEmbedMarkdown(username, 'light')}
+            <button class="copy-btn" onclick="copyEmbed()">copy</button>
+          </div>
+          <div class="dl-buttons">
+            <button class="dl-btn" onclick="downloadSVG('light')">⬇ download light svg</button>
+            <button class="dl-btn" onclick="downloadSVG('dark')">⬇ download dark svg</button>
+          </div>
+        </div>
+      `;
+
+      setupTooltips();
+    }
+
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const DAYS   = ['','Mon','','Wed','','Fri',''];
+
+    function buildGraph(weeks) {
+      // Month labels
+      let monthLabels = '<div class="month-labels">';
+      let lastMonth = -1;
+      weeks.forEach(week => {
+        const firstDay = week.contributionDays.find(d => d.date);
+        if (firstDay) {
+          const m = new Date(firstDay.date).getMonth();
+          if (m !== lastMonth) {
+            monthLabels += `<div class="month-label">${MONTHS[m]}</div>`;
+            lastMonth = m;
+          } else {
+            monthLabels += `<div class="month-label"></div>`;
+          }
+        }
+      });
+      monthLabels += '</div>';
+
+      // Day labels
+      let dayLabels = '<div class="day-labels">';
+      DAYS.forEach(d => { dayLabels += `<div class="day-label">${d}</div>`; });
+      dayLabels += '</div>';
+
+      // Weeks
+      let weeksHtml = '<div class="weeks">';
+      weeks.forEach(week => {
+        weeksHtml += '<div class="week">';
+        // Fill empty days at start
+        const firstDay = week.contributionDays[0];
+        if (firstDay) {
+          const weekday = new Date(firstDay.date).getDay(); // 0=sun
+          for (let i = 0; i < weekday; i++) {
+            weeksHtml += `<div class="day-cell" data-level="0" style="visibility:hidden"></div>`;
+          }
+        }
+        week.contributionDays.forEach(day => {
+          const level = getLevel(day.contributionCount);
+          const emoji = day.contributionCount > 0 ? '🌸' : '';
+          weeksHtml += `<div class="day-cell" data-level="${level}" data-count="${day.contributionCount}" data-date="${day.date}">${emoji}</div>`;
+        });
+        weeksHtml += '</div>';
+      });
+      weeksHtml += '</div>';
+
+      return `${monthLabels}<div class="graph-body">${dayLabels}${weeksHtml}</div>`;
+    }
+
+    function getLevel(count) {
+      if (count === 0) return 0;
+      if (count <= 2) return 1;
+      if (count <= 5) return 2;
+      if (count <= 9) return 3;
+      return 4;
+    }
+
+    function setupTooltips() {
+      const tooltip = document.getElementById('tooltip');
+      document.querySelectorAll('.day-cell[data-date]').forEach(cell => {
+        cell.addEventListener('mousemove', e => {
+          const count = cell.dataset.count;
+          const date = new Date(cell.dataset.date).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+          tooltip.textContent = count === '0' ? `no contributions · ${date}` : `${count} contribution${count>1?'s':''} · ${date}`;
+          tooltip.style.display = 'block';
+          tooltip.style.left = e.clientX + 12 + 'px';
+          tooltip.style.top  = e.clientY - 28 + 'px';
+        });
+        cell.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+      });
+    }
+
+    function calcStreak(weeks) {
+      let longest = 0, current = 0;
+      weeks.flatMap(w => w.contributionDays).forEach(d => {
+        if (d.contributionCount > 0) { current++; longest = Math.max(longest, current); }
+        else { current = 0; }
+      });
+      return { longest };
+    }
+
+    function calcMax(weeks) {
+      return Math.max(...weeks.flatMap(w => w.contributionDays).map(d => d.contributionCount));
+    }
+
+    // Embed codes
+    let activeEmbedTheme = 'light';
+
+    function switchTab(btn, theme) {
+      activeEmbedTheme = theme;
+      document.querySelectorAll('.embed-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateEmbedCodes();
+    }
+
+    function updateEmbedCodes() {
+      const el = document.getElementById('embedCode');
+      if (!el) return;
+      el.innerHTML = getEmbedMarkdown(currentUsername, activeEmbedTheme) + `<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
+    }
+
+    function getEmbedMarkdown(username, theme) {
+      const url = `${API_BASE.replace('/api/contributions', '')}/api/svg?username=${username}&year=${currentYear}&theme=${theme}`;
+      return `[![${username}'s sakura contributions](${url})](https://sakura.garden)`;
+    }
+
+    function copyEmbed() {
+      const el = document.getElementById('embedCode');
+      const text = el.childNodes[0].textContent.trim();
+      navigator.clipboard.writeText(text);
+      document.querySelector('.copy-btn').textContent = 'copied!';
+      setTimeout(() => { const btn = document.querySelector('.copy-btn'); if(btn) btn.textContent = 'copy'; }, 1500);
+    }
+
+    // SVG download
+    function downloadSVG(theme) {
+      if (!currentData) return;
+      const cal = currentData.user.contributionsCollection.contributionCalendar;
+      const svg = generateSVG(cal.weeks, theme, currentUsername, cal.totalContributions);
+      const blob = new Blob([svg], { type: 'image/svg+xml' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `sakura-${currentUsername}-${currentYear}-${theme}.svg`;
+      a.click();
+    }
+
+    function generateSVG(weeks, theme, username, total) {
+      const isDark = theme === 'dark';
+      const colors = isDark
+        ? { bg: '#0d0709', text: '#fdf0f5', text2: '#c0899a', accent: '#ff6b9d',
+            c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
+        : { bg: '#fdf6f0', text: '#1a0a00', text2: '#7a5a4a', accent: '#e8547a',
+            c0: '#f5e6e0', c1: '#ffc8d8', c2: '#ff8fab', c3: '#e8547a', c4: '#c2185b', border: '#f0ddd5' };
+
+      const cellSize = 11, gap = 2, step = cellSize + gap;
+      const paddingLeft = 28, paddingTop = 52, paddingRight = 20, paddingBottom = 36;
+      const graphW = weeks.length * step;
+      const W = graphW + paddingLeft + paddingRight;
+      const H = 7 * step + paddingTop + paddingBottom;
+
+      const levelColor = l => [colors.c0, colors.c1, colors.c2, colors.c3, colors.c4][l];
+
+      let cells = '';
+      let monthMarkers = {};
+
+      weeks.forEach((week, wi) => {
+        const firstDay = week.contributionDays[0];
+        if (firstDay) {
+          const m = new Date(firstDay.date).getMonth();
+          if (!monthMarkers[m]) monthMarkers[m] = wi;
+        }
+        week.contributionDays.forEach(day => {
+          const dow = new Date(day.date).getDay();
+          const x = paddingLeft + wi * step;
+          const y = paddingTop + dow * step;
+          const level = getLevel(day.contributionCount);
+          const col = levelColor(level);
+          if (day.contributionCount > 0) {
+            cells += `<text x="${x + cellSize/2}" y="${y + cellSize - 1}" text-anchor="middle" font-size="9" dominant-baseline="auto">🌸</text>`;
+          } else {
+            cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="${col}" />`;
+          }
+        });
+      });
+
+      let monthLabels = '';
+      Object.entries(monthMarkers).forEach(([m, wi]) => {
+        const x = paddingLeft + wi * step;
+        monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${colors.text2}" font-family="monospace">${MONTHS[m]}</text>`;
+      });
+
+      const dayNames = ['','Mon','','Wed','','Fri',''];
+      let dayLabels = '';
+      dayNames.forEach((d, i) => {
+        if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${colors.text2}" font-family="monospace" text-anchor="end">${d}</text>`;
+      });
+
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <rect width="${W}" height="${H}" rx="10" fill="${colors.bg}" />
+  <rect x="0.5" y="0.5" width="${W-1}" height="${H-1}" rx="9.5" fill="none" stroke="${colors.border}" />
+  <text x="${paddingLeft}" y="22" font-size="13" font-family="Georgia,serif" font-style="italic" fill="${colors.accent}">sakura.garden</text>
+  <text x="${W - paddingRight}" y="22" font-size="10" font-family="monospace" fill="${colors.text2}" text-anchor="end">@${username} · ${currentYear} · ${total} contributions</text>
+  ${monthLabels}
+  ${dayLabels}
+  ${cells}
+  <!-- Legend -->
+  ${[0,1,2,3,4].map((l,i) => `<rect x="${paddingLeft + i * (cellSize+2)}" y="${H - 20}" width="${cellSize}" height="${cellSize}" rx="2" fill="${levelColor(l)}" />`).join('')}
+  <text x="${paddingLeft + 5*(cellSize+2) + 4}" y="${H - 11}" font-size="8" fill="${colors.text2}" font-family="monospace">more blooms →</text>
+</svg>`;
+    }
+  </script>
+</body>
+</html>
