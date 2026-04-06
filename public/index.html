@@ -428,6 +428,12 @@
     }
     footer a { color: var(--accent); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .graph-container {
+        overflow-x: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -442,7 +448,7 @@
 
     <section class="hero">
       <h1>your contributions,<br/>but make it <em>bloom</em></h1>
-      <p>beautiful contribution graph 🌸<br/>light &amp; dark mode · svg embeds · instant download</p>
+      <p>beautiful contribution graph 🌸<br/>add it to your README or portfolio</p>
 
       <div class="search-wrap">
         <input class="search-input" type="text" id="usernameInput"
@@ -540,7 +546,7 @@
           </div>
         </div>
         <div class="export-section">
-          <h3>✦ add to your readme</h3>
+          <h3>✦ add it to your README or portfolio</h3>
           <div class="embed-code" id="embedCode">
             &lt;picture&gt;
   &lt;source 
@@ -558,6 +564,9 @@
 &lt;/picture&gt;
             <button class="copy-btn" onclick="copyEmbed()">copy</button>
           </div>
+        </div>
+        <div class="export-section">
+          If you liked this project consider giving it a star on <a href="https://github.com/a104437ana/sakura-garden" target="_blank">GitHub</a>! :)
         </div>
       `;
 
@@ -755,7 +764,6 @@
 
       return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" rx="10" fill="${colors.bg}" />
-  <rect x="0.5" y="0.5" width="${W-1}" height="${H-1}" rx="9.5" fill="none" stroke="${colors.border}" />
   ${monthLabels}
   ${dayLabels}
   ${cells}

@@ -50,8 +50,8 @@ function generateSVG(weeks, theme, username, total, year) {
 
   let monthLabels = '';
   Object.entries(monthMarkers).forEach(([m, wi]) => {
-    const x = paddingLeft + Number(wi) * step;
-    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${colors.text2}" font-family="monospace">${MONTHS[Number(m)]}</text>`;
+    const x = paddingLeft + wi * step;
+    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${colors.text2}" font-family="monospace">${MONTHS[m]}</text>`;
   });
 
   const dayNames = ['','Mon','','Wed','','Fri',''];
@@ -62,7 +62,6 @@ function generateSVG(weeks, theme, username, total, year) {
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" rx="10" fill="${colors.bg}" />
-  <rect x="0.5" y="0.5" width="${W-1}" height="${H-1}" rx="9.5" fill="none" stroke="${colors.border}" />
   ${monthLabels}
   ${dayLabels}
   ${cells}
