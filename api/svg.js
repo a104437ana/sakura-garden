@@ -35,7 +35,7 @@ function generateSVG(weeks, theme, username, total, year) {
   }
 
   const cellSize = 11, gap = 2, step = cellSize + gap;
-  const paddingLeft = 28, paddingTop = 32, paddingRight = 20, paddingBottom = 36;
+  const paddingLeft = 28, paddingTop = 32, paddingRight = 20, paddingBottom = 20;
   const graphW = weeks.length * step;
   const W = graphW + paddingLeft + paddingRight;
   const H = 7 * step + paddingTop + paddingBottom;
