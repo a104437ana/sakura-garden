@@ -504,7 +504,7 @@
 &lt;picture&gt;
   &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=dark" media="(prefers-color-scheme: dark)" /&gt;
   &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" media="(prefers-color-scheme: light)" /&gt;
-  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" alt="sakura contributions" /&gt;
+  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;
 &lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>
           </div>
         </div>
@@ -628,7 +628,7 @@
     function updateEmbedCodes() {
       const el = document.getElementById('embedCode');
       if (!el || !currentUsername) return;
-      el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" /&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" /&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
+      el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
     }
 
     function copyEmbed() {

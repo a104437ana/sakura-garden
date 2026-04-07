@@ -23,13 +23,11 @@ To add this garden to your README or portfolio, simply include the following ima
 
 ```markdown
 <picture>
-  <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=dark" media="(prefers-color-scheme: dark)" width="1000"/>
-  <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" media="(prefers-color-scheme: light)" width="1000"/>
+  <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=dark" media="(prefers-color-scheme: dark)"/>
+  <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" media="(prefers-color-scheme: light)"/>
   <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" alt="sakura contributions" width="1000"/>
 </picture>
 ```
 This will display your GitHub contributions as a beautiful sakura garden in both light and dark themes.
 
 Another option is going to <a href="https://sakura-garden.vercel.app" target="_blank">https://sakura-garden.vercel.app</a>, entering your GitHub username, and copying the generated image tag directly from the page.
-
-[![https://sakura-garden.vercel.app](image.png)](https://sakura-garden.vercel.app)
