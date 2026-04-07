@@ -33,5 +33,3 @@ This will display your GitHub contributions as a beautiful sakura garden in both
 Another option is going to <a href="https://sakura-garden.vercel.app" target="_blank">https://sakura-garden.vercel.app</a>, entering your GitHub username, and copying the generated image tag directly from the page.
 
 [![https://sakura-garden.vercel.app](image.png)](https://sakura-garden.vercel.app)
-
-[![https://sakura-garden.vercel.app](image-1.png)](https://sakura-garden.vercel.app)
