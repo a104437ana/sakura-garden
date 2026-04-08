@@ -19,7 +19,7 @@ If you like this project, consider giving it a star ⭐
 
 ## Add to your README or portfolio
 
-To add this garden to your README or portfolio, go to <a href="https://sakura-garden.vercel.app" target="_blank">https://sakura-garden.vercel.app</a>, enter your GitHub username, copy the generated image tag directly from the page, and paste it into your README or portfolio.
+To add your garden to your README or portfolio, go to <a href="https://sakura-garden.vercel.app" target="_blank">https://sakura-garden.vercel.app</a>, enter your GitHub username, copy the generated image tag directly from the page, and paste it into your README or portfolio.
 
 Alternatively, you can simply include the following image tag in your README or portfolio, replacing `your-github-username` with your actual GitHub username:
 
