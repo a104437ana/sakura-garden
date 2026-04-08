@@ -38,4 +38,7 @@ Alternatively, you can simply include the following image tag in your README or 
 - 💻 Dedicated website to view your garden and obtain the image tag
 
 ## Future Plans
-- Add more customization options for the garden (e.g., different colors, flower types, etc.)
+- [ ] Add more customization options for the garden (e.g., different colors, flower types, etc.)
+
+## Support
+If you like this project, please consider giving it a star ⭐ and sharing it with others who might find it useful!
