@@ -1,7 +1,7 @@
 # 🌸 sakura garden
 ## A GitHub contributions garden for your README or portfolio
 
-Turn your GitHub activity into a garden where commits bloom as flowers 🌸 and empty days stay green 🌿
+Turn your GitHub activity into a garden where commits bloom into flowers 🌸 and empty days stay green 🌿
 
 Perfect for your README or portfolio to showcase your GitHub contributions in a unique and beautiful way!
 
