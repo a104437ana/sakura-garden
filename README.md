@@ -19,7 +19,9 @@ If you like this project, consider giving it a star ⭐
 
 ## Add to your README or portfolio
 
-To add this garden to your README or portfolio, simply include the following image tag, replacing `your-github-username` with your actual GitHub username:
+To add this garden to your README or portfolio, go to <a href="https://sakura-garden.vercel.app" target="_blank">https://sakura-garden.vercel.app</a>, enter your GitHub username, copy the generated image tag directly from the page, and paste it into your README or portfolio.
+
+Alternatively, you can simply include the following image tag in your README or portfolio, replacing `your-github-username` with your actual GitHub username:
 
 ```markdown
 <picture>
@@ -28,6 +30,12 @@ To add this garden to your README or portfolio, simply include the following ima
   <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" alt="sakura contributions" width="1000"/>
 </picture>
 ```
-This will display your GitHub contributions as a beautiful sakura garden in both light and dark themes.
 
-Another option is going to <a href="https://sakura-garden.vercel.app" target="_blank">https://sakura-garden.vercel.app</a>, entering your GitHub username, and copying the generated image tag directly from the page.
+## Features
+- 🌸 Transforms your GitHub contributions into a beautiful garden
+- 🌈 Supports both light and dark themes
+- 🌐 Easy to integrate into any README or portfolio
+- 💻 Dedicated website to view your garden and obtain the image tag
+
+## Future Plans
+- Add more customization options for the garden (e.g., different colors, flower types, etc.)
