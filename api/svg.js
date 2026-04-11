@@ -15,9 +15,9 @@ function getLevel(count) {
 function generateSVG(weeks, theme, username, total, year) {
   const isDark = theme === 'dark';
   const colors = isDark
-    ? { bg: 'transparent', text: '#fdf0f5', text2: '#c0899a', accent: '#ff6b9d',
+    ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
-    : { bg: 'transparent', text: '#1a0a00', text2: '#7a5a4a', accent: '#e8547a',
+    : { bg: 'transparent', text: '#1a0a00', text2: '#000000ff', accent: '#e8547a',
         c0: '#f5e6e0', c1: '#ffc8d8', c2: '#ff8fab', c3: '#e8547a', c4: '#c2185b', border: '#f0ddd5' };
 
   const flowerPetal = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
@@ -56,7 +56,7 @@ function generateSVG(weeks, theme, username, total, year) {
       if (day.contributionCount > 0) {
         cells += flower(x + cellSize / 2, y + cellSize / 2, getLevel(day.contributionCount));
       } else {
-        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44' : '#99ff7d'}" stroke-width="0.8" />`;
+        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#2d5228' : '#99ff7d'}" stroke-width="0.8" />`;
       }
     });
   });
