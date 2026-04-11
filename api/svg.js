@@ -15,9 +15,9 @@ function getLevel(count) {
 function generateSVG(weeks, theme, username, total, year) {
   const isDark = theme === 'dark';
   const colors = isDark
-    ? { bg: 'transparent', text: '#fdf0f5', text2: '#000000ff', accent: '#ff6b9d',
+    ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
-    : { bg: 'transparent', text: '#1a0a00', text2: '#ffffffff', accent: '#e8547a',
+    : { bg: 'transparent', text: '#1a0a00', text2: '#000000ff', accent: '#e8547a',
         c0: '#f5e6e0', c1: '#ffc8d8', c2: '#ff8fab', c3: '#e8547a', c4: '#c2185b', border: '#f0ddd5' };
 
   const flowerPetal = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
@@ -64,13 +64,13 @@ function generateSVG(weeks, theme, username, total, year) {
   let monthLabels = '';
   Object.entries(monthMarkers).forEach(([m, wi]) => {
     const x = paddingLeft + wi * step;
-    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${colors.text2}" font-family="monospace">${MONTHS[m]}</text>`;
+    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isDark ? '#ffffff' : '#000000'}" font-family="monospace">${MONTHS[m]}</text>`;
   });
 
   const dayNames = ['','Mon','','Wed','','Fri',''];
   let dayLabels = '';
   dayNames.forEach((d, i) => {
-    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${colors.text2}" font-family="monospace" text-anchor="end">${d}</text>`;
+    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="$${isDark ? '#ffffff' : '#000000'}" font-family="monospace" text-anchor="end">${d}</text>`;
   });
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
