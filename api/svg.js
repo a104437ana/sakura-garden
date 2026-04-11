@@ -70,7 +70,7 @@ function generateSVG(weeks, theme, username, total, year) {
   const dayNames = ['','Mon','','Wed','','Fri',''];
   let dayLabels = '';
   dayNames.forEach((d, i) => {
-    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="$${isDark ? '#ffffff' : '#000000'}" font-family="monospace" text-anchor="end">${d}</text>`;
+    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isDark ? '#ffffff' : '#000000'}" font-family="monospace" text-anchor="end">${d}</text>`;
   });
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
