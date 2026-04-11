@@ -287,8 +287,11 @@
     }
     .day-cell:hover { transform: scale(1.4); z-index: 10; }
     .day-cell.zero {
-      background: rgba(124, 255, 68, 0.579);
-      border: none;
+      background: transparent;
+      border: 1px solid #99ff7d;
+    }
+    [data-theme="dark"] .day-cell.zero {
+      border-color: #4a7a44;
     }
     .legend {
       display: flex;

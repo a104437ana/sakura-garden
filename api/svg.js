@@ -56,7 +56,7 @@ function generateSVG(weeks, theme, username, total, year) {
       if (day.contributionCount > 0) {
         cells += flower(x + cellSize / 2, y + cellSize / 2, getLevel(day.contributionCount));
       } else {
-        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="rgba(124, 255, 68, 0.579)" stroke="none" />`;
+        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44' : '#99ff7d'}" stroke-width="0.8" />`;
       }
     });
   });
