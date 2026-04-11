@@ -15,9 +15,9 @@ function getLevel(count) {
 function generateSVG(weeks, theme, username, total, year) {
   const isDark = theme === 'dark';
   const colors = isDark
-    ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
+    ? { bg: 'transparent', text: '#fdf0f5', text2: '#000000ff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
-    : { bg: 'transparent', text: '#1a0a00', text2: '#000000ff', accent: '#e8547a',
+    : { bg: 'transparent', text: '#1a0a00', text2: '#ffffffff', accent: '#e8547a',
         c0: '#f5e6e0', c1: '#ffc8d8', c2: '#ff8fab', c3: '#e8547a', c4: '#c2185b', border: '#f0ddd5' };
 
   const flowerPetal = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
