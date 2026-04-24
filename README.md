@@ -32,6 +32,7 @@ See your garden here: https://sakura-garden.vercel.app
 
 ## Features
 - 🌸 Transforms your GitHub contributions into a beautiful garden
+- :octocat: Updates automatically based on your GitHub activity
 - 🌗 Supports both light and dark themes
 - ⚡ Easy to integrate into any README or portfolio
 - 💻 Dedicated website to generate and view your garden
