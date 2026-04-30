@@ -295,9 +295,9 @@
     /* Month labels: positioned absolutely over the weeks grid */
     .month-row {
       position: relative;
-      height: 14px;
-      /* left-pad to align with where the weeks start (after day-labels) */
-      margin-left: 24px;
+      height: 18px;
+      margin-left: 28px;
+      margin-bottom: 4px;
     }
 
     .month-label {
@@ -317,7 +317,7 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
-      margin-right: 4px;
+      margin-right: 8px;
       width: 20px;
       flex-shrink: 0;
     }
@@ -475,112 +475,6 @@
       white-space: nowrap;
     }
 
-    /* Settings */
-    .settings-toggle {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 0.4rem 0.9rem;
-      color: var(--text2);
-      font-size: 0.72rem;
-      cursor: pointer;
-      margin-top: 1.5rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 8px var(--shadow);
-      text-decoration: none;
-    }
-
-    .settings-toggle:hover {
-      border-color: var(--accent2);
-      color: var(--accent);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px var(--shadow);
-    }
-
-    .settings-panel {
-      max-width: 480px;
-      margin: 1.2rem auto;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      display: none;
-      text-align: left;
-      box-shadow: 0 10px 40px var(--shadow);
-      animation: bloomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes bloomIn {
-      from {
-        opacity: 0;
-        transform: translateY(-8px) scale(0.98);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .settings-panel.active {
-      display: block;
-    }
-
-    .settings-group {
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px dashed var(--border);
-    }
-
-    .settings-group:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-
-    .settings-label {
-      display: block;
-      font-size: 0.65rem;
-      color: var(--accent);
-      margin-bottom: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-    }
-
-    .settings-select,
-    .settings-input {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.5rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--text);
-      outline: none;
-    }
-
-    .settings-input:focus,
-    .settings-select:focus {
-      border-color: var(--accent);
-    }
-
-    .token-hint {
-      font-size: 0.65rem;
-      color: var(--text2);
-      margin-top: 0.4rem;
-      line-height: 1.4;
-    }
-
-    .token-hint a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
     footer {
       text-align: center;
       margin-top: 4rem;
@@ -620,29 +514,6 @@
           onkeydown="if(event.key==='Enter') search()" />
         <button class="search-btn" onclick="search()">bloom →</button>
       </div>
-
-      <button class="settings-toggle" onclick="toggleSettings()">⚙ settings</button>
-
-      <div class="settings-panel" id="settingsPanel">
-        <div class="settings-group">
-          <label class="settings-label">data source</label>
-          <select class="settings-select" id="sourceSelect" onchange="updateSourceUI()">
-            <option value="vercel">Vercel API (Default)</option>
-            <option value="github">GitHub Direct (Private Mode)</option>
-            <option value="demo">Demo Mode (Mock Data)</option>
-          </select>
-        </div>
-        <div class="settings-group" id="tokenGroup" style="display: none;">
-          <label class="settings-label">github personal access token</label>
-          <input type="password" class="settings-input" id="githubToken" placeholder="ghp_xxxxxxxxxxxx"
-            onchange="saveSettings()" />
-          <p class="token-hint">
-            Requires <code>read:user</code> scope. Token is stored locally in your browser.<br />
-            <a href="https://github.com/settings/tokens/new?description=Sakura%20Garden&scopes=read:user"
-              target="_blank">Generate a token →</a>
-          </p>
-        </div>
-      </div>
     </section>
 
     <div id="result"></div>
@@ -662,111 +533,6 @@
     let currentTheme = 'light';
     let currentData = null;
     let currentUsername = '';
-
-    // Settings
-    function toggleSettings() {
-      document.getElementById('settingsPanel').classList.toggle('active');
-    }
-
-    function updateSourceUI() {
-      const source = document.getElementById('sourceSelect').value;
-      document.getElementById('tokenGroup').style.display = source === 'github' ? 'block' : 'none';
-      saveSettings();
-    }
-
-    function saveSettings() {
-      const settings = {
-        source: document.getElementById('sourceSelect').value,
-        token: document.getElementById('githubToken').value
-      };
-      localStorage.setItem('sakura_settings', JSON.stringify(settings));
-    }
-
-    function loadSettings() {
-      const saved = localStorage.getItem('sakura_settings');
-      if (saved) {
-        const settings = JSON.parse(saved);
-        document.getElementById('sourceSelect').value = settings.source || 'vercel';
-        document.getElementById('githubToken').value = settings.token || '';
-        updateSourceUI();
-      }
-    }
-    loadSettings();
-
-    async function fetchFromGitHubDirect(username, token) {
-      const query = `
-        query($username: String!, $from: DateTime!, $to: DateTime!) {
-          user(login: $username) {
-            contributionsCollection(from: $from, to: $to) {
-              contributionCalendar {
-                totalContributions
-                weeks {
-                  contributionDays {
-                    contributionCount
-                    date
-                    weekday
-                  }
-                }
-              }
-            }
-            name
-            login
-            avatarUrl
-          }
-        }
-      `;
-
-      const toDate = new Date();
-      const fromDate = new Date();
-      fromDate.setDate(toDate.getDate() - 365);
-
-      const variables = { username, from: fromDate.toISOString(), to: toDate.toISOString() };
-
-      const res = await fetch('https://api.github.com/graphql', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query, variables }),
-      });
-
-      const json = await res.json();
-      if (json.errors) throw new Error(json.errors[0].message);
-      return json.data;
-    }
-
-    function generateMockData(username) {
-      const today = new Date();
-      const weeks = [];
-      for (let i = 0; i < 53; i++) {
-        const contributionDays = [];
-        for (let j = 0; j < 7; j++) {
-          const d = new Date(today);
-          d.setDate(d.getDate() - ((52 - i) * 7 + (6 - j)));
-          const count = Math.random() > 0.4 ? Math.floor(Math.random() * 15) : 0;
-          contributionDays.push({
-            contributionCount: count,
-            date: d.toISOString().split('T')[0],
-            weekday: j
-          });
-        }
-        weeks.push({ contributionDays });
-      }
-      return {
-        user: {
-          name: `${username} (Demo)`,
-          login: username,
-          avatarUrl: `https://github.com/${username}.png`,
-          contributionsCollection: {
-            contributionCalendar: {
-              totalContributions: weeks.reduce((acc, w) => acc + w.contributionDays.reduce((a, d) => a + d.contributionCount, 0), 0),
-              weeks
-            }
-          }
-        }
-      };
-    }
 
     // Petals
     function spawnPetals() {
@@ -802,26 +568,13 @@
       result.innerHTML = `<div class="loader"><span class="spinner">🌸</span>fetching blooms for ${username}…</div>`;
 
       try {
-        const source = document.getElementById('sourceSelect').value;
-        let data;
-
-        if (source === 'demo') {
-          await new Promise(r => setTimeout(r, 600)); // fake delay
-          data = generateMockData(username);
-        } else if (source === 'github') {
-          const token = document.getElementById('githubToken').value.trim();
-          if (!token) throw new Error('GitHub Token is required for Private Mode');
-          data = await fetchFromGitHubDirect(username, token);
-        } else {
-          const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}`);
-          data = await res.json();
-          if (data.error) throw new Error(data.error);
-        }
-
+        const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}`);
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
         currentData = data;
         renderResult(data, username);
       } catch (err) {
-        result.innerHTML = `<div class="error-msg">error: <strong>${err.message}</strong></div>`;
+        result.innerHTML = `<div class="error-msg">couldn't find <strong>${username}</strong> — check the username and try again.</div>`;
       }
     }
 
@@ -864,6 +617,14 @@
       `;
 
       setupTooltips();
+      scrollToEnd();
+    }
+
+    function scrollToEnd() {
+      const container = document.getElementById('graphContainer');
+      if (container) {
+        container.scrollLeft = container.scrollWidth;
+      }
     }
 
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -901,15 +662,22 @@
       // ── Month labels (absolutely positioned by week index) ──────────────────
       let monthRowHtml = '<div class="month-row">';
       let lastMonth = -1;
+      let lastLabelWeek = -10;
       weeks.forEach((week, wi) => {
         const firstDay = week.contributionDays.find(d => d.date);
         if (!firstDay) return;
-        const m = new Date(firstDay.date).getMonth();
-        if (m !== lastMonth) {
-          // left = week-index * STEP pixels
+
+        const date = new Date(firstDay.date);
+        const m = date.getMonth();
+        const d = date.getDate();
+
+        // Only show month if it changed and we haven't shown one recently (min 3 weeks gap)
+        // This prevents "AprMay" overlapping
+        if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
           const left = wi * STEP;
           monthRowHtml += `<span class="month-label" style="left:${left}px">${MONTHS[m]}</span>`;
           lastMonth = m;
+          lastLabelWeek = wi;
         }
       });
       monthRowHtml += '</div>';
@@ -923,21 +691,28 @@
       let weeksHtml = '<div class="weeks">';
       weeks.forEach(week => {
         weeksHtml += '<div class="week">';
-        const firstDay = week.contributionDays[0];
-        if (firstDay) {
-          const weekday = new Date(firstDay.date).getDay(); // 0=Sun
-          for (let i = 0; i < weekday; i++) {
+
+        // Robust alignment: Map days to their weekdays to ensure exactly 7 rows
+        const dayMap = {};
+        week.contributionDays.forEach(d => {
+          const wd = d.weekday !== undefined ? d.weekday : new Date(d.date).getDay();
+          dayMap[wd] = d;
+        });
+
+        for (let i = 0; i < 7; i++) {
+          const day = dayMap[i];
+          if (day) {
+            if (day.contributionCount > 0) {
+              const level = getLevel(day.contributionCount);
+              weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none">${makePetal(level)}</div>`;
+            } else {
+              weeksHtml += `<div class="day-cell zero" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
+            }
+          } else {
+            // Padding for missing days in partial weeks (start/end of year)
             weeksHtml += `<div class="day-cell" style="visibility:hidden"></div>`;
           }
         }
-        week.contributionDays.forEach(day => {
-          if (day.contributionCount > 0) {
-            const level = getLevel(day.contributionCount);
-            weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none">${makePetal(level)}</div>`;
-          } else {
-            weeksHtml += `<div class="day-cell zero" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
-          }
-        });
         weeksHtml += '</div>';
       });
       weeksHtml += '</div>';
@@ -978,14 +753,7 @@
     function updateEmbedCodes() {
       const el = document.getElementById('embedCode');
       if (!el || !currentUsername) return;
-
-      const source = document.getElementById('sourceSelect').value;
-      if (source !== 'vercel') {
-        el.innerHTML = `<p style="margin-bottom:0.5rem;color:var(--accent)">Note: Embed code always uses the Vercel backend. Private/Demo data cannot be embedded.</p>` +
-          `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
-      } else {
-        el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
-      }
+      el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
     }
 
     function copyEmbed() {
