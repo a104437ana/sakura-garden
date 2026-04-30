@@ -41,13 +41,21 @@ function generateSVG(weeks, theme, username, total, year) {
   const H = 7 * step + paddingTop + paddingBottom;
 
   let cells = '';
-  let monthMarkers = {};
+  let monthMarkers = [];
+  let lastMonth = -1;
+  let lastLabelWeek = -10;
 
   weeks.forEach((week, wi) => {
-    const firstDay = week.contributionDays[0];
+    const firstDay = week.contributionDays.find(d => d.date);
     if (firstDay) {
-      const m = new Date(firstDay.date).getMonth();
-      if (monthMarkers[m] === undefined) monthMarkers[m] = wi;
+      const date = new Date(firstDay.date);
+      const m = date.getMonth();
+      const d = date.getDate();
+      if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
+        monthMarkers.push({ m, wi });
+        lastMonth = m;
+        lastLabelWeek = wi;
+      }
     }
     week.contributionDays.forEach(day => {
       const dow = new Date(day.date).getDay();
@@ -62,7 +70,7 @@ function generateSVG(weeks, theme, username, total, year) {
   });
 
   let monthLabels = '';
-  Object.entries(monthMarkers).forEach(([m, wi]) => {
+  monthMarkers.forEach(({ m, wi }) => {
     const x = paddingLeft + wi * step;
     monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isDark ? '#ffffff' : '#000000'}" font-family="monospace">${MONTHS[m]}</text>`;
   });

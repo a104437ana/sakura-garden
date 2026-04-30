@@ -294,10 +294,10 @@
 
     /* Month labels: positioned absolutely over the weeks grid */
     .month-row {
-      position: relative;
-      height: 18px;
-      margin-left: 28px;
-      margin-bottom: 4px;
+     position: relative;
+      height: 14px;
+      /* left-pad to align with where the weeks start (after day-labels) */
+      margin-left: 24px;
     }
 
     .month-label {
@@ -317,7 +317,7 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
-      margin-right: 8px;
+      margin-right: 4px;
       width: 20px;
       flex-shrink: 0;
     }
@@ -617,15 +617,8 @@
       `;
 
       setupTooltips();
-      scrollToEnd();
     }
 
-    function scrollToEnd() {
-      const container = document.getElementById('graphContainer');
-      if (container) {
-        container.scrollLeft = container.scrollWidth;
-      }
-    }
 
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const DAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
