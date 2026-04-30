@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +10,10 @@
   <meta property="og:description" content="A GitHub contributions garden for your README or portfolio 🌸" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
-  <link rel="icon" href="favicon.ico"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" href="favicon.ico" />
   <style>
     :root {
       --bg: #fdf6f0;
@@ -28,6 +31,7 @@
       --shadow: rgba(232, 84, 122, 0.12);
       --card: #ffffff;
     }
+
     [data-theme="dark"] {
       --bg: #0d0709;
       --bg2: #120b0e;
@@ -45,7 +49,11 @@
       --card: #180d11;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'DM Mono', monospace;
@@ -57,12 +65,15 @@
 
     .petals {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 0;
       overflow: hidden;
     }
+
     .petal {
       position: absolute;
       font-size: 1.2rem;
@@ -70,9 +81,17 @@
       animation: fall linear infinite;
       top: -2rem;
     }
+
     @keyframes fall {
-      0%   { transform: translateY(-2rem) rotate(0deg); opacity: 0.18; }
-      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(-2rem) rotate(0deg);
+        opacity: 0.18;
+      }
+
+      100% {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .wrapper {
@@ -91,6 +110,7 @@
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
+
     .logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem;
@@ -98,7 +118,12 @@
       color: var(--accent);
       letter-spacing: -0.02em;
     }
-    .logo span { font-style: normal; font-size: 1rem; color: var(--text2); }
+
+    .logo span {
+      font-style: normal;
+      font-size: 1rem;
+      color: var(--text2);
+    }
 
     .theme-toggle {
       background: none;
@@ -111,12 +136,17 @@
       color: var(--text2);
       transition: all 0.2s;
     }
-    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
     .hero {
       text-align: center;
       margin-bottom: 3rem;
     }
+
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2.2rem, 6vw, 3.8rem);
@@ -124,10 +154,12 @@
       font-weight: 700;
       margin-bottom: 0.8rem;
     }
+
     .hero h1 em {
       font-style: italic;
       color: var(--accent);
     }
+
     .hero p {
       color: var(--text2);
       font-size: 0.88rem;
@@ -140,6 +172,7 @@
       max-width: 480px;
       margin: 2rem auto;
     }
+
     .search-input {
       flex: 1;
       background: var(--card);
@@ -152,8 +185,16 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    .search-input::placeholder { color: var(--text2); opacity: 0.6; }
-    .search-input:focus { border-color: var(--accent); }
+
+    .search-input::placeholder {
+      color: var(--text2);
+      opacity: 0.6;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
     .search-btn {
       background: var(--accent);
       color: white;
@@ -166,10 +207,19 @@
       transition: opacity 0.2s, transform 0.15s;
       white-space: nowrap;
     }
-    .search-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-    .search-btn:active { transform: translateY(0); }
 
-    #result { margin-top: 2rem; }
+    .search-btn:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .search-btn:active {
+      transform: translateY(0);
+    }
+
+    #result {
+      margin-top: 2rem;
+    }
 
     .profile-row {
       display: flex;
@@ -177,17 +227,24 @@
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
+
     .avatar {
-      width: 48px; height: 48px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       border: 2px solid var(--accent2);
     }
+
     .profile-name {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
       font-weight: 700;
     }
-    .profile-sub { font-size: 0.78rem; color: var(--text2); }
+
+    .profile-sub {
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
 
     .stats-row {
       display: flex;
@@ -195,7 +252,12 @@
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
-    .stat { font-size: 0.8rem; color: var(--text2); }
+
+    .stat {
+      font-size: 0.8rem;
+      color: var(--text2);
+    }
+
     .stat strong {
       display: block;
       font-size: 1.4rem;
@@ -214,6 +276,7 @@
       box-shadow: 0 4px 24px var(--shadow);
       -webkit-overflow-scrolling: touch;
     }
+
     .graph-label {
       font-size: 0.7rem;
       color: var(--text2);
@@ -224,17 +287,19 @@
 
     /* The scroll container — everything inside here has a fixed pixel width */
     .graph-scroll {
-      display: inline-block; /* shrink-wraps to content width */
+      display: inline-block;
+      /* shrink-wraps to content width */
       min-width: 100%;
     }
 
     /* Month labels: positioned absolutely over the weeks grid */
     .month-row {
       position: relative;
-      height: 14px;
-      /* left-pad to align with where the weeks start (after day-labels) */
-      margin-left: 24px;
+      height: 18px;
+      margin-left: 28px;
+      margin-bottom: 4px;
     }
+
     .month-label {
       position: absolute;
       font-size: 0.62rem;
@@ -247,14 +312,16 @@
       display: flex;
       gap: 0;
     }
+
     .day-labels {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      margin-right: 4px;
+      margin-right: 8px;
       width: 20px;
       flex-shrink: 0;
     }
+
     .day-label {
       font-size: 0.6rem;
       color: var(--text2);
@@ -263,15 +330,18 @@
       line-height: 13px;
       text-align: right;
     }
+
     .weeks {
       display: flex;
       gap: 2px;
     }
+
     .week {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
+
     .day-cell {
       width: 13px;
       height: 13px;
@@ -285,14 +355,21 @@
       position: relative;
       background: transparent;
     }
-    .day-cell:hover { transform: scale(1.4); z-index: 10; }
+
+    .day-cell:hover {
+      transform: scale(1.4);
+      z-index: 10;
+    }
+
     .day-cell.zero {
       background: transparent;
       border: 1px solid #99ff7d;
     }
+
     [data-theme="dark"] .day-cell.zero {
-      border-color: #4a7a44 ;
+      border-color: #4a7a44;
     }
+
     .legend {
       display: flex;
       align-items: center;
@@ -310,6 +387,7 @@
       border-radius: 12px;
       padding: 1.5rem;
     }
+
     .export-section h3 {
       font-family: 'Playfair Display', serif;
       font-size: 1rem;
@@ -329,6 +407,7 @@
       line-height: 1.6;
       position: relative;
     }
+
     .copy-btn {
       position: absolute;
       top: 0.6rem;
@@ -343,7 +422,10 @@
       font-family: 'DM Mono', monospace;
       transition: opacity 0.2s;
     }
-    .copy-btn:hover { opacity: 0.8; }
+
+    .copy-btn:hover {
+      opacity: 0.8;
+    }
 
     /* Loading & error */
     .loader {
@@ -352,13 +434,19 @@
       color: var(--text2);
       font-size: 0.85rem;
     }
+
     .loader .spinner {
       font-size: 2rem;
       display: block;
       margin-bottom: 1rem;
       animation: spin 2s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     .error-msg {
       background: #fff0f3;
@@ -368,7 +456,10 @@
       color: var(--accent);
       font-size: 0.85rem;
     }
-    [data-theme="dark"] .error-msg { background: #1a0d12; }
+
+    [data-theme="dark"] .error-msg {
+      background: #1a0d12;
+    }
 
     /* Tooltip */
     .tooltip {
@@ -391,10 +482,18 @@
       font-size: 0.72rem;
       line-height: 1.8;
     }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
+
 <body>
   <div class="petals" id="petals"></div>
   <div class="tooltip" id="tooltip"></div>
@@ -406,13 +505,13 @@
     </header>
 
     <section class="hero">
-      <h1>your contributions,<br/>but make it <em>bloom</em></h1>
-      <p>GitHub contributions garden 🌸<br/>add it to your README or portfolio</p><p>Light & dark mode support</p>
+      <h1>your contributions,<br />but make it <em>bloom</em></h1>
+      <p>GitHub contributions garden 🌸<br />add it to your README or portfolio</p>
+      <p>Light & dark mode support</p>
 
       <div class="search-wrap">
-        <input class="search-input" type="text" id="usernameInput"
-               placeholder="github username" autocomplete="off"
-               onkeydown="if(event.key==='Enter') search()" />
+        <input class="search-input" type="text" id="usernameInput" placeholder="github username" autocomplete="off"
+          onkeydown="if(event.key==='Enter') search()" />
         <button class="search-btn" onclick="search()">bloom →</button>
       </div>
     </section>
@@ -420,7 +519,8 @@
     <div id="result"></div>
 
     <footer>
-      made with 🌸 · <a href="https://github.com/a104437ana/sakura-garden" target="_blank">star on github</a> · open source
+      made with 🌸 · <a href="https://github.com/a104437ana/sakura-garden" target="_blank">star on github</a> · open
+      source
     </footer>
   </div>
 
@@ -517,15 +617,23 @@
       `;
 
       setupTooltips();
+      scrollToEnd();
     }
 
-    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const DAYS   = ['','Mon','','Wed','','Fri',''];
+    function scrollToEnd() {
+      const container = document.getElementById('graphContainer');
+      if (container) {
+        container.scrollLeft = container.scrollWidth;
+      }
+    }
 
-    const PETAL_LIGHT  = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const DAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+
+    const PETAL_LIGHT = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
     const CENTER_LIGHT = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
-    const PETAL_DARK   = ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab'];
-    const CENTER_DARK  = ['', '#3d0f1f', '#7a0e38', '#c2185b', '#ffaacc'];
+    const PETAL_DARK = ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab'];
+    const CENTER_DARK = ['', '#3d0f1f', '#7a0e38', '#c2185b', '#ffaacc'];
 
     function getLevel(count) {
       if (count === 0) return 0;
@@ -541,7 +649,7 @@
 
       let petals = '';
       for (let a = 0; a < 5; a++) {
-        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a*72})"/>`;
+        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
       }
 
       return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">
@@ -554,15 +662,22 @@
       // ── Month labels (absolutely positioned by week index) ──────────────────
       let monthRowHtml = '<div class="month-row">';
       let lastMonth = -1;
+      let lastLabelWeek = -10;
       weeks.forEach((week, wi) => {
         const firstDay = week.contributionDays.find(d => d.date);
         if (!firstDay) return;
-        const m = new Date(firstDay.date).getMonth();
-        if (m !== lastMonth) {
-          // left = week-index * STEP pixels
+
+        const date = new Date(firstDay.date);
+        const m = date.getMonth();
+        const d = date.getDate();
+
+        // Only show month if it changed and we haven't shown one recently (min 3 weeks gap)
+        // This prevents "AprMay" overlapping
+        if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
           const left = wi * STEP;
           monthRowHtml += `<span class="month-label" style="left:${left}px">${MONTHS[m]}</span>`;
           lastMonth = m;
+          lastLabelWeek = wi;
         }
       });
       monthRowHtml += '</div>';
@@ -576,21 +691,28 @@
       let weeksHtml = '<div class="weeks">';
       weeks.forEach(week => {
         weeksHtml += '<div class="week">';
-        const firstDay = week.contributionDays[0];
-        if (firstDay) {
-          const weekday = new Date(firstDay.date).getDay(); // 0=Sun
-          for (let i = 0; i < weekday; i++) {
+
+        // Robust alignment: Map days to their weekdays to ensure exactly 7 rows
+        const dayMap = {};
+        week.contributionDays.forEach(d => {
+          const wd = d.weekday !== undefined ? d.weekday : new Date(d.date).getDay();
+          dayMap[wd] = d;
+        });
+
+        for (let i = 0; i < 7; i++) {
+          const day = dayMap[i];
+          if (day) {
+            if (day.contributionCount > 0) {
+              const level = getLevel(day.contributionCount);
+              weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none">${makePetal(level)}</div>`;
+            } else {
+              weeksHtml += `<div class="day-cell zero" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
+            }
+          } else {
+            // Padding for missing days in partial weeks (start/end of year)
             weeksHtml += `<div class="day-cell" style="visibility:hidden"></div>`;
           }
         }
-        week.contributionDays.forEach(day => {
-          if (day.contributionCount > 0) {
-            const level = getLevel(day.contributionCount);
-            weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none">${makePetal(level)}</div>`;
-          } else {
-            weeksHtml += `<div class="day-cell zero" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
-          }
-        });
         weeksHtml += '</div>';
       });
       weeksHtml += '</div>';
@@ -609,11 +731,11 @@
       document.querySelectorAll('.day-cell[data-date]').forEach(cell => {
         cell.addEventListener('mousemove', e => {
           const count = cell.dataset.count;
-          const date = new Date(cell.dataset.date).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-          tooltip.textContent = count === '0' ? `no contributions · ${date}` : `${count} contribution${count>1?'s':''} · ${date}`;
+          const date = new Date(cell.dataset.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+          tooltip.textContent = count === '0' ? `no contributions · ${date}` : `${count} contribution${count > 1 ? 's' : ''} · ${date}`;
           tooltip.style.display = 'block';
           tooltip.style.left = e.clientX + 12 + 'px';
-          tooltip.style.top  = e.clientY - 28 + 'px';
+          tooltip.style.top = e.clientY - 28 + 'px';
         });
         cell.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
       });
@@ -651,4 +773,5 @@
     }
   </script>
 </body>
+
 </html>
