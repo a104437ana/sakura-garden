@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +10,10 @@
   <meta property="og:description" content="A GitHub contributions garden for your README or portfolio 🌸" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
-  <link rel="icon" href="favicon.ico"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" href="favicon.ico" />
   <style>
     :root {
       --bg: #fdf6f0;
@@ -28,6 +31,7 @@
       --shadow: rgba(232, 84, 122, 0.12);
       --card: #ffffff;
     }
+
     [data-theme="dark"] {
       --bg: #0d0709;
       --bg2: #120b0e;
@@ -45,7 +49,11 @@
       --card: #180d11;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'DM Mono', monospace;
@@ -57,12 +65,15 @@
 
     .petals {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 0;
       overflow: hidden;
     }
+
     .petal {
       position: absolute;
       font-size: 1.2rem;
@@ -70,9 +81,17 @@
       animation: fall linear infinite;
       top: -2rem;
     }
+
     @keyframes fall {
-      0%   { transform: translateY(-2rem) rotate(0deg); opacity: 0.18; }
-      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(-2rem) rotate(0deg);
+        opacity: 0.18;
+      }
+
+      100% {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .wrapper {
@@ -91,6 +110,7 @@
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
+
     .logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem;
@@ -98,7 +118,12 @@
       color: var(--accent);
       letter-spacing: -0.02em;
     }
-    .logo span { font-style: normal; font-size: 1rem; color: var(--text2); }
+
+    .logo span {
+      font-style: normal;
+      font-size: 1rem;
+      color: var(--text2);
+    }
 
     .theme-toggle {
       background: none;
@@ -111,12 +136,17 @@
       color: var(--text2);
       transition: all 0.2s;
     }
-    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
     .hero {
       text-align: center;
       margin-bottom: 3rem;
     }
+
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2.2rem, 6vw, 3.8rem);
@@ -124,10 +154,12 @@
       font-weight: 700;
       margin-bottom: 0.8rem;
     }
+
     .hero h1 em {
       font-style: italic;
       color: var(--accent);
     }
+
     .hero p {
       color: var(--text2);
       font-size: 0.88rem;
@@ -140,6 +172,7 @@
       max-width: 480px;
       margin: 2rem auto;
     }
+
     .search-input {
       flex: 1;
       background: var(--card);
@@ -152,8 +185,16 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    .search-input::placeholder { color: var(--text2); opacity: 0.6; }
-    .search-input:focus { border-color: var(--accent); }
+
+    .search-input::placeholder {
+      color: var(--text2);
+      opacity: 0.6;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
     .search-btn {
       background: var(--accent);
       color: white;
@@ -166,10 +207,19 @@
       transition: opacity 0.2s, transform 0.15s;
       white-space: nowrap;
     }
-    .search-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-    .search-btn:active { transform: translateY(0); }
 
-    #result { margin-top: 2rem; }
+    .search-btn:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .search-btn:active {
+      transform: translateY(0);
+    }
+
+    #result {
+      margin-top: 2rem;
+    }
 
     .profile-row {
       display: flex;
@@ -177,17 +227,24 @@
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
+
     .avatar {
-      width: 48px; height: 48px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       border: 2px solid var(--accent2);
     }
+
     .profile-name {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
       font-weight: 700;
     }
-    .profile-sub { font-size: 0.78rem; color: var(--text2); }
+
+    .profile-sub {
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
 
     .stats-row {
       display: flex;
@@ -195,7 +252,12 @@
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
-    .stat { font-size: 0.8rem; color: var(--text2); }
+
+    .stat {
+      font-size: 0.8rem;
+      color: var(--text2);
+    }
+
     .stat strong {
       display: block;
       font-size: 1.4rem;
@@ -214,6 +276,7 @@
       box-shadow: 0 4px 24px var(--shadow);
       -webkit-overflow-scrolling: touch;
     }
+
     .graph-label {
       font-size: 0.7rem;
       color: var(--text2);
@@ -224,7 +287,8 @@
 
     /* The scroll container — everything inside here has a fixed pixel width */
     .graph-scroll {
-      display: inline-block; /* shrink-wraps to content width */
+      display: inline-block;
+      /* shrink-wraps to content width */
       min-width: 100%;
     }
 
@@ -235,6 +299,7 @@
       /* left-pad to align with where the weeks start (after day-labels) */
       margin-left: 24px;
     }
+
     .month-label {
       position: absolute;
       font-size: 0.62rem;
@@ -247,6 +312,7 @@
       display: flex;
       gap: 0;
     }
+
     .day-labels {
       display: flex;
       flex-direction: column;
@@ -255,6 +321,7 @@
       width: 20px;
       flex-shrink: 0;
     }
+
     .day-label {
       font-size: 0.6rem;
       color: var(--text2);
@@ -263,15 +330,18 @@
       line-height: 13px;
       text-align: right;
     }
+
     .weeks {
       display: flex;
       gap: 2px;
     }
+
     .week {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
+
     .day-cell {
       width: 13px;
       height: 13px;
@@ -285,14 +355,21 @@
       position: relative;
       background: transparent;
     }
-    .day-cell:hover { transform: scale(1.4); z-index: 10; }
+
+    .day-cell:hover {
+      transform: scale(1.4);
+      z-index: 10;
+    }
+
     .day-cell.zero {
       background: transparent;
       border: 1px solid #99ff7d;
     }
+
     [data-theme="dark"] .day-cell.zero {
-      border-color: #4a7a44 ;
+      border-color: #4a7a44;
     }
+
     .legend {
       display: flex;
       align-items: center;
@@ -310,6 +387,7 @@
       border-radius: 12px;
       padding: 1.5rem;
     }
+
     .export-section h3 {
       font-family: 'Playfair Display', serif;
       font-size: 1rem;
@@ -329,6 +407,7 @@
       line-height: 1.6;
       position: relative;
     }
+
     .copy-btn {
       position: absolute;
       top: 0.6rem;
@@ -343,7 +422,10 @@
       font-family: 'DM Mono', monospace;
       transition: opacity 0.2s;
     }
-    .copy-btn:hover { opacity: 0.8; }
+
+    .copy-btn:hover {
+      opacity: 0.8;
+    }
 
     /* Loading & error */
     .loader {
@@ -352,13 +434,19 @@
       color: var(--text2);
       font-size: 0.85rem;
     }
+
     .loader .spinner {
       font-size: 2rem;
       display: block;
       margin-bottom: 1rem;
       animation: spin 2s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     .error-msg {
       background: #fff0f3;
@@ -368,7 +456,10 @@
       color: var(--accent);
       font-size: 0.85rem;
     }
-    [data-theme="dark"] .error-msg { background: #1a0d12; }
+
+    [data-theme="dark"] .error-msg {
+      background: #1a0d12;
+    }
 
     /* Tooltip */
     .tooltip {
@@ -384,6 +475,112 @@
       white-space: nowrap;
     }
 
+    /* Settings */
+    .settings-toggle {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 0.4rem 0.9rem;
+      color: var(--text2);
+      font-size: 0.72rem;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px var(--shadow);
+      text-decoration: none;
+    }
+
+    .settings-toggle:hover {
+      border-color: var(--accent2);
+      color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .settings-panel {
+      max-width: 480px;
+      margin: 1.2rem auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: none;
+      text-align: left;
+      box-shadow: 0 10px 40px var(--shadow);
+      animation: bloomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes bloomIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .settings-panel.active {
+      display: block;
+    }
+
+    .settings-group {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .settings-group:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .settings-label {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .settings-select,
+    .settings-input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    .settings-input:focus,
+    .settings-select:focus {
+      border-color: var(--accent);
+    }
+
+    .token-hint {
+      font-size: 0.65rem;
+      color: var(--text2);
+      margin-top: 0.4rem;
+      line-height: 1.4;
+    }
+
+    .token-hint a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
     footer {
       text-align: center;
       margin-top: 4rem;
@@ -391,10 +588,18 @@
       font-size: 0.72rem;
       line-height: 1.8;
     }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
+
 <body>
   <div class="petals" id="petals"></div>
   <div class="tooltip" id="tooltip"></div>
@@ -406,21 +611,45 @@
     </header>
 
     <section class="hero">
-      <h1>your contributions,<br/>but make it <em>bloom</em></h1>
-      <p>GitHub contributions garden 🌸<br/>add it to your README or portfolio</p><p>Light & dark mode support</p>
+      <h1>your contributions,<br />but make it <em>bloom</em></h1>
+      <p>GitHub contributions garden 🌸<br />add it to your README or portfolio</p>
+      <p>Light & dark mode support</p>
 
       <div class="search-wrap">
-        <input class="search-input" type="text" id="usernameInput"
-               placeholder="github username" autocomplete="off"
-               onkeydown="if(event.key==='Enter') search()" />
+        <input class="search-input" type="text" id="usernameInput" placeholder="github username" autocomplete="off"
+          onkeydown="if(event.key==='Enter') search()" />
         <button class="search-btn" onclick="search()">bloom →</button>
+      </div>
+
+      <button class="settings-toggle" onclick="toggleSettings()">⚙ settings</button>
+
+      <div class="settings-panel" id="settingsPanel">
+        <div class="settings-group">
+          <label class="settings-label">data source</label>
+          <select class="settings-select" id="sourceSelect" onchange="updateSourceUI()">
+            <option value="vercel">Vercel API (Default)</option>
+            <option value="github">GitHub Direct (Private Mode)</option>
+            <option value="demo">Demo Mode (Mock Data)</option>
+          </select>
+        </div>
+        <div class="settings-group" id="tokenGroup" style="display: none;">
+          <label class="settings-label">github personal access token</label>
+          <input type="password" class="settings-input" id="githubToken" placeholder="ghp_xxxxxxxxxxxx"
+            onchange="saveSettings()" />
+          <p class="token-hint">
+            Requires <code>read:user</code> scope. Token is stored locally in your browser.<br />
+            <a href="https://github.com/settings/tokens/new?description=Sakura%20Garden&scopes=read:user"
+              target="_blank">Generate a token →</a>
+          </p>
+        </div>
       </div>
     </section>
 
     <div id="result"></div>
 
     <footer>
-      made with 🌸 · <a href="https://github.com/a104437ana/sakura-garden" target="_blank">star on github</a> · open source
+      made with 🌸 · <a href="https://github.com/a104437ana/sakura-garden" target="_blank">star on github</a> · open
+      source
     </footer>
   </div>
 
@@ -433,6 +662,111 @@
     let currentTheme = 'light';
     let currentData = null;
     let currentUsername = '';
+
+    // Settings
+    function toggleSettings() {
+      document.getElementById('settingsPanel').classList.toggle('active');
+    }
+
+    function updateSourceUI() {
+      const source = document.getElementById('sourceSelect').value;
+      document.getElementById('tokenGroup').style.display = source === 'github' ? 'block' : 'none';
+      saveSettings();
+    }
+
+    function saveSettings() {
+      const settings = {
+        source: document.getElementById('sourceSelect').value,
+        token: document.getElementById('githubToken').value
+      };
+      localStorage.setItem('sakura_settings', JSON.stringify(settings));
+    }
+
+    function loadSettings() {
+      const saved = localStorage.getItem('sakura_settings');
+      if (saved) {
+        const settings = JSON.parse(saved);
+        document.getElementById('sourceSelect').value = settings.source || 'vercel';
+        document.getElementById('githubToken').value = settings.token || '';
+        updateSourceUI();
+      }
+    }
+    loadSettings();
+
+    async function fetchFromGitHubDirect(username, token) {
+      const query = `
+        query($username: String!, $from: DateTime!, $to: DateTime!) {
+          user(login: $username) {
+            contributionsCollection(from: $from, to: $to) {
+              contributionCalendar {
+                totalContributions
+                weeks {
+                  contributionDays {
+                    contributionCount
+                    date
+                    weekday
+                  }
+                }
+              }
+            }
+            name
+            login
+            avatarUrl
+          }
+        }
+      `;
+
+      const toDate = new Date();
+      const fromDate = new Date();
+      fromDate.setDate(toDate.getDate() - 365);
+
+      const variables = { username, from: fromDate.toISOString(), to: toDate.toISOString() };
+
+      const res = await fetch('https://api.github.com/graphql', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query, variables }),
+      });
+
+      const json = await res.json();
+      if (json.errors) throw new Error(json.errors[0].message);
+      return json.data;
+    }
+
+    function generateMockData(username) {
+      const today = new Date();
+      const weeks = [];
+      for (let i = 0; i < 53; i++) {
+        const contributionDays = [];
+        for (let j = 0; j < 7; j++) {
+          const d = new Date(today);
+          d.setDate(d.getDate() - ((52 - i) * 7 + (6 - j)));
+          const count = Math.random() > 0.4 ? Math.floor(Math.random() * 15) : 0;
+          contributionDays.push({
+            contributionCount: count,
+            date: d.toISOString().split('T')[0],
+            weekday: j
+          });
+        }
+        weeks.push({ contributionDays });
+      }
+      return {
+        user: {
+          name: `${username} (Demo)`,
+          login: username,
+          avatarUrl: `https://github.com/${username}.png`,
+          contributionsCollection: {
+            contributionCalendar: {
+              totalContributions: weeks.reduce((acc, w) => acc + w.contributionDays.reduce((a, d) => a + d.contributionCount, 0), 0),
+              weeks
+            }
+          }
+        }
+      };
+    }
 
     // Petals
     function spawnPetals() {
@@ -468,13 +802,26 @@
       result.innerHTML = `<div class="loader"><span class="spinner">🌸</span>fetching blooms for ${username}…</div>`;
 
       try {
-        const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}`);
-        const data = await res.json();
-        if (data.error) throw new Error(data.error);
+        const source = document.getElementById('sourceSelect').value;
+        let data;
+
+        if (source === 'demo') {
+          await new Promise(r => setTimeout(r, 600)); // fake delay
+          data = generateMockData(username);
+        } else if (source === 'github') {
+          const token = document.getElementById('githubToken').value.trim();
+          if (!token) throw new Error('GitHub Token is required for Private Mode');
+          data = await fetchFromGitHubDirect(username, token);
+        } else {
+          const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}`);
+          data = await res.json();
+          if (data.error) throw new Error(data.error);
+        }
+
         currentData = data;
         renderResult(data, username);
       } catch (err) {
-        result.innerHTML = `<div class="error-msg">couldn't find <strong>${username}</strong> — check the username and try again.</div>`;
+        result.innerHTML = `<div class="error-msg">error: <strong>${err.message}</strong></div>`;
       }
     }
 
@@ -519,13 +866,13 @@
       setupTooltips();
     }
 
-    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const DAYS   = ['','Mon','','Wed','','Fri',''];
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const DAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 
-    const PETAL_LIGHT  = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
+    const PETAL_LIGHT = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
     const CENTER_LIGHT = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
-    const PETAL_DARK   = ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab'];
-    const CENTER_DARK  = ['', '#3d0f1f', '#7a0e38', '#c2185b', '#ffaacc'];
+    const PETAL_DARK = ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab'];
+    const CENTER_DARK = ['', '#3d0f1f', '#7a0e38', '#c2185b', '#ffaacc'];
 
     function getLevel(count) {
       if (count === 0) return 0;
@@ -541,7 +888,7 @@
 
       let petals = '';
       for (let a = 0; a < 5; a++) {
-        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a*72})"/>`;
+        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
       }
 
       return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">
@@ -609,11 +956,11 @@
       document.querySelectorAll('.day-cell[data-date]').forEach(cell => {
         cell.addEventListener('mousemove', e => {
           const count = cell.dataset.count;
-          const date = new Date(cell.dataset.date).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-          tooltip.textContent = count === '0' ? `no contributions · ${date}` : `${count} contribution${count>1?'s':''} · ${date}`;
+          const date = new Date(cell.dataset.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+          tooltip.textContent = count === '0' ? `no contributions · ${date}` : `${count} contribution${count > 1 ? 's' : ''} · ${date}`;
           tooltip.style.display = 'block';
           tooltip.style.left = e.clientX + 12 + 'px';
-          tooltip.style.top  = e.clientY - 28 + 'px';
+          tooltip.style.top = e.clientY - 28 + 'px';
         });
         cell.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
       });
@@ -631,7 +978,14 @@
     function updateEmbedCodes() {
       const el = document.getElementById('embedCode');
       if (!el || !currentUsername) return;
-      el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
+
+      const source = document.getElementById('sourceSelect').value;
+      if (source !== 'vercel') {
+        el.innerHTML = `<p style="margin-bottom:0.5rem;color:var(--accent)">Note: Embed code always uses the Vercel backend. Private/Demo data cannot be embedded.</p>` +
+          `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
+      } else {
+        el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
+      }
     }
 
     function copyEmbed() {
@@ -651,4 +1005,5 @@
     }
   </script>
 </body>
+
 </html>
