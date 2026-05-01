@@ -327,6 +327,47 @@
       width: 20px;
       flex-shrink: 0;
     }
+    .download-btn span { font-size: 1.1rem; }
+
+    .overview-section {
+      margin-top: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+    .overview-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+      margin-bottom: 1.2rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+    }
+    .overview-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .overview-item span {
+      font-size: 0.72rem;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .overview-item strong {
+      font-size: 1.2rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--accent);
+    }
     .day-label {
       font-size: 0.6rem;
       color: var(--text2);
@@ -592,6 +633,7 @@
       const cal = user.contributionsCollection.contributionCalendar;
       const total = cal.totalContributions;
       const streakData = calcStreak(cal.weeks);
+      const enhancedStats = calcEnhancedStats(cal.weeks, total);
 
       document.getElementById('result').innerHTML = `
         <a href="https://github.com/${user.login}" target="_blank" class="profile-link">
@@ -630,6 +672,25 @@
 &lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>
           </div>
         </div>
+
+        <div class="overview-section">
+          <h3>📊 Yearly Overview</h3>
+          <div class="overview-grid">
+            <div class="overview-item">
+              <span>Most Active Month</span>
+              <strong>${enhancedStats.mostActiveMonth}</strong>
+            </div>
+            <div class="overview-item">
+              <span>Total Flowers</span>
+              <strong>${enhancedStats.totalFlowers.toLocaleString()}</strong>
+            </div>
+            <div class="overview-item">
+              <span>Daily Bloom Rate</span>
+              <strong>${enhancedStats.avgBloomRate}</strong>
+            </div>
+          </div>
+        </div>
+
         <div class="export-section">
           ⭐ If you liked this project consider giving it a star on <a href="https://github.com/a104437ana/sakura-garden" target="_blank">GitHub</a>! ⭐
         </div>
@@ -752,6 +813,34 @@
         else { current = 0; }
       });
       return { longest };
+    }
+
+    function calcEnhancedStats(weeks, totalCount) {
+      let totalFlowers = 0;
+      let totalDays = 0;
+      const monthCounts = new Array(12).fill(0);
+
+      weeks.forEach(week => {
+        week.contributionDays.forEach(day => {
+          totalDays++;
+          if (day.contributionCount > 0) {
+            totalFlowers++;
+            const m = new Date(day.date).getMonth();
+            monthCounts[m] += day.contributionCount;
+          }
+        });
+      });
+
+      let maxVal = -1, maxIdx = 0;
+      monthCounts.forEach((val, idx) => {
+        if (val > maxVal) { maxVal = val; maxIdx = idx; }
+      });
+
+      return {
+        mostActiveMonth: MONTHS[maxIdx],
+        totalFlowers,
+        avgBloomRate: (totalCount / (totalDays || 365)).toFixed(2)
+      };
     }
 
     function updateEmbedCodes() {
