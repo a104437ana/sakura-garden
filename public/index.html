@@ -415,6 +415,18 @@
       animation-delay: var(--delay);
       transform-origin: center;
     }
+    @keyframes sway {
+      0% { transform: rotate(-3deg); }
+      100% { transform: rotate(3deg); }
+    }
+    .sway-wrap {
+      display: block;
+      width: 100%;
+      height: 100%;
+      animation: sway var(--sway-duration) ease-in-out infinite alternate;
+      animation-delay: var(--sway-delay);
+      transform-origin: bottom center;
+    }
 
     footer {
       text-align: center;
@@ -621,9 +633,10 @@
         week.contributionDays.forEach(day => {
           if (day.contributionCount > 0) {
             const level = getLevel(day.contributionCount);
-            // Stagger delay based on week index for a "wave" effect from left to right
             const delay = wi * 20 + (new Date(day.date).getDay() * 10);
-            weeksHtml += `<div class="day-cell bloom-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none; --delay: ${delay}ms">${makePetal(level)}</div>`;
+            const sd = -(Math.random() * 4).toFixed(2);
+            const dur = (3 + Math.random() * 2).toFixed(2);
+            weeksHtml += `<div class="day-cell bloom-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none; --delay: ${delay}ms; --sway-delay: ${sd}s; --sway-duration: ${dur}s"><div class="sway-wrap">${makePetal(level)}</div></div>`;
             flowerCount++;
           } else {
             weeksHtml += `<div class="day-cell zero" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
