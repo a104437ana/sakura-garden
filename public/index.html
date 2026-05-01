@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +10,10 @@
   <meta property="og:description" content="A GitHub contributions garden for your README or portfolio 🌸" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
-  <link rel="icon" href="favicon.ico"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" href="favicon.ico" />
   <style>
     :root {
       --bg: #fdf6f0;
@@ -28,21 +31,49 @@
       --shadow: rgba(232, 84, 122, 0.12);
       --card: #ffffff;
       /* Sakura Default */
-      --p1: #ffb3cc; --p2: #ff85b3; --p3: #ff3d7f; --p4: #c2005a;
-      --c1: #ffe0ee; --c2: #ffcce0; --c3: #ffaacc; --c4: #ff80aa;
+      --p1: #ffb3cc;
+      --p2: #ff85b3;
+      --p3: #ff3d7f;
+      --p4: #c2005a;
+      --c1: #ffe0ee;
+      --c2: #ffcce0;
+      --c3: #ffaacc;
+      --c4: #ff80aa;
     }
+
     [data-seed="lavender"] {
-      --p1: #d1c4e9; --p2: #b39ddb; --p3: #9575cd; --p4: #7e57c2;
-      --c1: #ede7f6; --c2: #d1c4e9; --c3: #b39ddb; --c4: #9575cd;
+      --p1: #d1c4e9;
+      --p2: #b39ddb;
+      --p3: #9575cd;
+      --p4: #7e57c2;
+      --c1: #ede7f6;
+      --c2: #d1c4e9;
+      --c3: #b39ddb;
+      --c4: #9575cd;
     }
+
     [data-seed="sunflower"] {
-      --p1: #fff9c4; --p2: #fff176; --p3: #ffd600; --p4: #ffab00;
-      --c1: #fffde7; --c2: #fff9c4; --c3: #fff176; --c4: #ffd600;
+      --p1: #fff9c4;
+      --p2: #fff176;
+      --p3: #ffd600;
+      --p4: #ffab00;
+      --c1: #fffde7;
+      --c2: #fff9c4;
+      --c3: #fff176;
+      --c4: #ffd600;
     }
+
     [data-seed="midnight"] {
-      --p1: #b2ebf2; --p2: #4dd0e1; --p3: #00bcd4; --p4: #0097a7;
-      --c1: #e0f7fa; --c2: #b2ebf2; --c3: #4dd0e1; --c4: #00bcd4;
+      --p1: #b2ebf2;
+      --p2: #4dd0e1;
+      --p3: #00bcd4;
+      --p4: #0097a7;
+      --c1: #e0f7fa;
+      --c2: #b2ebf2;
+      --c3: #4dd0e1;
+      --c4: #00bcd4;
     }
+
     [data-theme="dark"] {
       --bg: #0d0709;
       --bg2: #120b0e;
@@ -59,23 +90,54 @@
       --shadow: rgba(255, 107, 157, 0.15);
       --card: #180d11;
       /* Sakura Default Dark */
-      --p1: #6b1f35; --p2: #c2185b; --p3: #e8547a; --p4: #ff8fab;
-      --c1: #3d0f1f; --c2: #7a0e38; --c3: #c2185b; --c4: #ffaacc;
-    }
-    [data-theme="dark"][data-seed="lavender"] {
-      --p1: #311b92; --p2: #4527a0; --p3: #512da8; --p4: #5e35b1;
-      --c1: #1a237e; --c2: #311b92; --c3: #4527a0; --c4: #512da8;
-    }
-    [data-theme="dark"][data-seed="sunflower"] {
-      --p1: #3e2723; --p2: #ef6c00; --p3: #fb8c00; --p4: #ff9800;
-      --c1: #1b110e; --c2: #3e2723; --c3: #ef6c00; --c4: #fb8c00;
-    }
-    [data-theme="dark"][data-seed="midnight"] {
-      --p1: #0d47a1; --p2: #1565c0; --p3: #1976d2; --p4: #1e88e5;
-      --c1: #001e4a; --c2: #0d47a1; --c3: #1565c0; --c4: #1976d2;
+      --p1: #6b1f35;
+      --p2: #c2185b;
+      --p3: #e8547a;
+      --p4: #ff8fab;
+      --c1: #3d0f1f;
+      --c2: #7a0e38;
+      --c3: #c2185b;
+      --c4: #ffaacc;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [data-theme="dark"][data-seed="lavender"] {
+      --p1: #311b92;
+      --p2: #4527a0;
+      --p3: #512da8;
+      --p4: #5e35b1;
+      --c1: #1a237e;
+      --c2: #311b92;
+      --c3: #4527a0;
+      --c4: #512da8;
+    }
+
+    [data-theme="dark"][data-seed="sunflower"] {
+      --p1: #3e2723;
+      --p2: #ef6c00;
+      --p3: #fb8c00;
+      --p4: #ff9800;
+      --c1: #1b110e;
+      --c2: #3e2723;
+      --c3: #ef6c00;
+      --c4: #fb8c00;
+    }
+
+    [data-theme="dark"][data-seed="midnight"] {
+      --p1: #0d47a1;
+      --p2: #1565c0;
+      --p3: #1976d2;
+      --p4: #1e88e5;
+      --c1: #001e4a;
+      --c2: #0d47a1;
+      --c3: #1565c0;
+      --c4: #1976d2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'DM Mono', monospace;
@@ -87,12 +149,15 @@
 
     .petals {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 0;
       overflow: hidden;
     }
+
     .petal {
       position: absolute;
       font-size: 1.2rem;
@@ -100,9 +165,17 @@
       animation: fall linear infinite;
       top: -2rem;
     }
+
     @keyframes fall {
-      0%   { transform: translateY(-2rem) rotate(0deg); opacity: 0.18; }
-      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(-2rem) rotate(0deg);
+        opacity: 0.18;
+      }
+
+      100% {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .wrapper {
@@ -121,6 +194,7 @@
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
+
     .logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem;
@@ -128,7 +202,12 @@
       color: var(--accent);
       letter-spacing: -0.02em;
     }
-    .logo span { font-style: normal; font-size: 1rem; color: var(--text2); }
+
+    .logo span {
+      font-style: normal;
+      font-size: 1rem;
+      color: var(--text2);
+    }
 
     .theme-toggle {
       background: var(--card);
@@ -145,6 +224,7 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 2px 10px var(--shadow);
     }
+
     .seeds-picker {
       display: flex;
       gap: 0.4rem;
@@ -154,6 +234,7 @@
       border-radius: 50px;
       border: 1px solid var(--border);
     }
+
     .seed-btn {
       width: 16px;
       height: 16px;
@@ -162,12 +243,31 @@
       cursor: pointer;
       transition: transform 0.2s, border-color 0.2s;
     }
-    .seed-btn:hover { transform: scale(1.2); }
-    .seed-btn.active { border-color: var(--text); }
-    .seed-sakura { background: #ff85b3; }
-    .seed-lavender { background: #9575cd; }
-    .seed-sunflower { background: #ffd600; }
-    .seed-midnight { background: #00bcd4; }
+
+    .seed-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .seed-btn.active {
+      border-color: var(--text);
+    }
+
+    .seed-sakura {
+      background: #ff85b3;
+    }
+
+    .seed-lavender {
+      background: #9575cd;
+    }
+
+    .seed-sunflower {
+      background: #ffd600;
+    }
+
+    .seed-midnight {
+      background: #00bcd4;
+    }
+
     .theme-toggle:hover {
       border-color: var(--accent);
       color: var(--accent);
@@ -179,6 +279,7 @@
       text-align: center;
       margin-bottom: 3rem;
     }
+
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2.2rem, 6vw, 3.8rem);
@@ -186,10 +287,12 @@
       font-weight: 700;
       margin-bottom: 0.8rem;
     }
+
     .hero h1 em {
       font-style: italic;
       color: var(--accent);
     }
+
     .hero p {
       color: var(--text2);
       font-size: 0.88rem;
@@ -202,6 +305,7 @@
       max-width: 480px;
       margin: 2rem auto;
     }
+
     .search-input {
       flex: 1;
       background: var(--card);
@@ -214,8 +318,16 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    .search-input::placeholder { color: var(--text2); opacity: 0.6; }
-    .search-input:focus { border-color: var(--accent); }
+
+    .search-input::placeholder {
+      color: var(--text2);
+      opacity: 0.6;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
     .search-btn {
       background: var(--accent);
       color: white;
@@ -228,10 +340,19 @@
       transition: opacity 0.2s, transform 0.15s;
       white-space: nowrap;
     }
-    .search-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-    .search-btn:active { transform: translateY(0); }
 
-    #result { margin-top: 2rem; }
+    .search-btn:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .search-btn:active {
+      transform: translateY(0);
+    }
+
+    #result {
+      margin-top: 2rem;
+    }
 
     .profile-row {
       display: flex;
@@ -239,27 +360,36 @@
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
+
     .avatar {
-      width: 48px; height: 48px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       border: 2px solid var(--accent2);
     }
+
     .profile-link {
       text-decoration: none;
       color: inherit;
       display: inline-block;
       transition: transform 0.2s, opacity 0.2s;
     }
+
     .profile-link:hover {
       opacity: 0.8;
       transform: translateY(-1px);
     }
+
     .profile-name {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
       font-weight: 700;
     }
-    .profile-sub { font-size: 0.78rem; color: var(--text2); }
+
+    .profile-sub {
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
 
     .stats-row {
       display: flex;
@@ -267,7 +397,12 @@
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
-    .stat { font-size: 0.8rem; color: var(--text2); }
+
+    .stat {
+      font-size: 0.8rem;
+      color: var(--text2);
+    }
+
     .stat strong {
       display: block;
       font-size: 1.4rem;
@@ -286,6 +421,7 @@
       box-shadow: 0 4px 24px var(--shadow);
       -webkit-overflow-scrolling: touch;
     }
+
     .graph-label {
       font-size: 0.7rem;
       color: var(--text2);
@@ -296,7 +432,8 @@
 
     /* The scroll container — everything inside here has a fixed pixel width */
     .graph-scroll {
-      display: inline-block; /* shrink-wraps to content width */
+      display: inline-block;
+      /* shrink-wraps to content width */
       min-width: 100%;
     }
 
@@ -307,6 +444,7 @@
       /* left-pad to align with where the weeks start (after day-labels) */
       margin-left: 24px;
     }
+
     .month-label {
       position: absolute;
       font-size: 0.62rem;
@@ -319,6 +457,7 @@
       display: flex;
       gap: 0;
     }
+
     .day-labels {
       display: flex;
       flex-direction: column;
@@ -327,7 +466,10 @@
       width: 20px;
       flex-shrink: 0;
     }
-    .download-btn span { font-size: 1.1rem; }
+
+    .download-btn span {
+      font-size: 1.1rem;
+    }
 
     .overview-section {
       margin-top: 2rem;
@@ -337,6 +479,7 @@
       padding: 1.5rem;
       box-shadow: 0 4px 20px var(--shadow);
     }
+
     .overview-section h3 {
       font-family: 'Playfair Display', serif;
       font-size: 1rem;
@@ -347,27 +490,32 @@
       align-items: center;
       gap: 0.5rem;
     }
+
     .overview-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 1.5rem;
     }
+
     .overview-item {
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
     }
+
     .overview-item span {
       font-size: 0.72rem;
       color: var(--text2);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
+
     .overview-item strong {
       font-size: 1.2rem;
       font-family: 'Playfair Display', serif;
       color: var(--accent);
     }
+
     .day-label {
       font-size: 0.6rem;
       color: var(--text2);
@@ -376,15 +524,18 @@
       line-height: 13px;
       text-align: right;
     }
+
     .weeks {
       display: flex;
       gap: 2px;
     }
+
     .week {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
+
     .day-cell {
       width: 13px;
       height: 13px;
@@ -398,14 +549,21 @@
       position: relative;
       background: transparent;
     }
-    .day-cell:hover { transform: scale(1.4); z-index: 10; }
+
+    .day-cell:hover {
+      transform: scale(1.4);
+      z-index: 10;
+    }
+
     .day-cell.zero {
       background: transparent;
       border: 1px solid #99ff7d;
     }
+
     [data-theme="dark"] .day-cell.zero {
-      border-color: #4a7a44 ;
+      border-color: #4a7a44;
     }
+
     .legend {
       display: flex;
       align-items: center;
@@ -423,6 +581,7 @@
       border-radius: 12px;
       padding: 1.5rem;
     }
+
     .export-section h3 {
       font-family: 'Playfair Display', serif;
       font-size: 1rem;
@@ -442,6 +601,7 @@
       line-height: 1.6;
       position: relative;
     }
+
     .copy-btn {
       position: absolute;
       top: 0.6rem;
@@ -456,7 +616,10 @@
       font-family: 'DM Mono', monospace;
       transition: opacity 0.2s;
     }
-    .copy-btn:hover { opacity: 0.8; }
+
+    .copy-btn:hover {
+      opacity: 0.8;
+    }
 
     /* Loading & error */
     .loader {
@@ -465,13 +628,19 @@
       color: var(--text2);
       font-size: 0.85rem;
     }
+
     .loader .spinner {
       font-size: 2rem;
       display: block;
       margin-bottom: 1rem;
       animation: spin 2s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     .error-msg {
       background: #fff0f3;
@@ -481,7 +650,10 @@
       color: var(--accent);
       font-size: 0.85rem;
     }
-    [data-theme="dark"] .error-msg { background: #1a0d12; }
+
+    [data-theme="dark"] .error-msg {
+      background: #1a0d12;
+    }
 
     /* Tooltip */
     .tooltip {
@@ -495,24 +667,42 @@
       z-index: 100;
       display: none;
       white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     /* Bloom Animation */
     @keyframes bloom {
-      0% { transform: scale(0) rotate(-15deg); opacity: 0; }
-      50% { transform: scale(1.1) rotate(5deg); }
-      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      0% {
+        transform: scale(0) rotate(-15deg);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
     }
+
     .bloom-cell svg {
       animation: bloom 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
       animation-delay: var(--delay);
       transform-origin: center;
     }
+
     @keyframes sway {
-      0% { transform: rotate(-3deg); }
-      100% { transform: rotate(3deg); }
+      0% {
+        transform: rotate(-3deg);
+      }
+
+      100% {
+        transform: rotate(3deg);
+      }
     }
+
     .sway-wrap {
       display: block;
       width: 100%;
@@ -529,10 +719,18 @@
       font-size: 0.72rem;
       line-height: 1.8;
     }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
+
 <body>
   <div class="petals" id="petals"></div>
   <div class="tooltip" id="tooltip"></div>
@@ -544,13 +742,13 @@
     </header>
 
     <section class="hero">
-      <h1>your contributions,<br/>but make it <em>bloom</em></h1>
-      <p>GitHub contributions garden 🌸<br/>add it to your README or portfolio</p><p>Light & dark mode support</p>
+      <h1>your contributions,<br />but make it <em>bloom</em></h1>
+      <p>GitHub contributions garden 🌸<br />add it to your README or portfolio</p>
+      <p>Light & dark mode support</p>
 
       <div class="search-wrap">
-        <input class="search-input" type="text" id="usernameInput"
-               placeholder="github username" autocomplete="off"
-               onkeydown="if(event.key==='Enter') search()" />
+        <input class="search-input" type="text" id="usernameInput" placeholder="github username" autocomplete="off"
+          onkeydown="if(event.key==='Enter') search()" />
         <button class="search-btn" onclick="search()">bloom →</button>
       </div>
     </section>
@@ -558,7 +756,8 @@
     <div id="result"></div>
 
     <footer>
-      made with 🌸 · <a href="https://github.com/a104437ana/sakura-garden" target="_blank">star on github</a> · open source
+      made with 🌸 · <a href="https://github.com/a104437ana/sakura-garden" target="_blank">star on github</a> · open
+      source
     </footer>
   </div>
 
@@ -697,7 +896,7 @@
       `;
 
       setupTooltips();
-      
+
       // Sync active seed class in the newly rendered picker
       const currentSeed = localStorage.getItem('sakura-garden-seed') || 'sakura';
       document.querySelectorAll('.seed-btn').forEach(btn => {
@@ -705,13 +904,13 @@
       });
     }
 
-    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const DAYS   = ['','Mon','','Wed','','Fri',''];
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const DAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 
-    const PETAL_LIGHT  = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
+    const PETAL_LIGHT = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
     const CENTER_LIGHT = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
-    const PETAL_DARK   = ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab'];
-    const CENTER_DARK  = ['', '#3d0f1f', '#7a0e38', '#c2185b', '#ffaacc'];
+    const PETAL_DARK = ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab'];
+    const CENTER_DARK = ['', '#3d0f1f', '#7a0e38', '#c2185b', '#ffaacc'];
 
     function getLevel(count) {
       if (count === 0) return 0;
@@ -724,7 +923,7 @@
     function makePetal(level) {
       let petals = '';
       for (let a = 0; a < 5; a++) {
-        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="var(--p${level})" transform="rotate(${a*72})"/>`;
+        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="var(--p${level})" transform="rotate(${a * 72})"/>`;
       }
       return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">
         ${petals}
@@ -796,11 +995,11 @@
       document.querySelectorAll('.day-cell[data-date]').forEach(cell => {
         cell.addEventListener('mousemove', e => {
           const count = cell.dataset.count;
-          const date = new Date(cell.dataset.date).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-          tooltip.textContent = count === '0' ? `no contributions · ${date}` : `${count} contribution${count>1?'s':''} · ${date}`;
+          const date = new Date(cell.dataset.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+          tooltip.textContent = count === '0' ? `no contributions · ${date}` : `${count} contribution${count > 1 ? 's' : ''} · ${date}`;
           tooltip.style.display = 'block';
           tooltip.style.left = e.clientX + 12 + 'px';
-          tooltip.style.top  = e.clientY - 28 + 'px';
+          tooltip.style.top = e.clientY - 28 + 'px';
         });
         cell.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
       });
@@ -866,4 +1065,5 @@
     }
   </script>
 </body>
+
 </html>
