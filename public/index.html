@@ -27,6 +27,21 @@
       --cell-4: #c2185b;
       --shadow: rgba(232, 84, 122, 0.12);
       --card: #ffffff;
+      /* Sakura Default */
+      --p1: #ffb3cc; --p2: #ff85b3; --p3: #ff3d7f; --p4: #c2005a;
+      --c1: #ffe0ee; --c2: #ffcce0; --c3: #ffaacc; --c4: #ff80aa;
+    }
+    [data-seed="lavender"] {
+      --p1: #d1c4e9; --p2: #b39ddb; --p3: #9575cd; --p4: #7e57c2;
+      --c1: #ede7f6; --c2: #d1c4e9; --c3: #b39ddb; --c4: #9575cd;
+    }
+    [data-seed="sunflower"] {
+      --p1: #fff9c4; --p2: #fff176; --p3: #ffd600; --p4: #ffab00;
+      --c1: #fffde7; --c2: #fff9c4; --c3: #fff176; --c4: #ffd600;
+    }
+    [data-seed="midnight"] {
+      --p1: #b2ebf2; --p2: #4dd0e1; --p3: #00bcd4; --p4: #0097a7;
+      --c1: #e0f7fa; --c2: #b2ebf2; --c3: #4dd0e1; --c4: #00bcd4;
     }
     [data-theme="dark"] {
       --bg: #0d0709;
@@ -43,6 +58,21 @@
       --cell-4: #ff8fab;
       --shadow: rgba(255, 107, 157, 0.15);
       --card: #180d11;
+      /* Sakura Default Dark */
+      --p1: #6b1f35; --p2: #c2185b; --p3: #e8547a; --p4: #ff8fab;
+      --c1: #3d0f1f; --c2: #7a0e38; --c3: #c2185b; --c4: #ffaacc;
+    }
+    [data-theme="dark"][data-seed="lavender"] {
+      --p1: #311b92; --p2: #4527a0; --p3: #512da8; --p4: #5e35b1;
+      --c1: #1a237e; --c2: #311b92; --c3: #4527a0; --c4: #512da8;
+    }
+    [data-theme="dark"][data-seed="sunflower"] {
+      --p1: #3e2723; --p2: #ef6c00; --p3: #fb8c00; --p4: #ff9800;
+      --c1: #1b110e; --c2: #3e2723; --c3: #ef6c00; --c4: #fb8c00;
+    }
+    [data-theme="dark"][data-seed="midnight"] {
+      --p1: #0d47a1; --p2: #1565c0; --p3: #1976d2; --p4: #1e88e5;
+      --c1: #001e4a; --c2: #0d47a1; --c3: #1565c0; --c4: #1976d2;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -115,6 +145,29 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 2px 10px var(--shadow);
     }
+    .seeds-picker {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      background: var(--bg2);
+      padding: 3px 6px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+    }
+    .seed-btn {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .seed-btn:hover { transform: scale(1.2); }
+    .seed-btn.active { border-color: var(--text); }
+    .seed-sakura { background: #ff85b3; }
+    .seed-lavender { background: #9575cd; }
+    .seed-sunflower { background: #ffd600; }
+    .seed-midnight { background: #00bcd4; }
     .theme-toggle:hover {
       border-color: var(--accent);
       color: var(--accent);
@@ -502,6 +555,18 @@
       if (currentData) updateEmbedCodes();
     }
 
+    function setSeed(seed) {
+      document.documentElement.setAttribute('data-seed', seed);
+      document.querySelectorAll('.seed-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.classList.contains('seed-' + seed));
+      });
+      localStorage.setItem('sakura-garden-seed', seed);
+    }
+
+    // Load saved seed
+    const savedSeed = localStorage.getItem('sakura-garden-seed');
+    if (savedSeed) setSeed(savedSeed);
+
     // Search
     async function search() {
       const username = document.getElementById('usernameInput').value.trim();
@@ -543,7 +608,15 @@
           <div class="stat"><strong>${streakData.longest}</strong>longest streak</div>
         </div>
         <div class="graph-container" id="graphContainer">
-          <div class="graph-label">contribution activity</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div class="graph-label" style="margin-bottom: 0;">contribution activity</div>
+            <div class="seeds-picker">
+              <div class="seed-btn seed-sakura" onclick="setSeed('sakura')" title="Sakura"></div>
+              <div class="seed-btn seed-lavender" onclick="setSeed('lavender')" title="Lavender"></div>
+              <div class="seed-btn seed-sunflower" onclick="setSeed('sunflower')" title="Sunflower"></div>
+              <div class="seed-btn seed-midnight" onclick="setSeed('midnight')" title="Midnight"></div>
+            </div>
+          </div>
           ${buildGraph(cal.weeks)}
           <div class="legend">hover for details</div>
         </div>
@@ -563,6 +636,12 @@
       `;
 
       setupTooltips();
+      
+      // Sync active seed class in the newly rendered picker
+      const currentSeed = localStorage.getItem('sakura-garden-seed') || 'sakura';
+      document.querySelectorAll('.seed-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.classList.contains('seed-' + currentSeed));
+      });
     }
 
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -582,17 +661,13 @@
     }
 
     function makePetal(level) {
-      const fc = PETAL_LIGHT[level];
-      const cc = CENTER_LIGHT[level];
-
       let petals = '';
       for (let a = 0; a < 5; a++) {
-        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a*72})"/>`;
+        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="var(--p${level})" transform="rotate(${a*72})"/>`;
       }
-
       return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">
         ${petals}
-        <circle cx="0" cy="0" r="1.8" fill="${cc}"/>
+        <circle cx="0" cy="0" r="1.8" fill="var(--c${level})"/>
       </svg>`;
     }
 
