@@ -182,6 +182,16 @@
       border-radius: 50%;
       border: 2px solid var(--accent2);
     }
+    .profile-link {
+      text-decoration: none;
+      color: inherit;
+      display: inline-block;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .profile-link:hover {
+      opacity: 0.8;
+      transform: translateY(-1px);
+    }
     .profile-name {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
@@ -485,13 +495,15 @@
       const streakData = calcStreak(cal.weeks);
 
       document.getElementById('result').innerHTML = `
-        <div class="profile-row">
-          <img class="avatar" src="${user.avatarUrl}" alt="${user.login}" />
-          <div>
-            <div class="profile-name">${user.name || user.login}</div>
-            <div class="profile-sub">@${user.login}</div>
+        <a href="https://github.com/${user.login}" target="_blank" class="profile-link">
+          <div class="profile-row">
+            <img class="avatar" src="${user.avatarUrl}" alt="${user.login}" />
+            <div>
+              <div class="profile-name">${user.name || user.login}</div>
+              <div class="profile-sub">@${user.login}</div>
+            </div>
           </div>
-        </div>
+        </a>
         <div class="stats-row">
           <div class="stat"><strong>${total.toLocaleString()}</strong>contributions</div>
           <div class="stat"><strong>${streakData.longest}</strong>longest streak</div>
