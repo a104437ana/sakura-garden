@@ -30,6 +30,48 @@
       --cell-4: #c2185b;
       --shadow: rgba(232, 84, 122, 0.12);
       --card: #ffffff;
+      /* Sakura Default */
+      --p1: #ffb3cc;
+      --p2: #ff85b3;
+      --p3: #ff3d7f;
+      --p4: #c2005a;
+      --c1: #ffe0ee;
+      --c2: #ffcce0;
+      --c3: #ffaacc;
+      --c4: #ff80aa;
+    }
+
+    [data-seed="lavender"] {
+      --p1: #d1c4e9;
+      --p2: #b39ddb;
+      --p3: #9575cd;
+      --p4: #7e57c2;
+      --c1: #ede7f6;
+      --c2: #d1c4e9;
+      --c3: #b39ddb;
+      --c4: #9575cd;
+    }
+
+    [data-seed="sunflower"] {
+      --p1: #fff9c4;
+      --p2: #fff176;
+      --p3: #ffd600;
+      --p4: #ffab00;
+      --c1: #fffde7;
+      --c2: #fff9c4;
+      --c3: #fff176;
+      --c4: #ffd600;
+    }
+
+    [data-seed="midnight"] {
+      --p1: #b2ebf2;
+      --p2: #4dd0e1;
+      --p3: #00bcd4;
+      --p4: #0097a7;
+      --c1: #e0f7fa;
+      --c2: #b2ebf2;
+      --c3: #4dd0e1;
+      --c4: #00bcd4;
     }
 
     [data-theme="dark"] {
@@ -47,6 +89,48 @@
       --cell-4: #ff8fab;
       --shadow: rgba(255, 107, 157, 0.15);
       --card: #180d11;
+      /* Sakura Default Dark */
+      --p1: #6b1f35;
+      --p2: #c2185b;
+      --p3: #e8547a;
+      --p4: #ff8fab;
+      --c1: #3d0f1f;
+      --c2: #7a0e38;
+      --c3: #c2185b;
+      --c4: #ffaacc;
+    }
+
+    [data-theme="dark"][data-seed="lavender"] {
+      --p1: #311b92;
+      --p2: #4527a0;
+      --p3: #512da8;
+      --p4: #5e35b1;
+      --c1: #1a237e;
+      --c2: #311b92;
+      --c3: #4527a0;
+      --c4: #512da8;
+    }
+
+    [data-theme="dark"][data-seed="sunflower"] {
+      --p1: #3e2723;
+      --p2: #ef6c00;
+      --p3: #fb8c00;
+      --p4: #ff9800;
+      --c1: #1b110e;
+      --c2: #3e2723;
+      --c3: #ef6c00;
+      --c4: #fb8c00;
+    }
+
+    [data-theme="dark"][data-seed="midnight"] {
+      --p1: #0d47a1;
+      --p2: #1565c0;
+      --p3: #1976d2;
+      --p4: #1e88e5;
+      --c1: #001e4a;
+      --c2: #0d47a1;
+      --c3: #1565c0;
+      --c4: #1976d2;
     }
 
     * {
@@ -126,20 +210,69 @@
     }
 
     .theme-toggle {
-      background: none;
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 0.4rem 1rem;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 1.1rem;
       color: var(--text2);
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
+    .seeds-picker {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      background: var(--bg2);
+      padding: 3px 6px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+    }
+
+    .seed-btn {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .seed-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .seed-btn.active {
+      border-color: var(--text);
+    }
+
+    .seed-sakura {
+      background: #ff85b3;
+    }
+
+    .seed-lavender {
+      background: #9575cd;
+    }
+
+    .seed-sunflower {
+      background: #ffd600;
+    }
+
+    .seed-midnight {
+      background: #00bcd4;
     }
 
     .theme-toggle:hover {
       border-color: var(--accent);
       color: var(--accent);
+      transform: rotate(20deg) scale(1.1);
+      box-shadow: 0 4px 15px var(--shadow);
     }
 
     .hero {
@@ -235,6 +368,18 @@
       border: 2px solid var(--accent2);
     }
 
+    .profile-link {
+      text-decoration: none;
+      color: inherit;
+      display: inline-block;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .profile-link:hover {
+      opacity: 0.8;
+      transform: translateY(-1px);
+    }
+
     .profile-name {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
@@ -294,7 +439,7 @@
 
     /* Month labels: positioned absolutely over the weeks grid */
     .month-row {
-     position: relative;
+      position: relative;
       height: 14px;
       /* left-pad to align with where the weeks start (after day-labels) */
       margin-left: 24px;
@@ -320,6 +465,55 @@
       margin-right: 4px;
       width: 20px;
       flex-shrink: 0;
+    }
+
+    .download-btn span {
+      font-size: 1.1rem;
+    }
+
+    .overview-section {
+      margin-top: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    .overview-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+      margin-bottom: 1.2rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .overview-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .overview-item span {
+      font-size: 0.72rem;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .overview-item strong {
+      font-size: 1.2rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--accent);
     }
 
     .day-label {
@@ -467,12 +661,55 @@
       background: var(--text);
       color: var(--bg);
       padding: 0.35rem 0.65rem;
-      border-radius: 5px;
+      border-radius: 50px;
       font-size: 0.7rem;
       pointer-events: none;
       z-index: 100;
       display: none;
       white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Bloom Animation */
+    @keyframes bloom {
+      0% {
+        transform: scale(0) rotate(-15deg);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    .bloom-cell svg {
+      animation: bloom 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      animation-delay: var(--delay);
+      transform-origin: center;
+    }
+
+    @keyframes sway {
+      0% {
+        transform: rotate(-3deg);
+      }
+
+      100% {
+        transform: rotate(3deg);
+      }
+    }
+
+    .sway-wrap {
+      display: block;
+      width: 100%;
+      height: 100%;
+      animation: sway var(--sway-duration) ease-in-out infinite alternate;
+      animation-delay: var(--sway-delay);
+      transform-origin: bottom center;
     }
 
     footer {
@@ -501,7 +738,7 @@
   <div class="wrapper">
     <header>
       <div class="logo">sakura<span> garden</span></div>
-      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀ light mode</button>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle Theme">☀</button>
     </header>
 
     <section class="hero">
@@ -554,9 +791,21 @@
     function toggleTheme() {
       currentTheme = currentTheme === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'dark' : '');
-      document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '🌙 dark mode' : '☀ light mode';
+      document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '🌙' : '☀';
       if (currentData) updateEmbedCodes();
     }
+
+    function setSeed(seed) {
+      document.documentElement.setAttribute('data-seed', seed);
+      document.querySelectorAll('.seed-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.classList.contains('seed-' + seed));
+      });
+      localStorage.setItem('sakura-garden-seed', seed);
+    }
+
+    // Load saved seed
+    const savedSeed = localStorage.getItem('sakura-garden-seed');
+    if (savedSeed) setSeed(savedSeed);
 
     // Search
     async function search() {
@@ -583,21 +832,32 @@
       const cal = user.contributionsCollection.contributionCalendar;
       const total = cal.totalContributions;
       const streakData = calcStreak(cal.weeks);
+      const enhancedStats = calcEnhancedStats(cal.weeks, total);
 
       document.getElementById('result').innerHTML = `
-        <div class="profile-row">
-          <img class="avatar" src="${user.avatarUrl}" alt="${user.login}" />
-          <div>
-            <div class="profile-name">${user.name || user.login}</div>
-            <div class="profile-sub">@${user.login}</div>
+        <a href="https://github.com/${user.login}" target="_blank" class="profile-link">
+          <div class="profile-row">
+            <img class="avatar" src="${user.avatarUrl}" alt="${user.login}" />
+            <div>
+              <div class="profile-name">${user.name || user.login}</div>
+              <div class="profile-sub">@${user.login}</div>
+            </div>
           </div>
-        </div>
+        </a>
         <div class="stats-row">
           <div class="stat"><strong>${total.toLocaleString()}</strong>contributions</div>
           <div class="stat"><strong>${streakData.longest}</strong>longest streak</div>
         </div>
         <div class="graph-container" id="graphContainer">
-          <div class="graph-label">contribution activity</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div class="graph-label" style="margin-bottom: 0;">contribution activity</div>
+            <div class="seeds-picker">
+              <div class="seed-btn seed-sakura" onclick="setSeed('sakura')" title="Sakura"></div>
+              <div class="seed-btn seed-lavender" onclick="setSeed('lavender')" title="Lavender"></div>
+              <div class="seed-btn seed-sunflower" onclick="setSeed('sunflower')" title="Sunflower"></div>
+              <div class="seed-btn seed-midnight" onclick="setSeed('midnight')" title="Midnight"></div>
+            </div>
+          </div>
           ${buildGraph(cal.weeks)}
           <div class="legend">hover for details</div>
         </div>
@@ -611,14 +871,38 @@
 &lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>
           </div>
         </div>
+
+        <div class="overview-section">
+          <h3>📊 Yearly Overview</h3>
+          <div class="overview-grid">
+            <div class="overview-item">
+              <span>Most Active Month</span>
+              <strong>${enhancedStats.mostActiveMonth}</strong>
+            </div>
+            <div class="overview-item">
+              <span>Total Flowers</span>
+              <strong>${enhancedStats.totalFlowers.toLocaleString()}</strong>
+            </div>
+            <div class="overview-item">
+              <span>Daily Bloom Rate</span>
+              <strong>${enhancedStats.avgBloomRate}</strong>
+            </div>
+          </div>
+        </div>
+
         <div class="export-section">
           ⭐ If you liked this project consider giving it a star on <a href="https://github.com/a104437ana/sakura-garden" target="_blank">GitHub</a>! ⭐
         </div>
       `;
 
       setupTooltips();
-    }
 
+      // Sync active seed class in the newly rendered picker
+      const currentSeed = localStorage.getItem('sakura-garden-seed') || 'sakura';
+      document.querySelectorAll('.seed-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.classList.contains('seed-' + currentSeed));
+      });
+    }
 
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const DAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
@@ -637,17 +921,13 @@
     }
 
     function makePetal(level) {
-      const fc = PETAL_LIGHT[level];
-      const cc = CENTER_LIGHT[level];
-
       let petals = '';
       for (let a = 0; a < 5; a++) {
-        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
+        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="var(--p${level})" transform="rotate(${a * 72})"/>`;
       }
-
       return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">
         ${petals}
-        <circle cx="0" cy="0" r="1.8" fill="${cc}"/>
+        <circle cx="0" cy="0" r="1.8" fill="var(--c${level})"/>
       </svg>`;
     }
 
@@ -655,22 +935,15 @@
       // ── Month labels (absolutely positioned by week index) ──────────────────
       let monthRowHtml = '<div class="month-row">';
       let lastMonth = -1;
-      let lastLabelWeek = -10;
       weeks.forEach((week, wi) => {
         const firstDay = week.contributionDays.find(d => d.date);
         if (!firstDay) return;
-
-        const date = new Date(firstDay.date);
-        const m = date.getMonth();
-        const d = date.getDate();
-
-        // Only show month if it changed and we haven't shown one recently (min 3 weeks gap)
-        // This prevents "AprMay" overlapping
-        if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
+        const m = new Date(firstDay.date).getMonth();
+        if (m !== lastMonth) {
+          // left = week-index * STEP pixels
           const left = wi * STEP;
           monthRowHtml += `<span class="month-label" style="left:${left}px">${MONTHS[m]}</span>`;
           lastMonth = m;
-          lastLabelWeek = wi;
         }
       });
       monthRowHtml += '</div>';
@@ -682,30 +955,28 @@
 
       // ── Weeks grid ──────────────────────────────────────────────────────────
       let weeksHtml = '<div class="weeks">';
-      weeks.forEach(week => {
+      let flowerCount = 0;
+      weeks.forEach((week, wi) => {
         weeksHtml += '<div class="week">';
-
-        // Robust alignment: Map days to their weekdays to ensure exactly 7 rows
-        const dayMap = {};
-        week.contributionDays.forEach(d => {
-          const wd = d.weekday !== undefined ? d.weekday : new Date(d.date).getDay();
-          dayMap[wd] = d;
-        });
-
-        for (let i = 0; i < 7; i++) {
-          const day = dayMap[i];
-          if (day) {
-            if (day.contributionCount > 0) {
-              const level = getLevel(day.contributionCount);
-              weeksHtml += `<div class="day-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none">${makePetal(level)}</div>`;
-            } else {
-              weeksHtml += `<div class="day-cell zero" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
-            }
-          } else {
-            // Padding for missing days in partial weeks (start/end of year)
+        const firstDay = week.contributionDays[0];
+        if (firstDay) {
+          const weekday = new Date(firstDay.date).getDay(); // 0=Sun
+          for (let i = 0; i < weekday; i++) {
             weeksHtml += `<div class="day-cell" style="visibility:hidden"></div>`;
           }
         }
+        week.contributionDays.forEach(day => {
+          if (day.contributionCount > 0) {
+            const level = getLevel(day.contributionCount);
+            const delay = wi * 20 + (new Date(day.date).getDay() * 10);
+            const sd = -(Math.random() * 4).toFixed(2);
+            const dur = (3 + Math.random() * 2).toFixed(2);
+            weeksHtml += `<div class="day-cell bloom-cell" data-count="${day.contributionCount}" data-date="${day.date}" style="border:none; --delay: ${delay}ms; --sway-delay: ${sd}s; --sway-duration: ${dur}s"><div class="sway-wrap">${makePetal(level)}</div></div>`;
+            flowerCount++;
+          } else {
+            weeksHtml += `<div class="day-cell zero" data-count="${day.contributionCount}" data-date="${day.date}"></div>`;
+          }
+        });
         weeksHtml += '</div>';
       });
       weeksHtml += '</div>';
@@ -741,6 +1012,34 @@
         else { current = 0; }
       });
       return { longest };
+    }
+
+    function calcEnhancedStats(weeks, totalCount) {
+      let totalFlowers = 0;
+      let totalDays = 0;
+      const monthCounts = new Array(12).fill(0);
+
+      weeks.forEach(week => {
+        week.contributionDays.forEach(day => {
+          totalDays++;
+          if (day.contributionCount > 0) {
+            totalFlowers++;
+            const m = new Date(day.date).getMonth();
+            monthCounts[m] += day.contributionCount;
+          }
+        });
+      });
+
+      let maxVal = -1, maxIdx = 0;
+      monthCounts.forEach((val, idx) => {
+        if (val > maxVal) { maxVal = val; maxIdx = idx; }
+      });
+
+      return {
+        mostActiveMonth: MONTHS[maxIdx],
+        totalFlowers,
+        avgBloomRate: (totalCount / (totalDays || 365)).toFixed(2)
+      };
     }
 
     function updateEmbedCodes() {
