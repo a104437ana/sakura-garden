@@ -2,6 +2,10 @@ name: Sakura Garden
 description: Generates a sakura garden from your GitHub contributions
 author: a104437ana
 
+branding:
+  icon: heart
+  color: pink
+
 runs:
   using: node20
   main: scripts/generate.js
