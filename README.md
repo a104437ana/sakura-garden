@@ -80,12 +80,9 @@ jobs:
 4. Copy the code below
 ```markdown
 <picture>
-  <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden-dark.svg"
-          media="(prefers-color-scheme: dark)" width="1000"/>
-  <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg"
-          media="(prefers-color-scheme: light)" width="1000"/>
-  <img src="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg"
-       alt="sakura garden" width="1000"/>
+  <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden-dark.svg" media="(prefers-color-scheme: dark)" width="1000"/>
+  <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" media="(prefers-color-scheme: light)" width="1000"/>
+  <img src="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" alt="sakura garden" width="1000"/>
 </picture>
 ```
 5. Replace `your-github-username` with your GitHub username
