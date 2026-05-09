@@ -414,26 +414,28 @@
       color: var(--text2);
       word-break: break-all;
       line-height: 1.6;
-      position: relative;
+    }
+
+    .embed-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.75rem;
     }
 
     .copy-btn {
-      position: absolute;
-      top: 0.6rem;
-      right: 0.6rem;
       background: var(--accent);
       color: white;
       border: none;
       border-radius: 5px;
-      padding: 0.25rem 0.6rem;
-      font-size: 0.65rem;
+      padding: 0.35rem 1rem;
+      font-size: 1rem;
       cursor: pointer;
       font-family: 'DM Mono', monospace;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s, background 0.2s;
     }
 
     .copy-btn:hover {
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     /* Loading & error */
@@ -626,13 +628,16 @@
           <div class="legend">hover for details</div>
         </div>
         <div class="export-section">
-          <h3>add it to your README or portfolio</h3>
+          <h3 style="text-align: center;">add it to your README or portfolio</h3>
           <div class="embed-code" id="embedCode">
 &lt;picture&gt;
   &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=dark" media="(prefers-color-scheme: dark)" /&gt;
   &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" media="(prefers-color-scheme: light)" /&gt;
   &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;
-&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>
+&lt;/picture&gt;
+          </div>
+          <div class="embed-actions">
+            <button class="copy-btn" id="copyBtn" onclick="copyEmbed()">copy</button>
           </div>
         </div>
         <div class="export-section">
@@ -774,24 +779,31 @@
 
     function updateEmbedCodes() {
       const el = document.getElementById('embedCode');
+      const btn = document.getElementById('copyBtn');
       if (!el || !currentUsername) return;
-      el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;<button class="copy-btn" onclick="copyEmbed()">copy</button>`;
+      el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;`;
+      if (btn) { btn.textContent = 'copy'; btn.classList.remove('ready-to-edit'); }
     }
 
     function copyEmbed() {
       const el = document.getElementById('embedCode');
-      // grab all text nodes, skip the button
-      const text = Array.from(el.childNodes)
-        .filter(n => n.nodeType === Node.TEXT_NODE)
-        .map(n => n.textContent)
-        .join('')
+      const btn = document.getElementById('copyBtn');
+
+      // If already in "copied" state, open README
+      if (btn.classList.contains('ready-to-edit')) {
+        window.open(`https://github.com/${currentUsername}/${currentUsername}/edit/main/README.md`, '_blank');
+        return;
+      }
+
+      // Copy the text
+      const text = el.innerText
         .trim()
-        // unescape HTML entities so the copied text is real HTML
         .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
       navigator.clipboard.writeText(text);
-      const btn = el.querySelector('.copy-btn');
-      btn.textContent = 'copied!';
-      setTimeout(() => { if (btn) btn.textContent = 'copy'; }, 1500);
+
+      // Switch to "copied" state — stays until next search
+      btn.textContent = 'copied! edit in README →';
+      btn.classList.add('ready-to-edit');
     }
   </script>
 </body>
