@@ -101,3 +101,14 @@ You can see an example of this setup in action [here](https://github.com/a104437
 
 ## Support
 If you like this project, please consider giving it a star ⭐
+
+## Stars
+[![GitHub stars](https://img.shields.io/github/stars/a104437ana/sakura-garden?style=social&label=Star&maxAge=2592000)](https://github.com/a104437ana/sakura-garden/stargazers/)
+
+<a href="https://www.star-history.com/?repos=a104437ana%2Fsakura-garden&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=a104437ana/sakura-garden&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=a104437ana/sakura-garden&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=a104437ana/sakura-garden&type=date&legend=top-left" />
+ </picture>
+</a>
