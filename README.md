@@ -88,7 +88,7 @@ jobs:
 5. Replace `your-github-username` with your GitHub username
 6. Paste into your README
 
-⚠️ The garden may take a minute to appear after the workflow runs for the first time, but after that it will always be there and update automatically every day based on your GitHub activity.
+⚠️ The garden may take a minute to appear after the workflow runs for the first time, but after that it will always be there and update automatically every day based on your GitHub activity
 
 You can see an example of this setup in action [here](https://github.com/a104437ana/a104437ana)
 
@@ -97,7 +97,7 @@ You can see an example of this setup in action [here](https://github.com/a104437
 - :octocat: Updates automatically based on your GitHub activity
 - 🌗 Supports both light and dark themes
 - ⚡ Easy to integrate into any README or portfolio
-- 💻 Dedicated website to generate and view your garden
+- 💻 Dedicated [website](https://sakura-garden.vercel.app) to generate and view your garden
 
 ## Support
 If you like this project, please consider giving it a star ⭐
