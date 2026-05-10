@@ -31,6 +31,7 @@ See your garden here: https://sakura-garden.vercel.app
 3. Paste into your README
 
 ## 🚀 Advanced Setup
+⚠️ This feature is still being tested ⚠️
 
 1. Create `.github/workflows/sakura-garden.yml`
 2. Copy the code below
