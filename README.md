@@ -31,7 +31,6 @@ See your garden here: https://sakura-garden.vercel.app
 3. Paste into your README
 
 ## 🚀 Advanced Setup
-⚠️ This feature is still being tested ⚠️
 
 1. Create `.github/workflows/sakura-garden.yml`
 2. Copy the code below
@@ -58,12 +57,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create output branch if it doesn't exist
-        run: |
-          git fetch origin output 2>/dev/null \
-            && git checkout output \
-            || (git checkout --orphan output && git rm -rf . --ignore-unmatch)
-
       - name: Generate sakura garden
         uses: a104437ana/sakura-garden@v1
         env:
@@ -73,9 +66,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan output
           git add sakura-garden.svg sakura-garden-dark.svg
-          git diff --cached --quiet || git commit -m "Update sakura garden"
-          git push origin output
+          git commit -m "Update sakura garden" || exit 0
+          git push -f origin output
 ```
 3. Paste into the file you just created
 4. Copy the code below
