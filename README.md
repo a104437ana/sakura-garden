@@ -85,8 +85,6 @@ jobs:
 
 ⚠️ The garden may take a minute to appear after the workflow runs for the first time, but after that it will always be there and update automatically every day based on your GitHub activity
 
-You can see an example of this setup in action [here](https://github.com/a104437ana/a104437ana)
-
 ## Features
 - 🌸 Transforms your GitHub contributions into a beautiful garden
 - :octocat: Updates automatically based on your GitHub activity
