@@ -96,7 +96,7 @@ jobs:
 If you like this project, please consider giving it a star ⭐
 
 ## Stars
-[![GitHub stars](https://img.shields.io/github/stars/a104437ana/sakura-garden?style=social&label=Star)](https://github.com/a104437ana/sakura-garden/stargazers/)
+[![GitHub stars](https://img.shields.io/github/stars/a104437ana/sakura-garden?style=social&label=Stars)](https://github.com/a104437ana/sakura-garden/stargazers/)
 
 <a href="https://www.star-history.com/?repos=a104437ana%2Fsakura-garden&type=date&legend=top-left">
  <picture>
