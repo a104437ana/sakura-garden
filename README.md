@@ -15,7 +15,7 @@ See your garden here: https://sakura-garden.vercel.app
 
 1. Go to https://sakura-garden.vercel.app  
 2. Enter your GitHub username  
-3. Copy the generated code  
+3. Copy the garden
 4. Paste into your README
 
 ## 🔧 Manual Setup
