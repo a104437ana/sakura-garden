@@ -1,493 +1,435 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="dark">
 <head>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('sakura-garden-theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>sakura garden</title>
-  <meta name="description" content="A GitHub contributions garden for your README or portfolio 🌸" />
+  <link rel="icon" href="favicon.ico" />
+  <meta name="description" content="A GitHub contributions garden for your README or portfolio — in any color you like 🌸" />
   <meta property="og:title" content="sakura garden" />
-  <meta property="og:description" content="A GitHub contributions garden for your README or portfolio 🌸" />
+  <meta property="og:description" content="A GitHub contributions garden for your README or portfolio — in any color you like 🌸" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap"
-    rel="stylesheet" />
-  <link rel="icon" href="favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #fdf6f0;
-      --bg2: #fff9f5;
-      --text: #1a0a00;
-      --text2: #7a5a4a;
-      --accent: #e8547a;
-      --accent2: #f9a8c0;
-      --border: #f0ddd5;
-      --cell-0: #f5e6e0;
-      --cell-1: #ffc8d8;
-      --cell-2: #ff8fab;
-      --cell-3: #e8547a;
-      --cell-4: #c2185b;
-      --shadow: rgba(232, 84, 122, 0.12);
-      --card: #ffffff;
+    /* ─── THEMES ─────────────────────────────────────────────────── */
+    :root, [data-theme="dark"] {
+      --cell-empty: rgba(255,255,255,0.25);
+      --mono-text: #ffffff;
+      --bg: #010409;
+      --surface: #0d1117;
+      --surface2: #1a1a1f;
+      --border: #252530;
+      --border2: #2e2e3a;
+      --text: #f0f6fc;
+      --text2: #f0f6fc;
+      --text3: #9198a1;
+      --accent: #ff85b3;
+      --c0: #1a1a22;
+      --c1: #6b1f35;
+      --c2: #c2185b;
+      --c3: #ff85b3;
+      --c4: #ff8fab;
+      --garden-color: #4a7a44;
+      --lvl1: #6b1f35;
+      --lvl2: #6b1f35;
+      --lvl3: #6b1f35;
+      --lvl4: #6b1f35;
+      --center1: color-mix(in srgb, var(--lvl1) 35%, white);
+      --center2: color-mix(in srgb, var(--lvl2) 35%, white);
+      --center3: color-mix(in srgb, var(--lvl3) 35%, white);
+      --center4: color-mix(in srgb, var(--lvl4) 35%, white);
+      --shadow: 0 4px 24px rgba(0,0,0,0.35);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
+      --cell-empty: #4a7a44;
     }
 
-    [data-theme="dark"] {
-      --bg: #0d0709;
-      --bg2: #120b0e;
-      --text: #fdf0f5;
-      --text2: #c0899a;
-      --accent: #ff6b9d;
-      --accent2: #ff8fab;
-      --border: #2a1520;
-      --cell-0: #1a0d12;
-      --cell-1: #6b1f35;
-      --cell-2: #c2185b;
-      --cell-3: #e8547a;
-      --cell-4: #ff8fab;
-      --shadow: rgba(255, 107, 157, 0.15);
-      --card: #180d11;
+    [data-theme="light"] {
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --surface2: #f6f8fa;
+      --border: #dcdce8;
+      --border2: #c8c8dc;
+      --text: #111118;
+      --text2: #52526a;
+      --text3: #9898b8;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --cell-empty: #37ff00b9;
+      --mono-text: #000000;
+      --garden-color: #70e261;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { 
+      overflow-x: hidden;
+      width: 100%;
     }
+
+    html { transition: background 0.25s; }
 
     body {
-      font-family: 'DM Mono', monospace;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      transition: background 0.4s, color 0.4s;
+      line-height: 1.6;
+      transition: background 0.25s, color 0.25s;
     }
 
-    .petals {
+    body::before {
+      content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
     }
 
-    .petal {
+    /* ─── DECORATIVE GIANT BLOOMS ───────────────────────────────── */
+    .deco-bloom {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.09;
+      transition: opacity 0.25s;
+    }
+    [data-theme="light"] .deco-bloom { opacity: 0.14; }
+    .deco-bloom svg ellipse { fill: var(--accent); transition: fill 0.25s; }
+    .deco-bloom svg circle { fill: var(--accent); opacity: 0.55; transition: fill 0.25s; }
+    .deco-bloom--tl { top: -90px; left: -90px; width: 280px; height: 280px; transform: rotate(-18deg); }
+    .deco-bloom--br { bottom: -110px; right: -110px; width: 340px; height: 340px; transform: rotate(24deg); }
+    .deco-bloom--tr { top: -50px; right: 40px; width: 150px; height: 150px; transform: rotate(-32deg); opacity: 0.07; }
+    .deco-bloom--bl { bottom: -60px; left: 60px; width: 210px; height: 210px; transform: rotate(38deg); opacity: 0.08; }
+    .deco-bloom--float { top: 42%; left: -55px; width: 130px; height: 130px; transform: rotate(58deg); opacity: 0.06; }
+    [data-theme="light"] .deco-bloom--tr { opacity: 0.11; }
+    [data-theme="light"] .deco-bloom--bl { opacity: 0.12; }
+    [data-theme="light"] .deco-bloom--float { opacity: 0.1; }
+
+    .deco-bloom--inner {
       position: absolute;
-      font-size: 1.2rem;
-      opacity: 0.18;
-      animation: fall linear infinite;
-      top: -2rem;
+      top: -40px;
+      right: -30px;
+      width: 220px;
+      height: 220px;
+      opacity: 0.055;
+      pointer-events: none;
+      z-index: 0;
+      transform: rotate(12deg);
     }
+    [data-theme="light"] .deco-bloom--inner { opacity: 0.08; }
+    .deco-bloom--inner svg ellipse { fill: var(--accent); transition: fill 0.25s; }
+    .deco-bloom--inner svg circle { fill: var(--accent); opacity: 0.55; transition: fill 0.25s; }
 
-    @keyframes fall {
-      0% {
-        transform: translateY(-2rem) rotate(0deg);
-        opacity: 0.18;
-      }
+    .deco-bloom--inner2 {
+      position: absolute;
+      bottom: -35px;
+      left: -25px;
+      width: 150px;
+      height: 150px;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+      transform: rotate(-22deg);
+    }
+    [data-theme="light"] .deco-bloom--inner2 { opacity: 0.075; }
+    .deco-bloom--inner2 svg ellipse { fill: var(--accent); transition: fill 0.25s; }
+    .deco-bloom--inner2 svg circle { fill: var(--accent); opacity: 0.55; transition: fill 0.25s; }
 
-      100% {
-        transform: translateY(105vh) rotate(360deg);
-        opacity: 0;
-      }
+    @media (max-width: 812px) {
+      .deco-bloom--tl, .deco-bloom--br, .deco-bloom--tr, .deco-bloom--bl, .deco-bloom--float { display: none; }
+      .deco-bloom--inner { width: 150px; height: 150px; top: -25px; right: -25px; opacity: 0.06; }
+      .deco-bloom--inner2 { display: none; }
     }
 
     .wrapper {
       position: relative;
       z-index: 1;
-      max-width: 900px;
+      max-width: 971.5px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
+      padding: 3rem 1.5rem 6rem;
+      width: 100%;
     }
 
-    header {
+    .readme-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 3.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
+      gap: 0.6rem;
+      padding: 0.45rem 0.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px 8px 0 0;
+      font-size: 0.72rem;
+      color: var(--text3);
+      transition: background 0.25s, border-color 0.25s;
     }
-
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      font-style: italic;
-      color: var(--accent);
-      letter-spacing: -0.02em;
-    }
-
-    .logo span {
-      font-style: normal;
-      font-size: 1rem;
-      color: var(--text2);
-    }
+    .readme-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .readme-dot.r { background: #ff5f57; }
+    .readme-dot.y { background: #febc2e; }
+    .readme-dot.g { background: #28c840; }
+    .readme-filename { font-size: 0.7rem; color: var(--text3); transition: color 0.25s; }
 
     .theme-toggle {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 0.4rem 1rem;
-      cursor: pointer;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--text2);
-      transition: all 0.2s;
-    }
-
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
-      line-height: 1.1;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero p {
-      color: var(--text2);
-      font-size: 0.88rem;
-      line-height: 1.7;
-    }
-
-    .search-wrap {
-      display: flex;
-      gap: 0.6rem;
-      max-width: 480px;
-      margin: 2rem auto;
-    }
-
-    .search-input {
-      flex: 1;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .search-input::placeholder {
-      color: var(--text2);
-      opacity: 0.6;
-    }
-
-    .search-input:focus {
-      border-color: var(--accent);
-    }
-
-    .search-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0.75rem 1.4rem;
-      cursor: pointer;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.9rem;
-      transition: opacity 0.2s, transform 0.15s;
-      white-space: nowrap;
-    }
-
-    .search-btn:hover {
-      opacity: 0.85;
-      transform: translateY(-1px);
-    }
-
-    .search-btn:active {
-      transform: translateY(0);
-    }
-
-    #result {
-      margin-top: 2rem;
-    }
-
-    .profile-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid var(--accent2);
-    }
-
-    .profile-link {
-      text-decoration: none;
-      color: inherit;
-      display: inline-block;
-      transition: transform 0.2s;
-    }
-    .profile-link:hover {
-      transform: translateY(-1px);
-    }
-    .profile-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-    }
-
-    .profile-sub {
-      font-size: 0.78rem;
-      color: var(--text2);
-    }
-
-    .stats-row {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .stat {
-      font-size: 0.8rem;
-      color: var(--text2);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.4rem;
-      font-family: 'Playfair Display', serif;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    /* Graph */
-    .graph-container {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      overflow-x: auto;
-      box-shadow: 0 4px 24px var(--shadow);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .graph-label {
-      font-size: 0.7rem;
-      color: var(--text2);
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    /* The scroll container — everything inside here has a fixed pixel width */
-    .graph-scroll {
-      display: inline-block;
-      /* shrink-wraps to content width */
-      min-width: 100%;
-    }
-
-    /* Month labels: positioned absolutely over the weeks grid */
-    .month-row {
-     position: relative;
-      height: 14px;
-      /* left-pad to align with where the weeks start (after day-labels) */
-      margin-left: 24px;
-    }
-
-    .month-label {
-      position: absolute;
-      font-size: 0.62rem;
-      color: var(--text2);
-      white-space: nowrap;
-      top: 0;
-    }
-
-    .graph-body {
-      display: flex;
-      gap: 0;
-    }
-
-    .day-labels {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      margin-right: 4px;
-      width: 20px;
-      flex-shrink: 0;
-    }
-
-    .day-label {
-      font-size: 0.6rem;
-      color: var(--text2);
-      width: 20px;
-      height: 13px;
-      line-height: 13px;
-      text-align: right;
-    }
-
-    .weeks {
-      display: flex;
-      gap: 2px;
-    }
-
-    .week {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .day-cell {
-      width: 13px;
-      height: 13px;
-      border-radius: 2px;
-      border: 1px solid var(--border);
-      font-size: 10px;
-      line-height: 13px;
-      text-align: center;
-      cursor: default;
-      transition: transform 0.1s;
-      position: relative;
-      background: transparent;
-    }
-
-    .day-cell:hover {
-      transform: scale(1.4);
-      z-index: 10;
-    }
-
-    .day-cell.zero {
-      background: transparent;
-      border: 1px solid #37ff00b9;
-    }
-
-    [data-theme="dark"] .day-cell.zero {
-      border-color: #4a7a44;
-    }
-
-    .legend {
+      margin-left: auto;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-top: 0.75rem;
+    }
+    .theme-label {
       font-size: 0.65rem;
-      color: var(--text2);
+      color: var(--text3);
+      letter-spacing: 0.04em;
+      transition: color 0.25s;
     }
-
-    /* Export section */
-    .export-section {
-      margin-top: 2rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-    }
-
-    .export-section h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      font-style: italic;
-      margin-bottom: 1rem;
-      color: var(--text);
-    }
-
-    .embed-code {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
-      font-size: 0.72rem;
-      color: var(--text2);
-      word-break: break-all;
-      line-height: 1.6;
-    }
-
-    .embed-actions {
-      display: flex;
-      justify-content: center;
-      margin-top: 0.75rem;
-    }
-
-    .copy-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 0.35rem 1rem;
-      font-size: 1rem;
+    .toggle-track {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      background: var(--border2);
+      border-radius: 10px;
       cursor: pointer;
-      font-family: 'DM Mono', monospace;
-      transition: opacity 0.2s, background 0.2s;
+      border: none;
+      padding: 0;
+      transition: background 0.25s;
+      flex-shrink: 0;
     }
-
-    .copy-btn:hover {
-      opacity: 0.85;
+    .toggle-track:hover { opacity: 0.85; }
+    [data-theme="light"] .toggle-track { background: var(--accent); }
+    .toggle-thumb {
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
     }
-
-    /* Loading & error */
-    .loader {
+    [data-theme="light"] .toggle-thumb { transform: translateX(16px); }
+    .toggle-icon {
+      font-size: 0.75rem;
+      line-height: 1;
+      user-select: none;
+      width: 20px;
+      display: inline-block;
       text-align: center;
-      padding: 3rem;
+    }
+
+    .readme-body {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 2.5rem 2rem 2rem;
+      transition: background 0.25s, border-color 0.25s;
+      box-shadow: var(--shadow);
+      max-width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .md-h1 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.03em;
+      text-align: center;
+    }
+    .md-h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--c4, #ff8fab));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .md-h1 .garden-word {
+      color: var(--garden-color);
+      transition: color 0.25s;
+    }
+
+    .md-badge-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 1.5rem; }
+    .md-badge {
+      font-size: 0.65rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
       color: var(--text2);
-      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+    }
+    .md-badge.primary {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+      color: var(--c4, #ff8fab);
     }
 
-    .loader .spinner {
-      font-size: 2rem;
-      display: block;
+    .md-p { font-size: 0.88rem; color: var(--text2); margin-bottom: 1.2rem; transition: color 0.25s; text-align: center; }
+    .md-p code {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      padding: 0.1em 0.4em;
+      font-size: 0.85em;
+      color: var(--text);
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .md-h2 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
       margin-bottom: 1rem;
-      animation: spin 2s linear infinite;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .md-h2::before { content: '## '; color: var(--text3); transition: color 0.25s; }
+
+    .hero-flex {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 0.75rem;
+      width: 100%;
+    }
+    .hero-main {
+      flex: 1 1 500px;
+      min-width: 0;
+    }
+    .hero-main .md-h1,
+    .hero-main .md-p { text-align: left; }
+    .hero-main .search-row { justify-content: flex-start; }
+
+    .search-row { display: flex; gap: 0.5rem; margin: 1.75rem 0 0.5rem; width: 100%;}
+    .search-input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      padding: 0.65rem 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.25s, color 0.25s;
+    }
+    .search-input::placeholder { color: var(--text3); }
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+    }
+    .search-btn {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.6rem 1.2rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s cubic-bezier(.4,0,.2,1), box-shadow 0.18s, filter 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .search-btn:hover {
+      transform: translateY(-2px);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+    .search-btn:active {
+      transform: translateY(0);
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 30%, transparent);
     }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+    #result { margin-top: 0; max-width: 100%; }
+
+    .loader { font-size: 0.8rem; color: var(--text2); padding: 2rem 0; text-align: center; transition: color 0.25s; }
+    .spinner { display: inline-block; animation: spin 1s linear infinite; margin-right: 0.5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .demo-note {
+      font-size: 0.82rem;
+      color: var(--text3);
+      margin: 0.25rem 0 1.4rem;
+      line-height: 1.7;
+      transition: color 0.25s;
     }
+    .demo-note strong { color: var(--text2); font-weight: 500; }
+    .demo-note-break { display: none; }
 
     .error-msg {
-      background: #fff0f3;
-      border: 1px solid #ffc0cb;
-      border-radius: 8px;
-      padding: 1rem 1.5rem;
-      color: var(--accent);
-      font-size: 0.85rem;
+      font-size: 0.8rem; color: #f87171;
+      padding: 1rem;
+      background: rgba(248,113,113,0.06);
+      border: 1px solid rgba(248,113,113,0.2);
+      border-radius: 6px;
     }
 
-    [data-theme="dark"] .error-msg {
-      background: #1a0d12;
+    .profile-row { display: flex; align-items: center; justify-content: space-between; gap: 0.9rem; margin-bottom: 1.2rem; }
+    .profile-info { display: flex; align-items: center; gap: 0.9rem; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--border2); transition: border-color 0.25s; }
+    .profile-name { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  ; font-size: 1.1rem; font-weight: 700; }
+    .profile-sub { font-size: 0.82rem; color: var(--text2); transition: color 0.25s; }
+
+    .stats-row { display: flex; gap: 1.5rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .stat { font-size: 0.72rem; color: var(--text2); transition: color 0.25s; }
+    .stat strong {
+      display: block;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--c3, var(--accent));
+      line-height: 1.1;
     }
 
-    /* Tooltip */
-    .tooltip {
-      position: fixed;
-      background: var(--text);
-      color: var(--bg);
-      padding: 0.35rem 0.65rem;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      pointer-events: none;
-      z-index: 100;
-      display: none;
-      white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .graph-container {
+      position: relative;
+      background:transparent;
+      padding: 1rem 1rem 0.8rem;
+      overflow-x: auto;
+      margin-bottom: 0.2rem;
+      -webkit-overflow-scrolling: touch;
+      transition: background 0.25s, border-color 0.25s;
+      max-width: 100%;
     }
+    .graph-toggle { position: absolute; top: 0.7rem; left: 0.8rem; margin-left: 0; }
+    .graph-scroll { display: inline-block; }
+    .month-row { position: relative; height: 16px; margin-bottom: 4px; }
+    .month-label { position: absolute; font-size: 0.65rem; color: var(--mono-text); transition: color 0.25s; }
+    .graph-body { display: flex; align-items: flex-start; }
+    .day-labels { display: flex; flex-direction: column; gap: 2px; margin-right: 4px; padding-top: 1px; }
+    .day-label { width: 20px; height: 13px; font-size: 0.6rem; color: var(--mono-text); display: flex; align-items: center; justify-content: flex-end; transition: color 0.25s; }
+    .weeks { display: flex; gap: 2px; }
+    .week { display: flex; flex-direction: column; gap: 2px; }
 
-    /* Bloom Animation */
+    .day-cell {
+      width: 13px; height: 13px;
+      border-radius: 2px;
+      background: transparent;
+      border: 1px solid var(--cell-empty);
+      cursor: pointer;
+      transition: opacity 0.1s, transform 0.1s, border-color 0.25s;
+      position: relative;
+    }
+    .day-cell:hover { opacity: 0.85; transform: scale(1.35); z-index: 5; }
+    .day-cell.bloom-cell { border: none; }
+
+    /* Bloom entrance animation */
     @keyframes bloom {
       0% { transform: scale(0) rotate(-15deg); opacity: 0; }
       50% { transform: scale(1.1) rotate(5deg); }
@@ -499,313 +441,599 @@
       transform-origin: center;
     }
 
-    footer {
-      text-align: center;
-      margin-top: 4rem;
-      color: var(--text2);
-      font-size: 0.72rem;
-      line-height: 1.8;
+    .legend-row {
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 0.5rem; font-size: 0.65rem; color: var(--text3);
+      padding: 0.5rem 0 0.1rem;
+      transition: color 0.25s;
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      display: inline-block;
     }
 
-    footer a {
-      color: var(--accent);
+    #tooltip {
+      position: fixed;
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 5px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.7rem;
+      color: var(--text);
+      pointer-events: none;
+      z-index: 999;
+      white-space: nowrap;
+      box-shadow: var(--shadow);
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+
+    .quick-copy-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      max-width: 100%;
+    }
+    .quick-copy {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      transition: transform 0.18s cubic-bezier(.4,0,.2,1), box-shadow 0.18s, filter 0.15s, background 0.15s, border-color 0.15s;
+      max-width: 100%;
+    }
+    .quick-copy:hover {
+      transform: translateY(-2px);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+    .quick-copy:active {
+      transform: translateY(0);
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+    .quick-copy.copied { border-color: #4ade80; }
+    .quick-copy-tag {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: color 0.25s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .quick-copy-icon { font-size: 0.9rem; }
+
+    .demo-star-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1.4rem;
+    }
+    .demo-star-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.6rem 1.15rem;
       text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: transform 0.18s cubic-bezier(.4,0,.2,1), box-shadow 0.18s, filter 0.15s, background 0.15s;
+    }
+    .demo-star-btn:hover {
+      transform: translateY(-2px);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+    .demo-star-btn:active {
+      transform: translateY(0);
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+    .demo-star-btn-icon { font-size: 0.95rem; line-height: 1; }
+
+    .about-section {
+      margin-top: 2.5rem; padding-top: 0;
+      font-size: 0.75rem; color: var(--text3);
+      display: flex; justify-content: center;
+      align-items: center; flex-wrap: wrap; gap: 0.5rem;
+      text-align: center;
+      transition: color 0.25s;
+    }
+    .about-section a { color: var(--text2); text-decoration: none; transition: color 0.15s; }
+    .about-section a:hover { color: var(--text); }
+
+    @media (max-width: 812px) {
+      .hero-flex { flex-direction: column; gap: 1.5rem; }
+      .hero-main { flex: none; width: 100%; max-width: 100%; text-align: center; }
+      .hero-main .md-h1,
+      .hero-main .md-p { text-align: center; }
+      .hero-main .search-row { justify-content: center; }
+      .demo-note-break { display: block; }
     }
 
-    footer a:hover {
-      text-decoration: underline;
+    @media (max-width: 600px) {
+      .wrapper { padding: 1.5rem 1rem 5rem; }
+      .readme-body { padding: 1.5rem 1rem; }
+      .search-row { flex-direction: column; width: 100%; }
+      .search-input { width: 100%; text-align: center; }
+      .search-btn { width: 100%; }
+      .theme-label { display: none; }
     }
   </style>
+<base target="_blank">
 </head>
-
 <body>
-  <div class="petals" id="petals"></div>
-  <div class="tooltip" id="tooltip"></div>
 
-  <div class="wrapper">
-    <header>
-      <div class="logo">sakura<span> garden</span></div>
-      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀ light mode</button>
-    </header>
+<div id="tooltip"></div>
 
-    <section class="hero">
-      <h1>your contributions,<br />but make it <em>bloom</em></h1>
-      <p>GitHub contributions garden 🌸<br />add it to your README or portfolio</p>
-      <p>Light & dark mode support</p>
+<div class="deco-bloom deco-bloom--tl" aria-hidden="true">
+  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="13"/>
+    </g>
+  </svg>
+</div>
 
-      <div class="search-wrap">
-        <input class="search-input" type="text" id="usernameInput" placeholder="github username" autocomplete="off"
-          onkeydown="if(event.key==='Enter') search()" />
-        <button class="search-btn" onclick="search()">bloom →</button>
-      </div>
-    </section>
+<div class="deco-bloom deco-bloom--br" aria-hidden="true">
+  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="13"/>
+    </g>
+  </svg>
+</div>
 
-    <div id="result"></div>
+<div class="deco-bloom deco-bloom--tr" aria-hidden="true">
+  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="13"/>
+    </g>
+  </svg>
+</div>
 
-    <footer>
-      made with 🌸 · <a href="https://github.com/a104437ana/sakura-garden" target="_blank">view on github</a> · open
-      source
-    </footer>
+<div class="deco-bloom deco-bloom--bl" aria-hidden="true">
+  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="13"/>
+    </g>
+  </svg>
+</div>
+
+<div class="deco-bloom deco-bloom--float" aria-hidden="true">
+  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="13"/>
+    </g>
+  </svg>
+</div>
+
+<div class="wrapper">
+  <div class="readme-bar">
+    <span class="readme-filename">README.md</span>
+    <div class="theme-toggle">
+      <span class="toggle-icon">🌙</span>
+      <button class="toggle-track" onclick="toggleTheme()" title="Toggle theme">
+        <div class="toggle-thumb"></div>
+      </button>
+      <span class="toggle-icon">☀️</span>
+    </div>
   </div>
 
-  <script>
-    const API_BASE = 'https://sakura-garden.vercel.app/api/contributions';
+  <div class="readme-body">
 
-    const CELL = 13, GAP = 2, STEP = CELL + GAP;
-    const DAY_LABEL_W = 24; // px — must match .day-labels width + margin-right
+    <div class="deco-bloom--inner" aria-hidden="true">
+      <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
+          <circle cx="0" cy="0" r="13"/>
+        </g>
+      </svg>
+    </div>
 
-    let currentTheme = 'light';
-    let currentData = null;
-    let currentUsername = '';
-
-    // Petals
-    function spawnPetals() {
-      const container = document.getElementById('petals');
-      for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div');
-        p.className = 'petal';
-        p.textContent = '🌸';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDuration = (8 + Math.random() * 14) + 's';
-        p.style.animationDelay = (Math.random() * 20) + 's';
-        p.style.fontSize = (0.7 + Math.random() * 0.8) + 'rem';
-        container.appendChild(p);
-      }
-    }
-    spawnPetals();
-
-    // Theme
-    function toggleTheme() {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'dark' : '');
-      document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '🌙 dark mode' : '☀ light mode';
-      if (currentData) updateEmbedCodes();
-    }
-
-    // Search
-    async function search() {
-      const username = document.getElementById('usernameInput').value.trim();
-      if (!username) return;
-      currentUsername = username;
-
-      const result = document.getElementById('result');
-      result.innerHTML = `<div class="loader"><span class="spinner">🌸</span>fetching blooms for ${username}…</div>`;
-
-      try {
-        const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}`);
-        const data = await res.json();
-        if (data.error) throw new Error(data.error);
-        currentData = data;
-        renderResult(data, username);
-      } catch (err) {
-        result.innerHTML = `<div class="error-msg">couldn't find <strong>${username}</strong> — check the username and try again.</div>`;
-      }
-    }
-
-    function renderResult(data, username) {
-      const user = data.user;
-      const cal = user.contributionsCollection.contributionCalendar;
-      const total = cal.totalContributions;
-      const streakData = calcStreak(cal.weeks);
-
-      document.getElementById('result').innerHTML = `
-        <a href="https://github.com/${user.login}" target="_blank" class="profile-link">
-          <div class="profile-row">
-            <img class="avatar" src="${user.avatarUrl}" alt="${user.login}" />
-            <div>
-              <div class="profile-name">${user.name || user.login}</div>
-              <div class="profile-sub">@${user.login}</div>
-            </div>
-          </div>
-        </a>
-        <div class="stats-row">
-          <div class="stat"><strong>${total.toLocaleString()}</strong>contributions</div>
-          <div class="stat"><strong>${streakData.longest}</strong>longest streak</div>
+    <div class="hero-flex">
+      <div class="hero-main">
+        <h1 class="md-h1"><span class="highlight">sakura</span> <span class="garden-word">garden</span></h1>
+        <p class="md-p">
+          Your GitHub contributions garden
+          <br>Add it to your GitHub profile README in seconds
+        </p>
+        <div class="search-row">
+          <input id="usernameInput" class="search-input" type="text"
+            placeholder="github username" autocomplete="off" spellcheck="false" />
+          <button class="search-btn" onclick="doSearch()">→ bloom</button>
         </div>
-        <div class="graph-container" id="graphContainer">
-          <div class="graph-label">contribution activity</div>
-          ${buildGraph(cal.weeks)}
-          <div class="legend">hover for details</div>
-        </div>
-        <div class="export-section">
-          <h3 style="text-align: center;">add it to your README or portfolio</h3>
-          <div class="embed-code" id="embedCode">
-&lt;picture&gt;
-  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=dark" media="(prefers-color-scheme: dark)" /&gt;
-  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" media="(prefers-color-scheme: light)" /&gt;
-  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${username}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;
-&lt;/picture&gt;
-          </div>
-          <div class="embed-actions">
-            <button class="copy-btn" id="copyBtn" onclick="copyEmbed()">copy</button>
-          </div>
-        </div>
-        <div class="export-section">
-          ⭐ If you liked this project consider giving it a star on <a href="https://github.com/a104437ana/sakura-garden" target="_blank">GitHub</a>! ⭐
-        </div>
-      `;
+      </div>
+    </div>
 
-      setupTooltips();
+    <div id="result">
+      <div class="loader">
+        <span class="spinner">◌</span>
+        loading example…
+      </div>
+    </div>
+
+    <div class="deco-bloom--inner2" aria-hidden="true">
+      <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
+          <circle cx="0" cy="0" r="13"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="about-section">
+      <span>made with 🌸</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function initTheme() {
+  const saved = localStorage.getItem('sakura-garden-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('sakura-garden-theme', next);
+  refreshGraph();
+}
+
+initTheme();
+
+function hexToRgbArr(hex) {
+  hex = hex.replace('#','');
+  if (hex.length === 3) hex = hex.split('').map(c=>c+c).join('');
+  return [parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16)];
+}
+
+function lighten(hex, amt) {
+  const [r,g,b] = hexToRgbArr(hex);
+  const nr = Math.round(r + (255-r)*amt);
+  const ng = Math.round(g + (255-g)*amt);
+  const nb = Math.round(b + (255-b)*amt);
+  return '#' + [nr,ng,nb].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+let lastWeeksData = null;
+
+// Paleta sakura fixa — igual em dark e light mode (mesma paleta usada no api/svg.js)
+const SAKURA_PETAL = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
+const SAKURA_CENTER = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
+
+const THEMES = {
+  sakura: {
+    label: '🌸 sakura',
+    accent: '#ff85b3',
+    getCellColor(wi, total, level) {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (level === 0) return { fill: 'transparent', stroke: isLight ? '#37ff00b9' : '#4a7a44', hex: '#ff85b3' };
+      const hex = SAKURA_PETAL[level];
+      return { fill: hex, stroke: hex, hex, center: SAKURA_CENTER[level] };
+    },
+  },
+};
+
+function refreshGraph() {
+  if (!lastWeeksData) return;
+  const container = document.querySelector('.graph-container');
+  if (!container) return;
+  container.innerHTML = `${buildGraph(lastWeeksData)}<div class="legend-row" id="graphLegend"></div>`;
+  setupTooltips();
+  updateLegend();
+}
+
+function applyLiveColor(hex) {
+  const root = document.documentElement;
+  root.style.setProperty('--lvl1', hex);
+  root.style.setProperty('--lvl2', hex);
+  root.style.setProperty('--lvl3', hex);
+  root.style.setProperty('--lvl4', hex);
+  root.style.setProperty('--c1', hex);
+  root.style.setProperty('--c2', hex);
+  root.style.setProperty('--c3', hex);
+  root.style.setProperty('--c4', hex);
+  root.style.setProperty('--accent', hex);
+  const hl = document.querySelector('.highlight');
+  if (hl) hl.style.backgroundImage = `linear-gradient(135deg,${hex},${hex}dd)`;
+  updateLegend();
+}
+
+let currentUsername = '';
+
+const API_BASE = 'https://sakura-garden.vercel.app/api/contributions';
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+async function doSearch() {
+  const username = document.getElementById('usernameInput').value.trim();
+  if (!username) return;
+  currentUsername = username;
+  quickCopyState = 'idle';
+  const result = document.getElementById('result');
+  result.innerHTML = `<div class="loader"><span class="spinner">◌</span> fetching <strong>${username}</strong>…</div>`;
+  try {
+    const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    renderResult(data, username, false);
+  } catch(err) {
+    result.innerHTML = `<div class="error-msg">✗ couldn't find ${username} — check the username and try again.</div>`;
+  }
+}
+
+document.getElementById('usernameInput').addEventListener('keydown', e => { if(e.key==='Enter') doSearch(); });
+
+async function loadDemo() {
+  try {
+    const res = await fetch(`${API_BASE}?username=a104437ana`);
+    const data = await res.json();
+
+    if (data.error) {
+      document.getElementById('result').innerHTML =
+        `<p class="md-p" style="color:var(--text3);font-size:0.78rem;">↑ enter your username to see your garden</p>`;
+      return;
     }
 
+    renderResult(data, 'a104437ana', true);
 
-    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const DAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+  } catch (err) {
+    document.getElementById('result').innerHTML =
+      `<p class="md-p" style="color:var(--text3);font-size:0.78rem;">↑ enter your username to see your garden</p>`;
+  }
+}
 
-    const PETAL_LIGHT = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
-    const CENTER_LIGHT = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
-    const PETAL_DARK = ['', '#6b1f35', '#c2185b', '#e8547a', '#ff8fab'];
-    const CENTER_DARK = ['', '#3d0f1f', '#7a0e38', '#c2185b', '#ffaacc'];
+function getLevel(count) {
+  if(count===0) return 0; if(count<=2) return 1; if(count<=5) return 2; if(count<=9) return 3; return 4;
+}
 
-    function getLevel(count) {
-      if (count === 0) return 0;
-      if (count <= 2) return 1;
-      if (count <= 5) return 2;
-      if (count <= 9) return 3;
-      return 4;
+function makePetal(level, fillColor, centerColor) {
+  const fc = fillColor || `var(--lvl${level})`;
+  const cc = centerColor || `var(--center${level})`;
+  let petals = '';
+  for (let a = 0; a < 5; a++) {
+    petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">${petals}<circle cx="0" cy="0" r="1.8" fill="${cc}"/></svg>`;
+}
+
+function buildGraph(weeks) {
+  const STEP = 15;
+  let monthHtml = '<div class="month-row">';
+  let lastMonth = -1;
+  let lastLabelWeek = -10;
+  weeks.forEach((week,wi) => {
+    const fd = week.contributionDays.find(d=>d.date);
+    if (!fd) return;
+    const date = new Date(fd.date);
+    const m = date.getMonth();
+    const d = date.getDate();
+    if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
+      monthHtml += `<span class="month-label" style="left:${wi*STEP}px">${MONTHS[m]}</span>`;
+      lastMonth = m;
+      lastLabelWeek = wi;
     }
+  });
+  monthHtml += '</div>';
 
-    function makePetal(level) {
-      const fc = PETAL_LIGHT[level];
-      const cc = CENTER_LIGHT[level];
+  let dayLabels = '<div class="day-labels">';
+  ['','Mon','','Wed','','Fri',''].forEach(d => { dayLabels += `<div class="day-label">${d}</div>`; });
+  dayLabels += '</div>';
 
-      let petals = '';
-      for (let a = 0; a < 5; a++) {
-        petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
-      }
+  let weeksHtml = '<div class="weeks">';
+  weeks.forEach((week, wi) => {
+    weeksHtml += '<div class="week">';
 
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="-6.5 -6.5 13 13" style="display:block">
-        ${petals}
-        <circle cx="0" cy="0" r="1.8" fill="${cc}"/>
-      </svg>`;
-    }
+    const dayMap = {};
+    week.contributionDays.forEach(d => {
+      const wd = d.weekday !== undefined ? d.weekday : new Date(d.date).getDay();
+      dayMap[wd] = d;
+    });
 
-    function buildGraph(weeks) {
-      // ── Month labels (absolutely positioned by week index) ──────────────────
-      let monthRowHtml = '<div class="month-row">';
-      let lastMonth = -1;
-      let lastLabelWeek = -10;
-      weeks.forEach((week, wi) => {
-        const firstDay = week.contributionDays.find(d => d.date);
-        if (!firstDay) return;
-
-        const date = new Date(firstDay.date);
-        const m = date.getMonth();
-        const d = date.getDate();
-
-        // Only show month if it changed and we haven't shown one recently (min 3 weeks gap)
-        // This prevents "AprMay" overlapping
-        if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
-          const left = wi * STEP;
-          monthRowHtml += `<span class="month-label" style="left:${left}px">${MONTHS[m]}</span>`;
-          lastMonth = m;
-          lastLabelWeek = wi;
+    for (let i = 0; i < 7; i++) {
+      const day = dayMap[i];
+      if (day) {
+        const count = day.contributionCount;
+        if (count > 0) {
+          const level = getLevel(count);
+          const theme = THEMES.sakura;
+          const res = theme.getCellColor(wi, weeks.length, level);
+          const fill = res.fill;
+          const center = res.center || lighten(res.hex, 0.55);
+          const delay = wi * 20 + i * 10;
+          weeksHtml += `<div class="day-cell bloom-cell" data-count="${count}" data-date="${day.date}" style="--delay:${delay}ms">${makePetal(level, fill, center)}</div>`;
+        } else {
+          weeksHtml += `<div class="day-cell zero" data-count="0" data-date="${day.date}"></div>`;
         }
-      });
-      monthRowHtml += '</div>';
-
-      // ── Day labels ───────────────────────────────────────────────────────────
-      let dayLabels = '<div class="day-labels">';
-      DAYS.forEach(d => { dayLabels += `<div class="day-label">${d}</div>`; });
-      dayLabels += '</div>';
-
-      // ── Weeks grid ──────────────────────────────────────────────────────────
-      let weeksHtml = '<div class="weeks">';
-      let flowerCount = 0;
-      weeks.forEach((week, wi) => {
-        weeksHtml += '<div class="week">';
-
-        // Robust alignment: Map days to their weekdays to ensure exactly 7 rows
-        const dayMap = {};
-        week.contributionDays.forEach(d => {
-          const wd = d.weekday !== undefined ? d.weekday : new Date(d.date).getDay();
-          dayMap[wd] = d;
-        });
-
-        for (let i = 0; i < 7; i++) {
-          const day = dayMap[i];
-          if (day) {
-            const count = day.contributionCount;
-            if (count > 0) {
-              const level = getLevel(count);
-              // Stagger delay based on week index for a "wave" effect from left to right
-              const delay = wi * 20 + i * 10;
-              weeksHtml += `<div class="day-cell bloom-cell" data-count="${count}" data-date="${day.date}" style="border:none; --delay: ${delay}ms">${makePetal(level)}</div>`;
-              flowerCount++;
-            } else {
-              weeksHtml += `<div class="day-cell zero" data-count="${count}" data-date="${day.date}"></div>`;
-            }
-          } else {
-            // Padding for missing days in partial weeks (start/end of year)
-            weeksHtml += `<div class="day-cell" style="visibility:hidden"></div>`;
-          }
-        }
-        weeksHtml += '</div>';
-      });
-      weeksHtml += '</div>';
-
-      // ── Wrap in a scroll container so month labels and grid share the same
-      //    coordinate space and scroll together ─────────────────────────────
-      return `
-        <div class="graph-scroll">
-          ${monthRowHtml}
-          <div class="graph-body">${dayLabels}${weeksHtml}</div>
-        </div>`;
-    }
-
-    function setupTooltips() {
-      const tooltip = document.getElementById('tooltip');
-      document.querySelectorAll('.day-cell[data-date]').forEach(cell => {
-        cell.addEventListener('mousemove', e => {
-          const count = cell.dataset.count;
-          const date = new Date(cell.dataset.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-          tooltip.textContent = count === '0' ? `no contributions · ${date}` : `${count} contribution${count > 1 ? 's' : ''} · ${date}`;
-          tooltip.style.display = 'block';
-          tooltip.style.left = e.clientX + 12 + 'px';
-          tooltip.style.top = e.clientY - 28 + 'px';
-        });
-        cell.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
-      });
-    }
-
-    function calcStreak(weeks) {
-      let longest = 0, current = 0;
-      weeks.flatMap(w => w.contributionDays).forEach(d => {
-        if (d.contributionCount > 0) { current++; longest = Math.max(longest, current); }
-        else { current = 0; }
-      });
-      return { longest };
-    }
-
-    function updateEmbedCodes() {
-      const el = document.getElementById('embedCode');
-      const btn = document.getElementById('copyBtn');
-      if (!el || !currentUsername) return;
-      el.innerHTML = `&lt;picture&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=dark" media="(prefers-color-scheme: dark)" width="1000"/&gt;\n  &lt;source srcset="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" media="(prefers-color-scheme: light)" width="1000"/&gt;\n  &lt;img src="https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&amp;theme=light" width="1000" alt="sakura contributions" /&gt;\n&lt;/picture&gt;`;
-      if (btn) { btn.textContent = 'copy'; btn.classList.remove('ready-to-edit'); }
-    }
-
-    function copyEmbed() {
-      const el = document.getElementById('embedCode');
-      const btn = document.getElementById('copyBtn');
-
-      // If already in "copied" state, open README
-      if (btn.classList.contains('ready-to-edit')) {
-        window.open(`https://github.com/${currentUsername}/${currentUsername}/edit/main/README.md`, '_blank');
-        return;
+      } else {
+        weeksHtml += `<div class="day-cell" style="visibility:hidden"></div>`;
       }
-
-      // Copy the text
-      const text = el.innerText
-        .trim()
-        .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-      navigator.clipboard.writeText(text);
-
-      // Switch to "copied" state — stays until next search
-      btn.textContent = 'copied! edit in README →';
-      btn.classList.add('ready-to-edit');
     }
-  </script>
+    weeksHtml += '</div>';
+  });
+  weeksHtml += '</div>';
+
+  return `<div class="graph-scroll">${monthHtml}<div class="graph-body">${dayLabels}${weeksHtml}</div></div>`;
+}
+
+function calcStreak(weeks) {
+  let longest=0, current=0;
+  weeks.flatMap(w=>w.contributionDays).forEach(d => {
+    if(d.contributionCount>0){current++;longest=Math.max(longest,current);}else current=0;
+  });
+  return longest;
+}
+
+function updateLegend() {
+  const el = document.getElementById('graphLegend');
+  if (!el) return;
+  el.innerHTML = `<span></span>`;
+}
+
+function renderResult(data, username, isDemo) {
+  const user = data.user;
+  const cal = user.contributionsCollection.contributionCalendar;
+  lastWeeksData = cal.weeks;
+  const total = cal.totalContributions;
+  const longest = calcStreak(cal.weeks);
+
+  const demoNote = isDemo
+    ? `<p class="demo-note">showing an example (@${username}) —<br class="demo-note-break"> <u>enter your username above</u> to generate your own contribution garden...</p>`
+    : `<br>`;
+
+  const starCta = `
+    <div class="demo-star-cta">
+      <a class="demo-star-btn" href="https://github.com/a104437ana/sakura-garden" target="_blank">
+        <span class="demo-star-btn-icon">⭐</span>
+        <span>Check out the project on GitHub and consider giving it a star</span>
+      </a>
+    </div>
+  `;
+
+  const actionBlock = isDemo ? starCta : `
+  <br>
+    <div class="quick-copy-wrap">
+      <div class="quick-copy" id="quickCopy" onclick="handleQuickCopy('${user.login}')" title="Copy the embed code, then click again to open your README and paste it">
+        <span class="quick-copy-icon" id="quickCopyIcon">📋</span>
+        <span class="quick-copy-tag" id="quickCopyLabel">copy garden</span>
+      </div>
+    </div>
+    ${starCta}
+  `;
+
+  document.getElementById('result').innerHTML = `
+    ${demoNote}
+    <div class="profile-row">
+      <div class="profile-info">
+        <img class="avatar" src="${user.avatarUrl}" alt="${user.login}" />
+        <div>
+          <div class="profile-name">${user.name || user.login}</div>
+          <div class="profile-sub">@${user.login} · last 365 days</div>
+        </div>
+      </div>
+    </div>
+    <div class="graph-container">
+      ${buildGraph(cal.weeks)}
+      <div class="legend-row" id="graphLegend"></div>
+    </div>
+    ${actionBlock}
+  `;
+
+  setupTooltips();
+  updateLegend();
+  if (!isDemo) updateEmbedCode();
+}
+
+function setupTooltips() {
+  const tooltip = document.getElementById('tooltip');
+  document.querySelectorAll('.day-cell[data-date]').forEach(cell => {
+    cell.addEventListener('mousemove', e => {
+      const count = parseInt(cell.dataset.count);
+      const date = new Date(cell.dataset.date).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+      tooltip.textContent = count===0 ? `no contributions · ${date}` : `${count} contribution${count!==1?'s':''} · ${date}`;
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX+12)+'px';
+      tooltip.style.top  = (e.clientY-32)+'px';
+    });
+    cell.addEventListener('mouseleave', () => { tooltip.style.display='none'; });
+  });
+}
+
+function getEmbedUrl(theme) {
+  return `https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=${theme}`;
+}
+
+function getEmbedCode() {
+  const l=getEmbedUrl('light'), d=getEmbedUrl('dark');
+  return `<picture>\n  <source srcset="${d}" media="(prefers-color-scheme: dark)" />\n  <source srcset="${l}" media="(prefers-color-scheme: light)" />\n  <img src="${l}" alt="${currentUsername} sakura contributions" width="1000" />\n</picture>`;
+}
+
+function updateEmbedCode() {
+  const el = document.getElementById('embedText');
+  if (!el || !currentUsername) return;
+  el.textContent = getEmbedCode();
+}
+
+
+let quickCopyState = 'idle';
+
+function resetQuickCopyState() {
+  quickCopyState = 'idle';
+  const quick = document.getElementById('quickCopy');
+  const label = document.getElementById('quickCopyLabel');
+  const icon = document.getElementById('quickCopyIcon');
+  if (!quick || !label) return;
+  quick.classList.remove('copied');
+  label.textContent = 'copy garden';
+  if (icon) icon.textContent = '📋';
+}
+
+function handleQuickCopy(login) {
+  const quick = document.getElementById('quickCopy');
+  const label = document.getElementById('quickCopyLabel');
+  const icon = document.getElementById('quickCopyIcon');
+
+  if (quickCopyState === 'idle') {
+    navigator.clipboard.writeText(getEmbedCode());
+    quickCopyState = 'copied';
+    if (quick) quick.classList.add('copied');
+    if (label) label.textContent = 'copied! now paste it in your README →';
+    if (icon) icon.textContent = '✅';
+  } else {
+    window.open(`https://github.com/${login}/${login}/edit/main/README.md`, '_blank');
+    setTimeout(resetQuickCopyState, 1500);
+  }
+}
+
+applyLiveColor(THEMES.sakura.accent);
+loadDemo();
+</script>
 </body>
-
 </html>
