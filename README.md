@@ -5,11 +5,13 @@ Turn your GitHub activity into a garden where commits bloom into flowers 🌸 an
 
 See your garden here: https://sakura-garden.vercel.app
 
+<a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
 <picture>
   <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=dark" media="(prefers-color-scheme: dark)" width="1000"/>
   <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" media="(prefers-color-scheme: light)" width="1000"/>
   <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" alt="sakura contributions" width="1000"/>
 </picture>
+</a>
 
 ## ⚡ Quick Setup
 
@@ -21,11 +23,13 @@ See your garden here: https://sakura-garden.vercel.app
 ## 🔧 Manual Setup
 1. Copy the code below  
 ```markdown
-<picture>
-  <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=dark" media="(prefers-color-scheme: dark)"/>
-  <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" media="(prefers-color-scheme: light)"/>
-  <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" alt="sakura contributions" width="1000"/>
-</picture>
+<a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
+  <picture>
+    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=dark" media="(prefers-color-scheme: dark)"/>
+    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" media="(prefers-color-scheme: light)"/>
+    <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" alt="sakura contributions" width="1000"/>
+  </picture>
+</a>
 ```
 2. Replace `your-github-username` with your GitHub username
 3. Paste into your README
@@ -74,11 +78,13 @@ jobs:
 3. Paste into the file you just created
 4. Copy the code below
 ```markdown
-<picture>
-  <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden-dark.svg" media="(prefers-color-scheme: dark)" width="1000"/>
-  <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" media="(prefers-color-scheme: light)" width="1000"/>
-  <img src="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" alt="sakura garden" width="1000"/>
-</picture>
+<a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
+  <picture>
+    <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden-dark.svg" media="(prefers-color-scheme: dark)" width="1000"/>
+    <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" media="(prefers-color-scheme: light)" width="1000"/>
+    <img src="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" alt="sakura garden" width="1000"/>
+  </picture>
+</a>
 ```
 5. Replace `your-github-username` with your GitHub username
 6. Paste into your README
