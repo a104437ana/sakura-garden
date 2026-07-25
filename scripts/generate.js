@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const FONT_FAMILY = "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif";
 
 function getLevel(count) {
   if (count === 0) return 0;
@@ -69,13 +70,13 @@ function generateSVG(weeks, theme) {
   let monthLabels = '';
   monthMarkers.forEach(({ m, wi }) => {
     const x = paddingLeft + wi * step;
-    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isDark ? '#ffffff' : '#000000'}" font-family="monospace">${MONTHS[m]}</text>`;
+    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}">${MONTHS[m]}</text>`;
   });
 
   const dayNames = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
   let dayLabels = '';
   dayNames.forEach((d, i) => {
-    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isDark ? '#ffffff' : '#000000'}" font-family="monospace" text-anchor="end">${d}</text>`;
+    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
   });
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
