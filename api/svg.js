@@ -24,15 +24,16 @@ function generateSVG(weeks, theme, username, total, year) {
   const flowerPetal = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
   const flowerCenter = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
 
-  function flower(cx, cy, level) {
+  // wi = índice da semana (coluna), dow = dia da semana (linha) — usados para o delay do bloom
+  function flower(cx, cy, level, wi, dow) {
     const fc = flowerPetal[level];
     const cc = flowerCenter[level];
-    let out = `<g transform="translate(${cx},${cy})">`;
+    const delay = wi * 20 + dow * 10;
+    let petals = '';
     for (let a = 0; a < 5; a++) {
-      out += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
+      petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
     }
-    out += `<circle cx="0" cy="0" r="1.8" fill="${cc}"/></g>`;
-    return out;
+    return `<g transform="translate(${cx},${cy})"><g class="bloom" style="animation-delay:${delay}ms">${petals}<circle cx="0" cy="0" r="1.8" fill="${cc}"/></g></g>`;
   }
 
   const cellSize = 11, gap = 2, step = cellSize + gap;
@@ -63,7 +64,7 @@ function generateSVG(weeks, theme, username, total, year) {
       const x = paddingLeft + wi * step;
       const y = paddingTop + dow * step;
       if (day.contributionCount > 0) {
-        cells += flower(x + cellSize / 2, y + cellSize / 2, getLevel(day.contributionCount));
+        cells += flower(x + cellSize / 2, y + cellSize / 2, getLevel(day.contributionCount), wi, dow);
       } else {
         cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44 ' : '#37ff00b9'}" stroke-width="0.8" />`;
       }
@@ -82,7 +83,23 @@ function generateSVG(weeks, theme, username, total, year) {
     if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
   });
 
+  const style = `
+  <style>
+    @keyframes bloom {
+      0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .bloom {
+      transform-origin: 0px 0px;
+      animation: bloom 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bloom { animation: none; }
+    }
+  </style>`;
+
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  ${style}
   <rect width="${W}" height="${H}" rx="10" fill="${colors.bg}" />
   ${monthLabels}
   ${dayLabels}
