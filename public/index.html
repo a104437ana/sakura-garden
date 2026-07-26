@@ -95,26 +95,7 @@
       z-index: 0;
     }
 
-    /* ─── DECORATIVE GIANT BLOOMS ───────────────────────────────── */
-    .deco-bloom {
-      position: fixed;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.09;
-      transition: opacity 0.25s;
-    }
-    [data-theme="light"] .deco-bloom { opacity: 0.14; }
-    .deco-bloom svg ellipse { fill: var(--accent); transition: fill 0.25s; }
-    .deco-bloom svg circle { fill: var(--accent); opacity: 0.55; transition: fill 0.25s; }
-    .deco-bloom--tl { top: -90px; left: -90px; width: 280px; height: 280px; transform: rotate(-18deg); }
-    .deco-bloom--br { bottom: -110px; right: -110px; width: 340px; height: 340px; transform: rotate(24deg); }
-    .deco-bloom--tr { top: -50px; right: 40px; width: 150px; height: 150px; transform: rotate(-32deg); opacity: 0.07; }
-    .deco-bloom--bl { bottom: -60px; left: 60px; width: 210px; height: 210px; transform: rotate(38deg); opacity: 0.08; }
-    .deco-bloom--float { top: 42%; left: -55px; width: 130px; height: 130px; transform: rotate(58deg); opacity: 0.06; }
-    [data-theme="light"] .deco-bloom--tr { opacity: 0.11; }
-    [data-theme="light"] .deco-bloom--bl { opacity: 0.12; }
-    [data-theme="light"] .deco-bloom--float { opacity: 0.1; }
-
+    /* ─── DECORATIVE GIANT BLOOMS (card only) ───────────────────── */
     .deco-bloom--inner {
       position: absolute;
       top: -40px;
@@ -146,7 +127,6 @@
     .deco-bloom--inner2 svg circle { fill: var(--accent); opacity: 0.55; transition: fill 0.25s; }
 
     @media (max-width: 812px) {
-      .deco-bloom--tl, .deco-bloom--br, .deco-bloom--tr, .deco-bloom--bl, .deco-bloom--float { display: none; }
       .deco-bloom--inner { width: 150px; height: 150px; top: -25px; right: -25px; opacity: 0.06; }
       .deco-bloom--inner2 { display: none; }
     }
@@ -317,7 +297,7 @@
     .search-input {
       flex: 1;
       background: var(--surface2);
-      border: 1px solid var(--border2);
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border2));
       border-radius: 6px;
       padding: 0.65rem 1rem;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
@@ -329,7 +309,7 @@
     .search-input::placeholder { color: var(--text3); }
     .search-input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
     }
     .search-btn {
       background: transparent;
@@ -569,77 +549,228 @@
       .search-btn { width: 100%; }
       .theme-label { display: none; }
     }
+
+    /* ─── BACKGROUND SCENES (day / night sakura garden) ────────────── */
+    .bg-scene {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .bg-scene svg { width: 100%; height: 100%; display: block; }
+    [data-theme="light"] .bg-scene--day { opacity: 1; }
+    [data-theme="dark"] .bg-scene--night { opacity: 1; }
   </style>
 <base target="_blank">
 </head>
 <body>
 
+<div class="bg-scene bg-scene--day" aria-hidden="true">
+  <svg viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="skyDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#a7ddff"/>
+        <stop offset="45%" stop-color="#ffe6c8"/>
+        <stop offset="100%" stop-color="#ffd3e2"/>
+      </linearGradient>
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff6cf" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#fff6cf" stop-opacity="0"/>
+      </radialGradient>
+      <symbol id="bloomFlower" viewBox="-8 -8 16 16">
+        <g fill="currentColor">
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3"/>
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3" transform="rotate(288)"/>
+        </g>
+        <circle cx="0" cy="0" r="2.1" fill="#fff" opacity="0.65"/>
+      </symbol>
+    </defs>
+    <rect width="1440" height="810" fill="url(#skyDay)"/>
+    <!-- discreet sun tucked in the corner -->
+    <circle cx="1360" cy="70" r="90" fill="url(#sunGlow)"/>
+    <circle cx="1360" cy="70" r="28" fill="#ffe6a3" opacity="0.9"/>
+    <path d="M0,560 C250,505 500,565 760,525 C1000,495 1250,545 1440,505 L1440,810 L0,810 Z" fill="#c3ecae"/>
+    <path d="M0,625 C300,585 600,650 900,605 C1150,565 1300,625 1440,595 L1440,810 L0,810 Z" fill="#a2dd8c"/>
+    <path d="M0,780 C300,760 600,795 900,770 C1100,755 1300,780 1440,765 L1440,810 L0,810 Z" fill="#8fd177"/>
+    <g id="groundFlowersDay">
+      <line x1="90" y1="700" x2="90" y2="666" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="79" y="654" width="22" height="22" color="#ff9fc2"/>
+      <line x1="170" y1="650" x2="170" y2="620" stroke="#5fa347" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlower" x="160" y="609" width="20" height="20" color="#ff85b3"/>
+      <line x1="230" y1="740" x2="230" y2="700" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="217" y="686" width="26" height="26" color="#ff9fc2"/>
+      <line x1="310" y1="600" x2="310" y2="574" stroke="#5fa347" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlower" x="301" y="564" width="18" height="18" color="#ff85b3"/>
+      <line x1="60" y1="770" x2="60" y2="735" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="49" y="723" width="22" height="22" color="#ff85b3"/>
+      <line x1="400" y1="690" x2="400" y2="656" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="388" y="643" width="24" height="24" color="#ffb3cc"/>
+      <line x1="470" y1="630" x2="470" y2="604" stroke="#5fa347" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlower" x="461" y="594" width="18" height="18" color="#ff9fc2"/>
+      <line x1="540" y1="760" x2="540" y2="723" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="527" y="709" width="26" height="26" color="#ff85b3"/>
+      <line x1="600" y1="695" x2="600" y2="662" stroke="#5fa347" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlower" x="588" y="649" width="24" height="24" color="#ffb3cc"/>
+      <line x1="650" y1="605" x2="650" y2="580" stroke="#5fa347" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlower" x="642" y="571" width="16" height="16" color="#ff85b3"/>
+      <line x1="700" y1="745" x2="700" y2="706" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="687" y="692" width="26" height="26" color="#ff9fc2"/>
+      <line x1="790" y1="655" x2="790" y2="626" stroke="#5fa347" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlower" x="779" y="614" width="22" height="22" color="#ff85b3"/>
+      <line x1="850" y1="600" x2="850" y2="578" stroke="#5fa347" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlower" x="841" y="568" width="18" height="18" color="#ffb3cc"/>
+      <line x1="900" y1="775" x2="900" y2="737" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="886" y="722" width="28" height="28" color="#ff85b3"/>
+      <line x1="960" y1="700" x2="960" y2="666" stroke="#5fa347" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlower" x="948" y="653" width="24" height="24" color="#ff9fc2"/>
+      <line x1="1030" y1="620" x2="1030" y2="594" stroke="#5fa347" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlower" x="1021" y="584" width="18" height="18" color="#ff85b3"/>
+      <line x1="1080" y1="755" x2="1080" y2="716" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="1067" y="702" width="26" height="26" color="#ffb3cc"/>
+      <line x1="1140" y1="665" x2="1140" y2="635" stroke="#5fa347" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlower" x="1129" y="623" width="22" height="22" color="#ff85b3"/>
+      <line x1="1200" y1="610" x2="1200" y2="584" stroke="#5fa347" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlower" x="1191" y="574" width="18" height="18" color="#ff9fc2"/>
+      <line x1="1260" y1="740" x2="1260" y2="700" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="1247" y="686" width="26" height="26" color="#ff85b3"/>
+      <line x1="1320" y1="680" x2="1320" y2="648" stroke="#5fa347" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlower" x="1309" y="636" width="22" height="22" color="#ffb3cc"/>
+      <line x1="1370" y1="770" x2="1370" y2="732" stroke="#5fa347" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlower" x="1357" y="718" width="26" height="26" color="#ff85b3"/>
+      <line x1="1390" y1="620" x2="1390" y2="594" stroke="#5fa347" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlower" x="1381" y="584" width="18" height="18" color="#ff9fc2"/>
+    </g>
+    <!-- a few discreet blossoms drifting near the edges -->
+    <use href="#bloomFlower" x="60" y="240" width="26" height="26" color="#ff9fc2" opacity="0.5"/>
+    <use href="#bloomFlower" x="1330" y="320" width="22" height="22" color="#ffb3cc" opacity="0.45"/>
+    <use href="#bloomFlower" x="1120" y="140" width="18" height="18" color="#ff85b3" opacity="0.4"/>
+  </svg>
+</div>
+
+<div class="bg-scene bg-scene--night" aria-hidden="true">
+  <svg viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#080c22"/>
+        <stop offset="40%" stop-color="#1c1c3e"/>
+        <stop offset="72%" stop-color="#2b3350"/>
+        <stop offset="100%" stop-color="#33475a"/>
+      </linearGradient>
+      <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#cbc7a8" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#cbc7a8" stop-opacity="0"/>
+      </radialGradient>
+      <symbol id="bloomFlowerNight" viewBox="-8 -8 16 16">
+        <g fill="currentColor">
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3"/>
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-4" rx="2.6" ry="4.3" transform="rotate(288)"/>
+        </g>
+        <circle cx="0" cy="0" r="2.1" fill="#fff" opacity="0.35"/>
+      </symbol>
+    </defs>
+    <rect width="1440" height="810" fill="url(#skyNight)"/>
+    <g fill="#ffffff">
+      <circle cx="140" cy="90" r="1.6" opacity="0.8"/>
+      <circle cx="260" cy="150" r="1.2" opacity="0.6"/>
+      <circle cx="420" cy="70" r="1.8" opacity="0.9"/>
+      <circle cx="560" cy="180" r="1.3" opacity="0.7"/>
+      <circle cx="680" cy="60" r="1.5" opacity="0.75"/>
+      <circle cx="830" cy="130" r="1.2" opacity="0.6"/>
+      <circle cx="330" cy="230" r="1.1" opacity="0.55"/>
+      <circle cx="60" cy="220" r="1.4" opacity="0.7"/>
+      <circle cx="960" cy="90" r="1.3" opacity="0.65"/>
+      <circle cx="1050" cy="200" r="1.1" opacity="0.55"/>
+    </g>
+    <!-- discreet moon tucked in the corner, softer tone -->
+    <circle cx="80" cy="65" r="70" fill="url(#moonGlow)"/>
+    <circle cx="80" cy="65" r="26" fill="#d9d4b0" opacity="0.85"/>
+    <circle cx="72" cy="55" r="4.5" fill="#c3bd97" opacity="0.5"/>
+    <circle cx="90" cy="72" r="6" fill="#c3bd97" opacity="0.4"/>
+    <path d="M0,560 C250,510 500,565 760,530 C1000,500 1250,545 1440,510 L1440,810 L0,810 Z" fill="#182c3a"/>
+    <path d="M0,625 C300,590 600,650 900,610 C1150,575 1300,625 1440,600 L1440,810 L0,810 Z" fill="#1c3329"/>
+    <path d="M0,780 C300,760 600,795 900,770 C1100,755 1300,780 1440,765 L1440,810 L0,810 Z" fill="#22402b"/>
+    <g id="groundFlowersNight">
+      <line x1="90" y1="700" x2="90" y2="667" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="80" y="656" width="20" height="20" color="#7f2440"/>
+      <line x1="170" y1="650" x2="170" y2="621" stroke="#4a7a44" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="161" y="611" width="18" height="18" color="#6b1f35"/>
+      <line x1="230" y1="740" x2="230" y2="700" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="218" y="687" width="24" height="24" color="#8a2846"/>
+      <line x1="310" y1="600" x2="310" y2="574" stroke="#4a7a44" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="302" y="565" width="16" height="16" color="#7f2440"/>
+      <line x1="60" y1="770" x2="60" y2="736" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="50" y="725" width="20" height="20" color="#6b1f35"/>
+      <line x1="400" y1="690" x2="400" y2="657" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="389" y="645" width="22" height="22" color="#8a2846"/>
+      <line x1="470" y1="630" x2="470" y2="605" stroke="#4a7a44" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="462" y="596" width="16" height="16" color="#7f2440"/>
+      <line x1="540" y1="760" x2="540" y2="724" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="528" y="711" width="24" height="24" color="#6b1f35"/>
+      <line x1="600" y1="695" x2="600" y2="663" stroke="#4a7a44" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="589" y="651" width="22" height="22" color="#8a2846"/>
+      <line x1="650" y1="605" x2="650" y2="581" stroke="#4a7a44" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="643" y="573" width="14" height="14" color="#7f2440"/>
+      <line x1="700" y1="745" x2="700" y2="707" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="688" y="694" width="24" height="24" color="#6b1f35"/>
+      <line x1="790" y1="655" x2="790" y2="627" stroke="#4a7a44" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="780" y="616" width="20" height="20" color="#8a2846"/>
+      <line x1="850" y1="600" x2="850" y2="579" stroke="#4a7a44" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="842" y="570" width="16" height="16" color="#7f2440"/>
+      <line x1="900" y1="775" x2="900" y2="738" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="887" y="724" width="26" height="26" color="#6b1f35"/>
+      <line x1="960" y1="700" x2="960" y2="667" stroke="#4a7a44" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="949" y="655" width="22" height="22" color="#8a2846"/>
+      <line x1="1030" y1="620" x2="1030" y2="595" stroke="#4a7a44" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="1022" y="586" width="16" height="16" color="#7f2440"/>
+      <line x1="1080" y1="755" x2="1080" y2="717" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="1068" y="704" width="24" height="24" color="#6b1f35"/>
+      <line x1="1140" y1="665" x2="1140" y2="636" stroke="#4a7a44" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="1130" y="625" width="20" height="20" color="#8a2846"/>
+      <line x1="1200" y1="610" x2="1200" y2="585" stroke="#4a7a44" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="1192" y="576" width="16" height="16" color="#7f2440"/>
+      <line x1="1260" y1="740" x2="1260" y2="701" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="1248" y="688" width="24" height="24" color="#6b1f35"/>
+      <line x1="1320" y1="680" x2="1320" y2="649" stroke="#4a7a44" stroke-width="2.2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="1310" y="638" width="20" height="20" color="#8a2846"/>
+      <line x1="1370" y1="770" x2="1370" y2="733" stroke="#4a7a44" stroke-width="2.4" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="1358" y="720" width="24" height="24" color="#6b1f35"/>
+      <line x1="1390" y1="620" x2="1390" y2="595" stroke="#4a7a44" stroke-width="2" opacity="0.85"/>
+      <use href="#bloomFlowerNight" x="1382" y="586" width="16" height="16" color="#7f2440"/>
+    </g>
+    <!-- a few discreet blossoms drifting near the edges -->
+    <use href="#bloomFlowerNight" x="60" y="240" width="26" height="26" color="#7f2440" opacity="0.4"/>
+    <use href="#bloomFlowerNight" x="1330" y="320" width="22" height="22" color="#6b1f35" opacity="0.35"/>
+    <use href="#bloomFlowerNight" x="1120" y="140" width="18" height="18" color="#8a2846" opacity="0.3"/>
+    <g fill="#4a7a44" opacity="0.7">
+      <path d="M40,805 Q43,782 47,803 Z"/>
+      <path d="M120,807 Q124,788 128,805 Z"/>
+      <path d="M250,798 Q253,776 257,796 Z"/>
+      <path d="M340,800 Q344,780 348,798 Z"/>
+      <path d="M430,793 Q433,770 437,791 Z"/>
+      <path d="M520,796 Q524,775 528,794 Z"/>
+      <path d="M610,792 Q613,768 617,790 Z"/>
+      <path d="M710,795 Q714,774 718,793 Z"/>
+      <path d="M800,799 Q803,777 807,797 Z"/>
+      <path d="M890,802 Q894,782 898,800 Z"/>
+      <path d="M980,798 Q983,776 987,796 Z"/>
+      <path d="M1080,806 Q1083,785 1087,804 Z"/>
+      <path d="M1170,795 Q1174,772 1178,793 Z"/>
+      <path d="M1260,800 Q1263,780 1267,798 Z"/>
+      <path d="M1350,798 Q1354,776 1358,796 Z"/>
+      <path d="M1420,806 Q1423,785 1427,804 Z"/>
+    </g>
+  </svg>
+</div>
+
 <div id="tooltip"></div>
-
-<div class="deco-bloom deco-bloom--tl" aria-hidden="true">
-  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
-    <g>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="13"/>
-    </g>
-  </svg>
-</div>
-
-<div class="deco-bloom deco-bloom--br" aria-hidden="true">
-  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
-    <g>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="13"/>
-    </g>
-  </svg>
-</div>
-
-<div class="deco-bloom deco-bloom--tr" aria-hidden="true">
-  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
-    <g>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="13"/>
-    </g>
-  </svg>
-</div>
-
-<div class="deco-bloom deco-bloom--bl" aria-hidden="true">
-  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
-    <g>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="13"/>
-    </g>
-  </svg>
-</div>
-
-<div class="deco-bloom deco-bloom--float" aria-hidden="true">
-  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
-    <g>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
-      <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
-      <circle cx="0" cy="0" r="13"/>
-    </g>
-  </svg>
-</div>
 
 <div class="wrapper">
   <div class="readme-bar">
@@ -654,20 +785,6 @@
   </div>
 
   <div class="readme-body">
-
-    <div class="deco-bloom--inner" aria-hidden="true">
-      <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
-          <circle cx="0" cy="0" r="13"/>
-        </g>
-      </svg>
-    </div>
-
     <div class="hero-flex">
       <div class="hero-main">
         <h1 class="md-h1"><span class="highlight">sakura</span> <span class="garden-word">garden</span></h1>
@@ -689,20 +806,6 @@
         loading example…
       </div>
     </div>
-
-    <div class="deco-bloom--inner2" aria-hidden="true">
-      <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(0)"/>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(72)"/>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(144)"/>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(216)"/>
-          <ellipse cx="0" cy="-24" rx="15" ry="26" transform="rotate(288)"/>
-          <circle cx="0" cy="0" r="13"/>
-        </g>
-      </svg>
-    </div>
-
     <div class="about-section">
       <span>made with 🌸</span>
     </div>
