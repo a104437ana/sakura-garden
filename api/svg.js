@@ -13,7 +13,7 @@ function getLevel(count) {
   return 4;
 }
 
-function generateSVG(weeks, theme, username, total, year) {
+function generateSVG(weeks, theme, username, total, year, animate) {
   const isDark = theme === 'dark';
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
@@ -28,11 +28,14 @@ function generateSVG(weeks, theme, username, total, year) {
   function flower(cx, cy, level, wi, dow) {
     const fc = flowerPetal[level];
     const cc = flowerCenter[level];
-    const delay = wi * 20 + dow * 10;
     let petals = '';
     for (let a = 0; a < 5; a++) {
       petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
     }
+    if (!animate) {
+      return `<g transform="translate(${cx},${cy})">${petals}<circle cx="0" cy="0" r="1.8" fill="${cc}"/></g>`;
+    }
+    const delay = wi * 20 + dow * 10;
     return `<g transform="translate(${cx},${cy})"><g class="bloom" style="animation-delay:${delay}ms">${petals}<circle cx="0" cy="0" r="1.8" fill="${cc}"/></g></g>`;
   }
 
@@ -83,7 +86,7 @@ function generateSVG(weeks, theme, username, total, year) {
     if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
   });
 
-  const style = `
+  const style = animate ? `
   <style>
     @keyframes bloom {
       0% { transform: scale(0) rotate(-15deg); opacity: 0; }
@@ -96,7 +99,7 @@ function generateSVG(weeks, theme, username, total, year) {
     @media (prefers-reduced-motion: reduce) {
       .bloom { animation: none; }
     }
-  </style>`;
+  </style>` : '';
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   ${style}
@@ -112,6 +115,7 @@ export default async function handler(req) {
   const username = searchParams.get('username');
   const year = searchParams.get('year') || new Date().getFullYear();
   const theme = searchParams.get('theme') === 'dark' ? 'dark' : 'light';
+  const animate = searchParams.get('animate') !== 'false';
 
   if (!username) {
     return new Response('Username required', { status: 400 });
@@ -168,7 +172,7 @@ export default async function handler(req) {
     }
 
     const cal = data.data.user.contributionsCollection.contributionCalendar;
-    const svg = generateSVG(cal.weeks, theme, username, cal.totalContributions, year);
+    const svg = generateSVG(cal.weeks, theme, username, cal.totalContributions, year, animate);
 
     return new Response(svg, {
       status: 200,

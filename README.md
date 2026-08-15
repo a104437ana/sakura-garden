@@ -99,6 +99,15 @@ jobs:
 - 💻 Dedicated [website](https://sakura-garden.vercel.app) to generate and view your garden
 - 🎬 Flowers bloom in one by one when the image loads
 
+## API
+You can also hit the API directly to generate the image, without going through the site:
+
+`https://sakura-garden.vercel.app/api/svg?username=YOUR_USERNAME&theme=dark|light&animate=true|false`
+
+- `username` — your GitHub username
+- `theme` — `dark` or `light`
+- `animate` — set to `false` to disable the flower bloom-in animation (default `true`)
+
 ## Support
 If you like this project, please consider giving it a star ⭐
 
