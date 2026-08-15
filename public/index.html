@@ -397,13 +397,12 @@
       width: 13px; height: 13px;
       border-radius: 2px;
       background: transparent;
-      border: 1px solid var(--cell-empty);
       cursor: pointer;
       transition: opacity 0.1s, transform 0.1s;
       position: relative;
     }
     .day-cell:hover { opacity: 0.85; transform: scale(1.35); z-index: 5; }
-    .day-cell.bloom-cell { border: none; }
+    .day-cell.zero svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
     /* Bloom entrance animation */
     @keyframes bloom {
@@ -984,7 +983,7 @@ function buildGraph(weeks) {
           const delay = wi * 20 + i * 10;
           weeksHtml += `<div class="day-cell bloom-cell" data-count="${count}" data-date="${day.date}" style="--delay:${delay}ms">${makePetal(level, fill, center)}</div>`;
         } else {
-          weeksHtml += `<div class="day-cell zero" data-count="0" data-date="${day.date}"></div>`;
+          weeksHtml += `<div class="day-cell zero" data-count="0" data-date="${day.date}"><svg viewBox="0 0 11 11"><rect x="0" y="0" width="11" height="11" rx="2" fill="transparent" stroke="var(--cell-empty)" stroke-width="0.8"/></svg></div>`;
         }
       } else {
         weeksHtml += `<div class="day-cell" style="visibility:hidden"></div>`;
