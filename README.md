@@ -97,6 +97,7 @@ jobs:
 - 🌗 Supports both light and dark themes
 - ⚡ Easy to integrate into any README or portfolio
 - 💻 Dedicated [website](https://sakura-garden.vercel.app) to generate and view your garden
+- 🎬 Flowers bloom in one by one when the image loads
 
 ## Support
 If you like this project, please consider giving it a star ⭐
