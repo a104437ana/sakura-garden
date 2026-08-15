@@ -101,5 +101,8 @@ jobs:
 ## Support
 If you like this project, please consider giving it a star ⭐
 
+## Also check out
+Want your GitHub contributions graph in any color/theme? Check out [gitcolors](https://gitcolors.vercel.app/)
+
 ## Stars
 [![GitHub stars](https://img.shields.io/github/stars/a104437ana/sakura-garden?style=social&label=Stars)](https://github.com/a104437ana/sakura-garden/stargazers/)

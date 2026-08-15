@@ -514,6 +514,19 @@
     }
     .demo-star-btn-icon { font-size: 0.95rem; line-height: 1; }
 
+    .gitcolors-note {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: var(--text3);
+    }
+    .gitcolors-note a {
+      font-weight: 700;
+      color: var(--text2);
+      text-decoration: underline;
+    }
+    .gitcolors-note a:hover { color: var(--text); }
+
     .about-section {
       margin-top: 2.5rem; padding-top: 0;
       font-size: 0.75rem; color: var(--text3);
@@ -1027,6 +1040,9 @@ function renderResult(data, username, isDemo) {
         <span class="demo-star-btn-icon">⭐</span>
         <span>Check out the project on GitHub and consider giving it a star</span>
       </a>
+    </div>
+    <div class="gitcolors-note">
+      Want your GitHub contributions graph in any color/theme? Check out <a href="https://gitcolors.vercel.app/" target="_blank">gitcolors</a>
     </div>
   `;
 
