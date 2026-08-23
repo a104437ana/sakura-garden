@@ -20,6 +20,8 @@ See your garden here: https://sakura-garden.vercel.app
 3. Copy the garden
 4. Paste into your README
 
+![Quick setup demo](https://sakura-garden.vercel.app/quick-setup-demo.gif)
+
 ## 🔧 Manual Setup
 1. Copy the code below  
 ```markdown
