@@ -19,6 +19,7 @@ See your garden here: https://sakura-garden.vercel.app
 2. Enter your GitHub username  
 3. Copy the garden
 4. Paste into your README
+5. Commit and push
 
 <img src="https://sakura-garden.vercel.app/quick-setup-demo.gif" alt="Quick setup demo" loading="lazy"/>
 
