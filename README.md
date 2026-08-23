@@ -9,7 +9,7 @@ See your garden here: https://sakura-garden.vercel.app
 <picture>
   <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=dark" media="(prefers-color-scheme: dark)" width="846" height="164"/>
   <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" media="(prefers-color-scheme: light)" width="846" height="164"/>
-  <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" width="846" height="164"/>
+  <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" width="846" height="164" loading="eager"/>
 </picture>
 </a>
 
@@ -20,7 +20,7 @@ See your garden here: https://sakura-garden.vercel.app
 3. Copy the garden
 4. Paste into your README
 
-![Quick setup demo](https://sakura-garden.vercel.app/quick-setup-demo.gif)
+<img src="https://sakura-garden.vercel.app/quick-setup-demo.gif" alt="Quick setup demo" loading="lazy"/>
 
 ## 🔧 Manual Setup
 1. Copy the code below  
