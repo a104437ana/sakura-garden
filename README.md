@@ -21,7 +21,9 @@ See your garden here: https://sakura-garden.vercel.app
 4. Paste into your README
 5. Commit and push
 
+<a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
 <img src="https://sakura-garden.vercel.app/quick-setup-demo.gif" alt="Quick setup demo" loading="lazy"/>
+</a>
 
 ## 🔧 Manual Setup
 1. Copy the code below  
