@@ -13,6 +13,15 @@ See your garden here: https://sakura-garden.vercel.app
 </picture>
 </a>
 
+## Features
+- 🌸 Transforms your GitHub contributions into a beautiful garden
+- :octocat: Updates automatically based on your GitHub activity
+- 🌗 Supports both light and dark themes
+- 📱 Looks good on desktop and mobile
+- ⚡ Easy to integrate into any README or portfolio
+- 💻 Dedicated [website](https://sakura-garden.vercel.app) to generate and view your garden
+- 🎬 Flowers bloom in one by one when the image loads
+
 ## ⚡ Quick Setup
 
 1. Go to https://sakura-garden.vercel.app  
@@ -95,14 +104,6 @@ jobs:
 6. Paste into your README
 
 ⚠️ The garden may take a minute to appear after the workflow runs for the first time, but after that it will always be there and update automatically every day based on your GitHub activity
-
-## Features
-- 🌸 Transforms your GitHub contributions into a beautiful garden
-- :octocat: Updates automatically based on your GitHub activity
-- 🌗 Supports both light and dark themes
-- ⚡ Easy to integrate into any README or portfolio
-- 💻 Dedicated [website](https://sakura-garden.vercel.app) to generate and view your garden
-- 🎬 Flowers bloom in one by one when the image loads
 
 ## API
 You can also hit the API directly to generate the image, without going through the site:
