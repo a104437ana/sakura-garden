@@ -1095,6 +1095,7 @@ function fitGraphToContainer() {
   if (!container || !scrollEl) return;
   scrollEl.style.transform = '';
   scrollEl.style.marginBottom = '';
+  container.style.overflowX = '';
   const pad = 32; // matches .graph-container's left+right padding (1rem each)
   const available = container.clientWidth - pad;
   const natural = scrollEl.scrollWidth;
@@ -1103,6 +1104,9 @@ function fitGraphToContainer() {
     scrollEl.style.transformOrigin = 'top left';
     scrollEl.style.transform = `scale(${scale})`;
     scrollEl.style.marginBottom = `${-scrollEl.scrollHeight * (1 - scale)}px`;
+    // transform doesn't shrink the layout box, so the container would still
+    // think it overflows and offer a scrollbar that reveals nothing — disable it.
+    container.style.overflowX = 'hidden';
   }
 }
 
