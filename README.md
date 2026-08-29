@@ -7,9 +7,9 @@ See your garden here: https://sakura-garden.vercel.app
 
 <a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
 <picture>
-  <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=dark" media="(prefers-color-scheme: dark)" width="846" height="164"/>
-  <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" media="(prefers-color-scheme: light)" width="846" height="164"/>
-  <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" width="846" height="164" loading="eager"/>
+  <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=dark" media="(prefers-color-scheme: dark)" width="846" height="164" style="height:auto"/>
+  <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" media="(prefers-color-scheme: light)" width="846" height="164" style="height:auto"/>
+  <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" width="846" height="164" style="height:auto" loading="eager"/>
 </picture>
 </a>
 
@@ -32,7 +32,7 @@ See your garden here: https://sakura-garden.vercel.app
   <picture>
     <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=dark" media="(prefers-color-scheme: dark)"/>
     <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" media="(prefers-color-scheme: light)"/>
-    <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" width="846" height="164"/>
+    <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" width="846" height="164" style="height:auto"/>
   </picture>
 </a>
 ```
@@ -85,9 +85,9 @@ jobs:
 ```markdown
 <a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
   <picture>
-    <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden-dark.svg" media="(prefers-color-scheme: dark)" width="846" height="164"/>
-    <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" media="(prefers-color-scheme: light)" width="846" height="164"/>
-    <img src="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" width="846" height="164"/>
+    <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden-dark.svg" media="(prefers-color-scheme: dark)" width="846" height="164" style="height:auto"/>
+    <source srcset="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" media="(prefers-color-scheme: light)" width="846" height="164" style="height:auto"/>
+    <img src="https://raw.githubusercontent.com/your-github-username/your-github-username/output/sakura-garden.svg" width="846" height="164" style="height:auto"/>
   </picture>
 </a>
 ```
