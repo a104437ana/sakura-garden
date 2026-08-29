@@ -882,6 +882,7 @@ function refreshGraph() {
   container.innerHTML = `${buildGraph(lastWeeksData)}<div class="legend-row" id="graphLegend"></div>`;
   setupTooltips();
   updateLegend();
+  fitGraphToContainer();
 }
 
 function applyLiveColor(hex) {
@@ -1084,8 +1085,32 @@ function renderResult(data, username, isDemo) {
 
   setupTooltips();
   updateLegend();
+  fitGraphToContainer();
   if (!isDemo) updateEmbedCode();
 }
+
+function fitGraphToContainer() {
+  const container = document.querySelector('.graph-container');
+  const scrollEl = container && container.querySelector('.graph-scroll');
+  if (!container || !scrollEl) return;
+  scrollEl.style.transform = '';
+  scrollEl.style.marginBottom = '';
+  const pad = 32; // matches .graph-container's left+right padding (1rem each)
+  const available = container.clientWidth - pad;
+  const natural = scrollEl.scrollWidth;
+  if (natural > available && available > 0) {
+    const scale = available / natural;
+    scrollEl.style.transformOrigin = 'top left';
+    scrollEl.style.transform = `scale(${scale})`;
+    scrollEl.style.marginBottom = `${-scrollEl.scrollHeight * (1 - scale)}px`;
+  }
+}
+
+let fitGraphResizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(fitGraphResizeTimer);
+  fitGraphResizeTimer = setTimeout(fitGraphToContainer, 100);
+});
 
 function setupTooltips() {
   const tooltip = document.getElementById('tooltip');
