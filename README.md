@@ -15,7 +15,7 @@ See your garden here: https://sakura-garden.vercel.app
 ## Features
 - 🌸 Transforms your GitHub contributions into a beautiful garden
 - :octocat: Updates automatically based on your GitHub activity
-- 🌗 Supports both light and dark themes
+- 🌗 Automatically matches light or dark mode — no need to pick one
 - 📱 Looks good on desktop and mobile
 - ⚡ Easy to integrate into any README or portfolio
 - 💻 Dedicated [website](https://sakura-garden.vercel.app) to generate and view your garden
@@ -113,11 +113,11 @@ You can also hit the API directly to generate the image, without going through t
 - `theme` — `dark` or `light`
 - `animate` — set to `false` to disable the flower bloom-in animation (default `true`)
 
-## Support
-If you like this project, please consider giving it a star ⭐
-
 ## Also check out
 Want your GitHub contributions graph in any color/theme? Check out [gitcolors](https://gitcolors.vercel.app/)
+
+## Support
+If you like this project, please consider giving it a star ⭐
 
 ## Stars
 [![GitHub stars](https://img.shields.io/github/stars/a104437ana/sakura-garden?style=social&label=Stars)](https://github.com/a104437ana/sakura-garden/stargazers/)
