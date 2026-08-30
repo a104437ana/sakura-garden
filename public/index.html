@@ -70,9 +70,9 @@
       --text3: #9898b8;
       --shadow: 0 4px 24px rgba(0,0,0,0.08);
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-      --cell-empty: #37ff00b9;
+      --cell-empty: #52c41a;
       --mono-text: #000000;
-      --garden-color: #70e261;
+      --garden-color: #52c41a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -868,7 +868,7 @@ const THEMES = {
     accent: '#ff85b3',
     getCellColor(wi, total, level) {
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if (level === 0) return { fill: 'transparent', stroke: isLight ? '#37ff00b9' : '#4a7a44', hex: '#ff85b3' };
+      if (level === 0) return { fill: 'transparent', stroke: isLight ? '#52c41a' : '#4a7a44', hex: '#ff85b3' };
       const hex = SAKURA_PETAL[level];
       return { fill: hex, stroke: hex, hex, center: SAKURA_CENTER[level] };
     },
