@@ -9,7 +9,9 @@ Turn your GitHub activity into a garden where commits bloom into flowers 🌸 an
   <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" media="(prefers-color-scheme: light)" width="846" height="164" style="height:auto"/>
   <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" width="846" height="164" style="height:auto" loading="eager"/>
 </picture>
-</a> See your garden here: https://sakura-garden.vercel.app
+</a>
+
+See your garden here: https://sakura-garden.vercel.app
 
 ## Features
 - 🌸 Transforms your GitHub contributions into a beautiful garden
