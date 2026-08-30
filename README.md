@@ -3,8 +3,6 @@
 
 Turn your GitHub activity into a garden where commits bloom into flowers 🌸 and empty days stay green 🌿
 
-See your garden here: https://sakura-garden.vercel.app
-
 <a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
 <picture>
   <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=dark" media="(prefers-color-scheme: dark)" width="846" height="164" style="height:auto"/>
@@ -12,6 +10,7 @@ See your garden here: https://sakura-garden.vercel.app
   <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" width="846" height="164" style="height:auto" loading="eager"/>
 </picture>
 </a>
+See your garden here: https://sakura-garden.vercel.app
 
 ## Features
 - 🌸 Transforms your GitHub contributions into a beautiful garden
