@@ -39,8 +39,8 @@ See your garden here: https://sakura-garden.vercel.app
 ```markdown
 <a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
   <picture>
-    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=dark" media="(prefers-color-scheme: dark)"/>
-    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" media="(prefers-color-scheme: light)"/>
+    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=dark" media="(prefers-color-scheme: dark)" width="846" height="164" style="height:auto"/>
+    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" media="(prefers-color-scheme: light)" width="846" height="164" style="height:auto"/>
     <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" width="846" height="164" style="height:auto"/>
   </picture>
 </a>

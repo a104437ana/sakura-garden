@@ -1137,7 +1137,7 @@ function getEmbedUrl(theme) {
 
 function getEmbedCode() {
   const l=getEmbedUrl('light'), d=getEmbedUrl('dark');
-  return `<a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">\n <picture>\n  <source srcset="${d}" media="(prefers-color-scheme: dark)" />\n  <source srcset="${l}" media="(prefers-color-scheme: light)" />\n  <img src="${l}" width="846" height="164" style="height:auto" />\n</picture>\n</a>`;
+  return `<a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">\n <picture>\n  <source srcset="${d}" media="(prefers-color-scheme: dark)" width="846" height="164" style="height:auto" />\n  <source srcset="${l}" media="(prefers-color-scheme: light)" width="846" height="164" style="height:auto" />\n  <img src="${l}" width="846" height="164" style="height:auto" />\n</picture>\n</a>`;
 }
 
 function updateEmbedCode() {
