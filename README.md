@@ -10,12 +10,13 @@ Turn your GitHub activity into a garden where commits bloom into flowers 🌸 an
   <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" width="846" height="164" style="height:auto" loading="eager"/>
 </picture>
 </a>
+
 See your garden here: https://sakura-garden.vercel.app
 
 ## Features
 - 🌸 Transforms your GitHub contributions into a beautiful garden
 - :octocat: Updates automatically based on your GitHub activity
-- 🌗 Supports both light and dark themes
+- 🌗 Automatically matches light or dark mode — no need to pick one
 - 📱 Looks good on desktop and mobile
 - ⚡ Easy to integrate into any README or portfolio
 - 💻 Dedicated [website](https://sakura-garden.vercel.app) to generate and view your garden
@@ -114,11 +115,12 @@ You can also hit the API directly to generate the image, without going through t
 - `animate` — set to `false` to disable the flower bloom-in animation (default `true`)
 - `levels` — set to `false` to make every flower the same, instead of shading by how active each day was (default `true`)
 
-## Support
-If you like this project, please consider giving it a star ⭐
-
 ## Also check out
 Want your GitHub contributions graph in any color/theme? Check out [gitcolors](https://gitcolors.vercel.app/)
 
+## Support
+If you like this project, please consider giving it a star ⭐
+
 ## Stars
-[![GitHub stars](https://img.shields.io/github/stars/a104437ana/sakura-garden?style=social&label=Stars)](https://github.com/a104437ana/sakura-garden/stargazers/)
+[![a104437ana/sakura-garden stars](https://repo-stars.vercel.app/api/stars-badge?repo=a104437ana%2Fsakura-garden)](https://github.com/a104437ana/sakura-garden/stargazers)
+[![a104437ana/sakura-garden stars](https://repo-stars.vercel.app/api/svg?repo=a104437ana%2Fsakura-garden)](https://github.com/a104437ana/sakura-garden/stargazers)
