@@ -107,11 +107,12 @@ jobs:
 ## API
 You can also hit the API directly to generate the image, without going through the site:
 
-`https://sakura-garden.vercel.app/api/svg?username=YOUR_USERNAME&theme=dark|light&animate=true|false`
+`https://sakura-garden.vercel.app/api/svg?username=YOUR_USERNAME&theme=dark|light&animate=true|false&levels=true|false`
 
 - `username` — your GitHub username
 - `theme` — `dark` or `light`
 - `animate` — set to `false` to disable the flower bloom-in animation (default `true`)
+- `levels` — set to `false` to make every flower the same, instead of shading by how active each day was (default `true`)
 
 ## Support
 If you like this project, please consider giving it a star ⭐

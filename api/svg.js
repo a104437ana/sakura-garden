@@ -13,7 +13,7 @@ function getLevel(count) {
   return 4;
 }
 
-function generateSVG(weeks, theme, username, total, year, animate) {
+function generateSVG(weeks, theme, username, total, year, animate, levels) {
   const isDark = theme === 'dark';
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
@@ -23,11 +23,13 @@ function generateSVG(weeks, theme, username, total, year, animate) {
 
   const flowerPetal = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
   const flowerCenter = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
+  const UNIFORM_PETAL = '#ff2f7e';
+  const UNIFORM_CENTER = '#ffcfe2';
 
   // wi = índice da semana (coluna), dow = dia da semana (linha) — usados para o delay do bloom
   function flower(cx, cy, level, wi, dow) {
-    const fc = flowerPetal[level];
-    const cc = flowerCenter[level];
+    const fc = levels ? flowerPetal[level] : UNIFORM_PETAL;
+    const cc = levels ? flowerCenter[level] : UNIFORM_CENTER;
     let petals = '';
     for (let a = 0; a < 5; a++) {
       petals += `<ellipse cx="0" cy="-3.2" rx="2.2" ry="3.5" fill="${fc}" transform="rotate(${a * 72})"/>`;
@@ -116,6 +118,7 @@ export default async function handler(req) {
   const year = searchParams.get('year') || new Date().getFullYear();
   const theme = searchParams.get('theme') === 'dark' ? 'dark' : 'light';
   const animate = searchParams.get('animate') !== 'false';
+  const levels = searchParams.get('levels') !== 'false';
 
   if (!username) {
     return new Response('Username required', { status: 400 });
@@ -172,7 +175,7 @@ export default async function handler(req) {
     }
 
     const cal = data.data.user.contributionsCollection.contributionCalendar;
-    const svg = generateSVG(cal.weeks, theme, username, cal.totalContributions, year, animate);
+    const svg = generateSVG(cal.weeks, theme, username, cal.totalContributions, year, animate, levels);
 
     return new Response(svg, {
       status: 200,
