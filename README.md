@@ -122,5 +122,5 @@ Want your GitHub contributions graph in any color/theme? Check out [gitcolors](h
 If you like this project, please consider giving it a star ⭐
 
 ## Stars
-[![a104437ana/sakura-garden stars](https://repo-stars.vercel.app/api/stars-badge?repo=a104437ana%2Fsakura-garden)](https://github.com/a104437ana/sakura-garden/stargazers)
-[![a104437ana/sakura-garden stars](https://repo-stars.vercel.app/api/svg?repo=a104437ana%2Fsakura-garden)](https://github.com/a104437ana/sakura-garden/stargazers)
+[![a104437ana/sakura-garden stars](https://repo-stars.vercel.app/api/stars-badge?repo=a104437ana%2Fsakura-garden)](https://repo-stars.vercel.app)
+[![a104437ana/sakura-garden stars](https://repo-stars.vercel.app/api/svg?repo=a104437ana%2Fsakura-garden)](https://repo-stars.vercel.app)
