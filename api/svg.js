@@ -22,6 +22,7 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
   const autoEmptyStroke = '#ff6b9d';
   const autoEmptyOpacity = 0.45;
   const autoGreenEmptyStroke = '#268a52';
+  const autoGreenEmptyOpacity = 0.45;
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
@@ -81,7 +82,7 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
         cells += isAuto
           ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${autoEmptyStroke}" stroke-opacity="${autoEmptyOpacity}" stroke-width="0.8" />`
           : isAutoGreen
-          ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${autoGreenEmptyStroke}" stroke-width="0.8" />`
+          ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${autoGreenEmptyStroke}" stroke-opacity="${autoGreenEmptyOpacity}" stroke-width="0.8" />`
           : `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44' : '#52c41a'}" stroke-width="0.8" />`;
       }
     });
