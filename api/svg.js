@@ -22,7 +22,7 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
   const autoEmptyStroke = '#ff6b9d';
   const autoEmptyOpacity = 0.45;
   const autoGreenEmptyStroke = '#268a52';
-  const autoGreenEmptyOpacity = 0.45;
+  const autoGreenEmptyOpacity = 0.7;
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
