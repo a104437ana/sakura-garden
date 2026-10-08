@@ -15,6 +15,11 @@ function getLevel(count) {
 
 function generateSVG(weeks, theme, username, total, year, animate, levels) {
   const isDark = theme === 'dark';
+  const isAuto = theme === 'auto';
+  // paleta "auto": nem clara nem escura, lê-se em qualquer fundo (1 só SVG, sem <picture>)
+  const autoLabelColor = '#a98fa0';
+  const autoEmptyStroke = '#ff6b9d';
+  const autoEmptyOpacity = 0.45;
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
@@ -71,7 +76,9 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
       if (day.contributionCount > 0) {
         cells += flower(x + cellSize / 2, y + cellSize / 2, getLevel(day.contributionCount), wi, dow);
       } else {
-        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44' : '#52c41a'}" stroke-width="0.8" />`;
+        cells += isAuto
+          ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${autoEmptyStroke}" stroke-opacity="${autoEmptyOpacity}" stroke-width="0.8" />`
+          : `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44' : '#52c41a'}" stroke-width="0.8" />`;
       }
     });
   });
@@ -79,13 +86,13 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
   let monthLabels = '';
   monthMarkers.forEach(({ m, wi }) => {
     const x = paddingLeft + wi * step;
-    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}">${MONTHS[m]}</text>`;
+    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isAuto ? autoLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}">${MONTHS[m]}</text>`;
   });
 
   const dayNames = ['','Mon','','Wed','','Fri',''];
   let dayLabels = '';
   dayNames.forEach((d, i) => {
-    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
+    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isAuto ? autoLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
   });
 
   const style = animate ? `
@@ -116,7 +123,8 @@ export default async function handler(req) {
   const { searchParams } = new URL(req.url);
   const username = searchParams.get('username');
   const year = searchParams.get('year') || new Date().getFullYear();
-  const theme = searchParams.get('theme') === 'dark' ? 'dark' : 'light';
+  const themeParam = searchParams.get('theme');
+  const theme = themeParam === 'dark' ? 'dark' : themeParam === 'auto' ? 'auto' : 'light';
   const animate = searchParams.get('animate') !== 'false';
   const levels = searchParams.get('levels') !== 'false';
 
