@@ -50,7 +50,7 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
   }
 
   const cellSize = 11, gap = 2, step = cellSize + gap;
-  const paddingLeft = 24, paddingTop = 24, paddingRight = 10, paddingBottom = 10;
+  const paddingLeft = 24, paddingTop = 16, paddingRight = 10, paddingBottom = 6;
   const graphW = weeks.length * step;
   const W = graphW + paddingLeft + paddingRight;
   const H = 7 * step + paddingTop + paddingBottom;
