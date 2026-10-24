@@ -34,7 +34,7 @@ function generateSVG(weeks, theme) {
   const flowerCenter = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
 
   const cellSize = 11, gap = 2, step = cellSize + gap;
-  const paddingLeft = 28, paddingTop = 32, paddingRight = 20, paddingBottom = 20;
+  const paddingLeft = 24, paddingTop = 24, paddingRight = 10, paddingBottom = 10;
   const graphW = weeks.length * step;
   const W = graphW + paddingLeft + paddingRight;
   const H = 7 * step + paddingTop + paddingBottom;
