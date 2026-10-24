@@ -165,8 +165,18 @@
     .readme-dot.g { background: #28c840; }
     .readme-filename { font-size: 0.7rem; color: var(--text3); }
 
-    .theme-toggle {
+    .toolbar-right {
       margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .labels-toggle {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -176,6 +186,30 @@
       color: var(--text3);
       letter-spacing: 0.04em;
     }
+    .mini-toggle-track {
+      position: relative;
+      width: 30px;
+      height: 16px;
+      background: var(--border2);
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      transition: background 0.25s;
+      flex-shrink: 0;
+    }
+    .mini-toggle-track:hover { opacity: 0.85; }
+    .mini-toggle-track.on { background: var(--accent); }
+    .mini-toggle-thumb {
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.22s cubic-bezier(.4, 0, .2, 1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .mini-toggle-track.on .mini-toggle-thumb { transform: translateX(14px); }
     .toggle-track {
       position: relative;
       width: 36px;
@@ -787,12 +821,20 @@
 <div class="wrapper">
   <div class="readme-bar">
     <span class="readme-filename">README.md</span>
-    <div class="theme-toggle">
-      <span class="toggle-icon">🌙</span>
-      <button class="toggle-track" onclick="toggleTheme()" title="Toggle theme">
-        <div class="toggle-thumb"></div>
-      </button>
-      <span class="toggle-icon">☀️</span>
+    <div class="toolbar-right">
+      <div class="labels-toggle">
+        <span class="theme-label">labels</span>
+        <button class="mini-toggle-track on" id="labelsToggleBtn" onclick="toggleLabels()" title="Show/hide month and weekday labels">
+          <div class="mini-toggle-thumb"></div>
+        </button>
+      </div>
+      <div class="theme-toggle">
+        <span class="toggle-icon">🌙</span>
+        <button class="toggle-track" onclick="toggleTheme()" title="Toggle theme">
+          <div class="toggle-thumb"></div>
+        </button>
+        <span class="toggle-icon">☀️</span>
+      </div>
     </div>
   </div>
 
@@ -857,6 +899,15 @@ function lighten(hex, amt) {
 }
 
 let lastWeeksData = null;
+let showLabels = true;
+
+function toggleLabels() {
+  showLabels = !showLabels;
+  const btn = document.getElementById('labelsToggleBtn');
+  if (btn) btn.classList.toggle('on', showLabels);
+  refreshGraph();
+  if (currentUsername) updateEmbedCode();
+}
 
 // Paleta sakura fixa — igual em dark e light mode (mesma paleta usada no api/svg.js)
 const SAKURA_PETAL = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
@@ -960,26 +1011,32 @@ function makePetal(level, fillColor, centerColor) {
 
 function buildGraph(weeks) {
   const STEP = 15;
-  let monthHtml = '<div class="month-row">';
-  let lastMonth = -1;
-  let lastLabelWeek = -10;
-  weeks.forEach((week,wi) => {
-    const fd = week.contributionDays.find(d=>d.date);
-    if (!fd) return;
-    const date = new Date(fd.date);
-    const m = date.getMonth();
-    const d = date.getDate();
-    if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
-      monthHtml += `<span class="month-label" style="left:${wi*STEP}px">${MONTHS[m]}</span>`;
-      lastMonth = m;
-      lastLabelWeek = wi;
-    }
-  });
-  monthHtml += '</div>';
+  let monthHtml = '';
+  if (showLabels) {
+    monthHtml = '<div class="month-row">';
+    let lastMonth = -1;
+    let lastLabelWeek = -10;
+    weeks.forEach((week,wi) => {
+      const fd = week.contributionDays.find(d=>d.date);
+      if (!fd) return;
+      const date = new Date(fd.date);
+      const m = date.getMonth();
+      const d = date.getDate();
+      if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
+        monthHtml += `<span class="month-label" style="left:${wi*STEP}px">${MONTHS[m]}</span>`;
+        lastMonth = m;
+        lastLabelWeek = wi;
+      }
+    });
+    monthHtml += '</div>';
+  }
 
-  let dayLabels = '<div class="day-labels">';
-  ['','Mon','','Wed','','Fri',''].forEach(d => { dayLabels += `<div class="day-label">${d}</div>`; });
-  dayLabels += '</div>';
+  let dayLabels = '';
+  if (showLabels) {
+    dayLabels = '<div class="day-labels">';
+    ['','Mon','','Wed','','Fri',''].forEach(d => { dayLabels += `<div class="day-label">${d}</div>`; });
+    dayLabels += '</div>';
+  }
 
   let weeksHtml = '<div class="weeks">';
   weeks.forEach((week, wi) => {
@@ -1132,12 +1189,14 @@ function setupTooltips() {
 }
 
 function getEmbedUrl(theme) {
-  return `https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=${theme}`;
+  const labelsParam = showLabels ? '' : '&labels=false';
+  return `https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=${theme}${labelsParam}`;
 }
 
 function getEmbedCode() {
   const l=getEmbedUrl('light'), d=getEmbedUrl('dark');
-  return `<a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">\n <picture>\n  <source srcset="${d}" media="(prefers-color-scheme: dark)" width="846" height="132" style="height:auto" />\n  <source srcset="${l}" media="(prefers-color-scheme: light)" width="846" height="132" style="height:auto" />\n  <img src="${l}" width="846" height="132" style="height:auto" />\n</picture>\n</a>`;
+  const w = 846, h = showLabels ? 132 : 119;
+  return `<a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">\n <picture>\n  <source srcset="${d}" media="(prefers-color-scheme: dark)" width="${w}" height="${h}" style="height:auto" />\n  <source srcset="${l}" media="(prefers-color-scheme: light)" width="${w}" height="${h}" style="height:auto" />\n  <img src="${l}" width="${w}" height="${h}" style="height:auto" />\n</picture>\n</a>`;
 }
 
 function updateEmbedCode() {
