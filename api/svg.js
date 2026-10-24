@@ -13,7 +13,7 @@ function getLevel(count) {
   return 4;
 }
 
-function generateSVG(weeks, theme, username, total, year, animate, levels) {
+function generateSVG(weeks, theme, username, total, year, animate, levels, labels) {
   const isDark = theme === 'dark';
   const isAuto = theme === 'auto';
   const isAutoGreen = theme === 'auto-green';
@@ -21,8 +21,8 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
   const autoLabelColor = '#a98fa0';
   const autoEmptyStroke = '#ff6b9d';
   const autoEmptyOpacity = 0.45;
-  const autoGreenEmptyStroke = '#268a52';
-  const autoGreenEmptyOpacity = 0.7;
+  const autoGreenEmptyStroke = '#2ea043';
+  const autoGreenEmptyOpacity = 0.6;
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
@@ -50,7 +50,7 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
   }
 
   const cellSize = 11, gap = 2, step = cellSize + gap;
-  const paddingLeft = 24, paddingTop = 16, paddingRight = 10, paddingBottom = 6;
+  const paddingLeft = labels ? 24 : 2, paddingTop = labels ? 16 : 2, paddingRight = 10, paddingBottom = 6;
   const graphW = weeks.length * step;
   const W = graphW + paddingLeft + paddingRight;
   const H = 7 * step + paddingTop + paddingBottom;
@@ -61,15 +61,17 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
   let lastLabelWeek = -10;
 
   weeks.forEach((week, wi) => {
-    const firstDay = week.contributionDays.find(d => d.date);
-    if (firstDay) {
-      const date = new Date(firstDay.date);
-      const m = date.getMonth();
-      const d = date.getDate();
-      if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
-        monthMarkers.push({ m, wi });
-        lastMonth = m;
-        lastLabelWeek = wi;
+    if (labels) {
+      const firstDay = week.contributionDays.find(d => d.date);
+      if (firstDay) {
+        const date = new Date(firstDay.date);
+        const m = date.getMonth();
+        const d = date.getDate();
+        if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
+          monthMarkers.push({ m, wi });
+          lastMonth = m;
+          lastLabelWeek = wi;
+        }
       }
     }
     week.contributionDays.forEach(day => {
@@ -89,16 +91,18 @@ function generateSVG(weeks, theme, username, total, year, animate, levels) {
   });
 
   let monthLabels = '';
-  monthMarkers.forEach(({ m, wi }) => {
-    const x = paddingLeft + wi * step;
-    monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isAuto || isAutoGreen ? autoLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}">${MONTHS[m]}</text>`;
-  });
-
-  const dayNames = ['','Mon','','Wed','','Fri',''];
   let dayLabels = '';
-  dayNames.forEach((d, i) => {
-    if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isAuto || isAutoGreen ? autoLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
-  });
+  if (labels) {
+    monthMarkers.forEach(({ m, wi }) => {
+      const x = paddingLeft + wi * step;
+      monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isAuto || isAutoGreen ? autoLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}">${MONTHS[m]}</text>`;
+    });
+
+    const dayNames = ['','Mon','','Wed','','Fri',''];
+    dayNames.forEach((d, i) => {
+      if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isAuto || isAutoGreen ? autoLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
+    });
+  }
 
   const style = animate ? `
   <style>
@@ -132,6 +136,7 @@ export default async function handler(req) {
   const theme = themeParam === 'dark' ? 'dark' : themeParam === 'auto' ? 'auto' : themeParam === 'auto-green' ? 'auto-green' : 'light';
   const animate = searchParams.get('animate') !== 'false';
   const levels = searchParams.get('levels') !== 'false';
+  const labels = searchParams.get('labels') !== 'false';
 
   if (!username) {
     return new Response('Username required', { status: 400 });
@@ -188,7 +193,7 @@ export default async function handler(req) {
     }
 
     const cal = data.data.user.contributionsCollection.contributionCalendar;
-    const svg = generateSVG(cal.weeks, theme, username, cal.totalContributions, year, animate, levels);
+    const svg = generateSVG(cal.weeks, theme, username, cal.totalContributions, year, animate, levels, labels);
 
     return new Response(svg, {
       status: 200,

@@ -108,12 +108,13 @@ jobs:
 ## API
 You can also hit the API directly to generate the image, without going through the site:
 
-`https://sakura-garden.vercel.app/api/svg?username=YOUR_USERNAME&theme=dark|light|auto|auto-green&animate=true|false&levels=true|false`
+`https://sakura-garden.vercel.app/api/svg?username=YOUR_USERNAME&theme=dark|light|auto|auto-green&animate=true|false&levels=true|false&labels=true|false`
 
 - `username` — your GitHub username
 - `theme` — `dark`, `light`, `auto`, or `auto-green` — the last two are single images that read fine on both light and dark backgrounds, no `<picture>`/`<source>` needed (`auto` uses a translucent pink outline for empty days, `auto-green` uses solid green)
 - `animate` — set to `false` to disable the flower bloom-in animation (default `true`)
 - `levels` — set to `false` to make every flower the same, instead of shading by how active each day was (default `true`)
+- `labels` — set to `false` to hide the month and weekday labels and crop the image tight to the grid (default `true`)
 
 ## Also check out
 Want your GitHub contributions graph in any color/theme? Check out [gitcolors](https://gitcolors.vercel.app/)
