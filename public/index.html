@@ -44,7 +44,6 @@
       --c2: #c2185b;
       --c3: #ff85b3;
       --c4: #ff8fab;
-      --garden-color: #4a7a44;
       --lvl1: #6b1f35;
       --lvl2: #6b1f35;
       --lvl3: #6b1f35;
@@ -69,7 +68,6 @@
       --shadow: 0 4px 24px rgba(0,0,0,0.08);
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
       --mono-text: #000000;
-      --garden-color: #52c41a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -178,11 +176,6 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .garden-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
     .theme-label {
       font-size: 0.65rem;
       color: var(--text3);
@@ -268,13 +261,10 @@
       text-align: center;
     }
     .md-h1 .highlight {
-      background: linear-gradient(135deg, var(--accent), var(--c4, #ff8fab));
+      background: linear-gradient(135deg, #ff85ad, #ff3d7f, #ff0055);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-    }
-    .md-h1 .garden-word {
-      color: var(--garden-color);
     }
 
     .md-badge-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 1.5rem; }
@@ -608,8 +598,8 @@
       transition: opacity 0.6s ease;
     }
     .bg-scene svg { width: 100%; height: 100%; display: block; }
-    [data-theme="light"] .bg-scene--day { opacity: 1; }
-    [data-theme="dark"] .bg-scene--night { opacity: 1; }
+    [data-theme="light"] .bg-scene--day { opacity: 0.3; }
+    [data-theme="dark"] .bg-scene--night { opacity: 0.35; }
   </style>
 <base target="_blank">
 </head>
@@ -824,12 +814,6 @@
   <div class="readme-bar">
     <span class="readme-filename">README.md</span>
     <div class="toolbar-right">
-      <div class="garden-toggle">
-        <span class="theme-label">kawaii</span>
-        <button class="mini-toggle-track" id="gardenToggleBtn" onclick="toggleGardenType()" title="Switch between the original sakura palette and the kawaii palette">
-          <div class="mini-toggle-thumb"></div>
-        </button>
-      </div>
       <div class="labels-toggle">
         <span class="theme-label">labels</span>
         <button class="mini-toggle-track on" id="labelsToggleBtn" onclick="toggleLabels()" title="Show/hide month and weekday labels">
@@ -849,7 +833,7 @@
   <div class="readme-body">
     <div class="hero-flex">
       <div class="hero-main">
-        <h1 class="md-h1"><span class="highlight">sakura</span> <span class="garden-word">garden</span></h1>
+        <h1 class="md-h1"><span class="highlight">sakura garden</span></h1>
         <p class="md-p">
           Your GitHub contributions garden
           <br>Add it to your GitHub profile README in seconds
@@ -909,21 +893,11 @@ function lighten(hex, amt) {
 
 let lastWeeksData = null;
 let showLabels = true;
-let gardenType = 'sakura';
 
 function toggleLabels() {
   showLabels = !showLabels;
   const btn = document.getElementById('labelsToggleBtn');
   if (btn) btn.classList.toggle('on', showLabels);
-  refreshGraph();
-  if (currentUsername) updateEmbedCode();
-}
-
-function toggleGardenType() {
-  gardenType = gardenType === 'sakura' ? 'kawaii' : 'sakura';
-  const btn = document.getElementById('gardenToggleBtn');
-  if (btn) btn.classList.toggle('on', gardenType === 'kawaii');
-  applyLiveColor(THEMES[gardenType].accent);
   refreshGraph();
   if (currentUsername) updateEmbedCode();
 }
@@ -938,16 +912,6 @@ const KAWAII_PETAL = ['', '#ff85ad', '#ff5c92', '#ff3d7f', '#ff0055'];
 const KAWAII_CENTER = ['', '#ffcede', '#ffbed3', '#ffb1cc', '#ff99bb'];
 
 const THEMES = {
-  sakura: {
-    label: '🌸 sakura',
-    accent: '#ff85b3',
-    getCellColor(wi, total, level) {
-      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if (level === 0) return { fill: 'transparent', stroke: isLight ? '#52c41a' : '#4a7a44', hex: '#ff85b3' };
-      const hex = SAKURA_PETAL[level];
-      return { fill: hex, stroke: hex, hex, center: SAKURA_CENTER[level] };
-    },
-  },
   kawaii: {
     label: '🌷 kawaii',
     accent: '#ff3d7f',
@@ -982,8 +946,6 @@ function applyLiveColor(hex) {
   root.style.setProperty('--c3', hex);
   root.style.setProperty('--c4', hex);
   root.style.setProperty('--accent', hex);
-  const hl = document.querySelector('.highlight');
-  if (hl) hl.style.backgroundImage = `linear-gradient(135deg,${hex},${hex}dd)`;
   updateLegend();
 }
 
@@ -1089,14 +1051,13 @@ function buildGraph(weeks) {
         const count = day.contributionCount;
         if (count > 0) {
           const level = getLevel(count);
-          const theme = THEMES[gardenType];
-          const res = theme.getCellColor(wi, weeks.length, level);
+          const res = THEMES.kawaii.getCellColor(wi, weeks.length, level);
           const fill = res.fill;
           const center = res.center || lighten(res.hex, 0.55);
           const delay = wi * 20 + i * 10;
           weeksHtml += `<div class="day-cell bloom-cell" data-count="${count}" data-date="${day.date}" style="--delay:${delay}ms">${makePetal(level, fill, center)}</div>`;
         } else {
-          const emptyStroke = THEMES[gardenType].getCellColor(wi, weeks.length, 0).stroke;
+          const emptyStroke = THEMES.kawaii.getCellColor(wi, weeks.length, 0).stroke;
           weeksHtml += `<div class="day-cell zero" data-count="0" data-date="${day.date}"><svg viewBox="0 0 11 11"><rect x="0" y="0" width="11" height="11" rx="2" fill="transparent" stroke="${emptyStroke}" stroke-width="0.8"/></svg></div>`;
         }
       } else {
@@ -1225,7 +1186,7 @@ function setupTooltips() {
 }
 
 function getEmbedUrl(mode) {
-  const themeParam = gardenType === 'kawaii' ? (mode === 'dark' ? 'kawaii-dark' : 'kawaii') : mode;
+  const themeParam = mode === 'dark' ? 'kawaii-dark' : 'kawaii';
   const labelsParam = showLabels ? '' : '&labels=false';
   return `https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=${themeParam}${labelsParam}`;
 }
@@ -1273,7 +1234,7 @@ function handleQuickCopy(login) {
   }
 }
 
-applyLiveColor(THEMES[gardenType].accent);
+applyLiveColor(THEMES.kawaii.accent);
 loadDemo();
 </script>
 <script data-goatcounter="https://sakura-garden.goatcounter.com/count"
