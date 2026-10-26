@@ -27,7 +27,7 @@ function generateSVG(weeks, theme, username, total, year, animate, levels, label
   // kawaii: mesma paleta escura do original (quem já usa dark fica igual) — só o light mode
   // muda, com um verde-menta cute e níveis que são variações próximas do rosa do L3 original
   // (#ff3d7f), em vez de ir de um rosa quase invisível a um magenta escuro demais
-  const kawaiiEmptyStroke = '#2bc77c';
+  const kawaiiEmptyStroke = '#2dd256';
   const kawaiiLabelColor = '#8a3b6b';
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',

@@ -953,7 +953,7 @@ const THEMES = {
     accent: '#ff3d7f',
     getCellColor(wi, total, level) {
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if (level === 0) return { fill: 'transparent', stroke: isLight ? '#2bc77c' : '#4a7a44', hex: '#ff3d7f' };
+      if (level === 0) return { fill: 'transparent', stroke: isLight ? '#2dd256' : '#4a7a44', hex: '#ff3d7f' };
       const hex = isLight ? KAWAII_PETAL[level] : SAKURA_PETAL[level];
       const center = isLight ? KAWAII_CENTER[level] : SAKURA_CENTER[level];
       return { fill: hex, stroke: hex, hex, center };
