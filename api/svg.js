@@ -14,7 +14,8 @@ function getLevel(count) {
 }
 
 function generateSVG(weeks, theme, username, total, year, animate, levels, labels) {
-  const isDark = theme === 'dark';
+  const isKawaii = theme === 'kawaii';
+  const isDark = theme === 'dark' || theme === 'kawaii-dark';
   const isAuto = theme === 'auto';
   const isAutoGreen = theme === 'auto-green';
   // paletas "auto": nem claras nem escuras, lêem-se em qualquer fundo (1 só SVG, sem <picture>)
@@ -23,16 +24,25 @@ function generateSVG(weeks, theme, username, total, year, animate, levels, label
   const autoEmptyOpacity = 0.45;
   const autoGreenEmptyStroke = '#2ea043';
   const autoGreenEmptyOpacity = 0.6;
+  // kawaii: mesma paleta escura do original (quem já usa dark fica igual) — só o light mode
+  // muda, com um verde-menta cute e níveis que são variações próximas do rosa do L3 original
+  // (#ff3d7f), em vez de ir de um rosa quase invisível a um magenta escuro demais
+  const kawaiiEmptyStroke = '#2bc77c';
+  const kawaiiLabelColor = '#8a3b6b';
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
     : { bg: 'transparent', text: '#1a0a00', text2: '#000000ff', accent: '#e8547a',
         c0: '#f5e6e0', c1: '#ffc8d8', c2: '#ff8fab', c3: '#e8547a', c4: '#c2185b', border: '#f0ddd5' };
 
-  const flowerPetal = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
-  const flowerCenter = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
-  const UNIFORM_PETAL = '#ff2f7e';
-  const UNIFORM_CENTER = '#ffcfe2';
+  const flowerPetal = isKawaii
+    ? ['', '#ff85ad', '#ff5c92', '#ff3d7f', '#ff0055']
+    : ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
+  const flowerCenter = isKawaii
+    ? ['', '#ffcede', '#ffbed3', '#ffb1cc', '#ff99bb']
+    : ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
+  const UNIFORM_PETAL = isKawaii ? '#ff3d7f' : '#ff2f7e';
+  const UNIFORM_CENTER = isKawaii ? '#ffb1cc' : '#ffcfe2';
 
   // wi = índice da semana (coluna), dow = dia da semana (linha) — usados para o delay do bloom
   function flower(cx, cy, level, wi, dow) {
@@ -85,6 +95,8 @@ function generateSVG(weeks, theme, username, total, year, animate, levels, label
           ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${autoEmptyStroke}" stroke-opacity="${autoEmptyOpacity}" stroke-width="0.8" />`
           : isAutoGreen
           ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${autoGreenEmptyStroke}" stroke-opacity="${autoGreenEmptyOpacity}" stroke-width="0.8" />`
+          : isKawaii
+          ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${kawaiiEmptyStroke}" stroke-width="1" />`
           : `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44' : '#52c41a'}" stroke-width="0.8" />`;
       }
     });
@@ -95,12 +107,12 @@ function generateSVG(weeks, theme, username, total, year, animate, levels, label
   if (labels) {
     monthMarkers.forEach(({ m, wi }) => {
       const x = paddingLeft + wi * step;
-      monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isAuto || isAutoGreen ? autoLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}">${MONTHS[m]}</text>`;
+      monthLabels += `<text x="${x}" y="${paddingTop - 8}" font-size="9" fill="${isAuto || isAutoGreen ? autoLabelColor : isKawaii ? kawaiiLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}">${MONTHS[m]}</text>`;
     });
 
     const dayNames = ['','Mon','','Wed','','Fri',''];
     dayNames.forEach((d, i) => {
-      if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isAuto || isAutoGreen ? autoLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
+      if (d) dayLabels += `<text x="${paddingLeft - 4}" y="${paddingTop + i * step + cellSize - 2}" font-size="8" fill="${isAuto || isAutoGreen ? autoLabelColor : isKawaii ? kawaiiLabelColor : isDark ? '#ffffff' : '#000000'}" font-family="${FONT_FAMILY}" text-anchor="end">${d}</text>`;
     });
   }
 
@@ -133,7 +145,7 @@ export default async function handler(req) {
   const username = searchParams.get('username');
   const year = searchParams.get('year') || new Date().getFullYear();
   const themeParam = searchParams.get('theme');
-  const theme = themeParam === 'dark' ? 'dark' : themeParam === 'auto' ? 'auto' : themeParam === 'auto-green' ? 'auto-green' : 'light';
+  const theme = ['dark', 'auto', 'auto-green', 'kawaii', 'kawaii-dark'].includes(themeParam) ? themeParam : 'light';
   const animate = searchParams.get('animate') !== 'false';
   const levels = searchParams.get('levels') !== 'false';
   const labels = searchParams.get('labels') !== 'false';

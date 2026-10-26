@@ -29,7 +29,6 @@
   <style>
     /* ─── THEMES ─────────────────────────────────────────────────── */
     :root, [data-theme="dark"] {
-      --cell-empty: rgba(255,255,255,0.25);
       --mono-text: #ffffff;
       --bg: #010409;
       --surface: #0d1117;
@@ -56,7 +55,6 @@
       --center4: color-mix(in srgb, var(--lvl4) 35%, white);
       --shadow: 0 4px 24px rgba(0,0,0,0.35);
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
-      --cell-empty: #4a7a44;
     }
 
     [data-theme="light"] {
@@ -70,7 +68,6 @@
       --text3: #9898b8;
       --shadow: 0 4px 24px rgba(0,0,0,0.08);
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-      --cell-empty: #52c41a;
       --mono-text: #000000;
       --garden-color: #52c41a;
     }
@@ -177,6 +174,11 @@
       gap: 0.5rem;
     }
     .labels-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .garden-toggle {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -822,6 +824,12 @@
   <div class="readme-bar">
     <span class="readme-filename">README.md</span>
     <div class="toolbar-right">
+      <div class="garden-toggle">
+        <span class="theme-label">kawaii</span>
+        <button class="mini-toggle-track" id="gardenToggleBtn" onclick="toggleGardenType()" title="Switch between the original sakura palette and the kawaii palette">
+          <div class="mini-toggle-thumb"></div>
+        </button>
+      </div>
       <div class="labels-toggle">
         <span class="theme-label">labels</span>
         <button class="mini-toggle-track on" id="labelsToggleBtn" onclick="toggleLabels()" title="Show/hide month and weekday labels">
@@ -880,6 +888,7 @@ function toggleTheme() {
   const next = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('sakura-garden-theme', next);
+  refreshGraph();
 }
 
 initTheme();
@@ -900,6 +909,7 @@ function lighten(hex, amt) {
 
 let lastWeeksData = null;
 let showLabels = true;
+let gardenType = 'sakura';
 
 function toggleLabels() {
   showLabels = !showLabels;
@@ -909,9 +919,23 @@ function toggleLabels() {
   if (currentUsername) updateEmbedCode();
 }
 
+function toggleGardenType() {
+  gardenType = gardenType === 'sakura' ? 'kawaii' : 'sakura';
+  const btn = document.getElementById('gardenToggleBtn');
+  if (btn) btn.classList.toggle('on', gardenType === 'kawaii');
+  applyLiveColor(THEMES[gardenType].accent);
+  refreshGraph();
+  if (currentUsername) updateEmbedCode();
+}
+
 // Paleta sakura fixa — igual em dark e light mode (mesma paleta usada no api/svg.js)
 const SAKURA_PETAL = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
 const SAKURA_CENTER = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
+
+// Paleta kawaii — só muda o light mode (verde-menta + ramo de rosas mais vivo);
+// o dark mode é igual ao sakura original (mesma paleta usada no api/svg.js)
+const KAWAII_PETAL = ['', '#ff85ad', '#ff5c92', '#ff3d7f', '#ff0055'];
+const KAWAII_CENTER = ['', '#ffcede', '#ffbed3', '#ffb1cc', '#ff99bb'];
 
 const THEMES = {
   sakura: {
@@ -922,6 +946,17 @@ const THEMES = {
       if (level === 0) return { fill: 'transparent', stroke: isLight ? '#52c41a' : '#4a7a44', hex: '#ff85b3' };
       const hex = SAKURA_PETAL[level];
       return { fill: hex, stroke: hex, hex, center: SAKURA_CENTER[level] };
+    },
+  },
+  kawaii: {
+    label: '🌷 kawaii',
+    accent: '#ff3d7f',
+    getCellColor(wi, total, level) {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (level === 0) return { fill: 'transparent', stroke: isLight ? '#2bc77c' : '#4a7a44', hex: '#ff3d7f' };
+      const hex = isLight ? KAWAII_PETAL[level] : SAKURA_PETAL[level];
+      const center = isLight ? KAWAII_CENTER[level] : SAKURA_CENTER[level];
+      return { fill: hex, stroke: hex, hex, center };
     },
   },
 };
@@ -1054,14 +1089,15 @@ function buildGraph(weeks) {
         const count = day.contributionCount;
         if (count > 0) {
           const level = getLevel(count);
-          const theme = THEMES.sakura;
+          const theme = THEMES[gardenType];
           const res = theme.getCellColor(wi, weeks.length, level);
           const fill = res.fill;
           const center = res.center || lighten(res.hex, 0.55);
           const delay = wi * 20 + i * 10;
           weeksHtml += `<div class="day-cell bloom-cell" data-count="${count}" data-date="${day.date}" style="--delay:${delay}ms">${makePetal(level, fill, center)}</div>`;
         } else {
-          weeksHtml += `<div class="day-cell zero" data-count="0" data-date="${day.date}"><svg viewBox="0 0 11 11"><rect x="0" y="0" width="11" height="11" rx="2" fill="transparent" stroke="var(--cell-empty)" stroke-width="0.8"/></svg></div>`;
+          const emptyStroke = THEMES[gardenType].getCellColor(wi, weeks.length, 0).stroke;
+          weeksHtml += `<div class="day-cell zero" data-count="0" data-date="${day.date}"><svg viewBox="0 0 11 11"><rect x="0" y="0" width="11" height="11" rx="2" fill="transparent" stroke="${emptyStroke}" stroke-width="0.8"/></svg></div>`;
         }
       } else {
         weeksHtml += `<div class="day-cell" style="visibility:hidden"></div>`;
@@ -1188,9 +1224,10 @@ function setupTooltips() {
   });
 }
 
-function getEmbedUrl(theme) {
+function getEmbedUrl(mode) {
+  const themeParam = gardenType === 'kawaii' ? (mode === 'dark' ? 'kawaii-dark' : 'kawaii') : mode;
   const labelsParam = showLabels ? '' : '&labels=false';
-  return `https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=${theme}${labelsParam}`;
+  return `https://sakura-garden.vercel.app/api/svg?username=${currentUsername}&theme=${themeParam}${labelsParam}`;
 }
 
 function getEmbedCode() {
@@ -1236,7 +1273,7 @@ function handleQuickCopy(login) {
   }
 }
 
-applyLiveColor(THEMES.sakura.accent);
+applyLiveColor(THEMES[gardenType].accent);
 loadDemo();
 </script>
 <script data-goatcounter="https://sakura-garden.goatcounter.com/count"
