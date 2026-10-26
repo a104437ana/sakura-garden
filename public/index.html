@@ -281,7 +281,7 @@
       color: var(--c4, #ff8fab);
     }
 
-    .md-p { font-size: 0.88rem; color: var(--text2); margin-bottom: 1.2rem; text-align: center; }
+    .md-p { font-size: 0.88rem; color: var(--mono-text); margin-bottom: 1.2rem; text-align: center; }
     .md-p code {
       background: var(--surface2);
       border: 1px solid var(--border2);
@@ -370,12 +370,11 @@
 
     .demo-note {
       font-size: 0.82rem;
-      color: var(--text3);
+      color: var(--mono-text);
       margin: 0.25rem 0 1.4rem;
       line-height: 1.7;
     }
     .demo-note strong { color: var(--text2); font-weight: 500; }
-    .demo-note-break { display: none; }
 
     .error-msg {
       font-size: 0.8rem; color: #f87171;
@@ -573,7 +572,6 @@
       .hero-main .md-h1,
       .hero-main .md-p { text-align: center; }
       .hero-main .search-row { justify-content: center; }
-      .demo-note-break { display: block; }
     }
 
     @media (max-width: 600px) {
@@ -622,7 +620,7 @@
         </p>
         <div class="search-row">
           <input id="usernameInput" class="search-input" type="text"
-            placeholder="github username" autocomplete="off" spellcheck="false" />
+            placeholder="your github username" autocomplete="off" spellcheck="false" />
           <button class="search-btn" onclick="doSearch()">→ bloom</button>
         </div>
       </div>
@@ -747,7 +745,7 @@ async function doSearch() {
     const res = await fetch(`${API_BASE}?username=${encodeURIComponent(username)}`);
     const data = await res.json();
     if (data.error) throw new Error(data.error);
-    renderResult(data, username, false);
+    renderResult(data, false);
   } catch(err) {
     result.innerHTML = `<div class="error-msg">✗ couldn't find ${username} — check the username and try again.</div>`;
   }
@@ -766,7 +764,7 @@ async function loadDemo() {
       return;
     }
 
-    renderResult(data, 'a104437ana', true);
+    renderResult(data, true);
 
   } catch (err) {
     document.getElementById('result').innerHTML =
@@ -867,7 +865,7 @@ function updateLegend() {
   el.innerHTML = `<span></span>`;
 }
 
-function renderResult(data, username, isDemo) {
+function renderResult(data, isDemo) {
   const user = data.user;
   const cal = user.contributionsCollection.contributionCalendar;
   lastWeeksData = cal.weeks;
@@ -875,7 +873,7 @@ function renderResult(data, username, isDemo) {
   const longest = calcStreak(cal.weeks);
 
   const demoNote = isDemo
-    ? `<p class="demo-note">showing an example (@${username}) —<br class="demo-note-break"> <u>enter your username above</u> to generate your own contribution garden...</p>`
+    ? `<p class="demo-note">showing an example:</p>`
     : `<br>`;
 
   const starCta = `
