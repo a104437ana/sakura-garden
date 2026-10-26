@@ -271,7 +271,7 @@
       border-radius: 4px;
       background: var(--surface2);
       border: 1px solid var(--border2);
-      color: var(--text2);
+      color: var(--mono-text);
       letter-spacing: 0.04em;
       transition: background 0.25s;
     }
@@ -301,7 +301,7 @@
       padding-bottom: 0.4rem;
       border-bottom: 1px solid var(--border);
     }
-    .md-h2::before { content: '## '; color: var(--text3); }
+    .md-h2::before { content: '## '; color: var(--mono-text); }
 
     .hero-flex {
       display: flex;
@@ -364,7 +364,7 @@
 
     #result { margin-top: 0; max-width: 100%; }
 
-    .loader { font-size: 0.8rem; color: var(--text2); padding: 2rem 0; text-align: center; }
+    .loader { font-size: 0.8rem; color: var(--mono-text); padding: 2rem 0; text-align: center; }
     .spinner { display: inline-block; animation: spin 1s linear infinite; margin-right: 0.5rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -374,7 +374,7 @@
       margin: 0.25rem 0 1.4rem;
       line-height: 1.7;
     }
-    .demo-note strong { color: var(--text2); font-weight: 500; }
+    .demo-note strong { color: var(--mono-text); font-weight: 500; }
 
     .error-msg {
       font-size: 0.8rem; color: #f87171;
@@ -389,10 +389,10 @@
     .avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--border2); }
     .profile-name { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
   ; font-size: 1.1rem; font-weight: 700; }
-    .profile-sub { font-size: 0.82rem; color: var(--text2); }
+    .profile-sub { font-size: 0.82rem; color: var(--mono-text); }
 
     .stats-row { display: flex; gap: 1.5rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
-    .stat { font-size: 0.72rem; color: var(--text2); }
+    .stat { font-size: 0.72rem; color: var(--mono-text); }
     .stat strong {
       display: block;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
@@ -446,7 +446,7 @@
 
     .legend-row {
       display: flex; align-items: center; justify-content: flex-end;
-      gap: 0.5rem; font-size: 0.65rem; color: var(--text3);
+      gap: 0.5rem; font-size: 0.65rem; color: var(--mono-text);
       padding: 0.5rem 0 0.1rem;
     }
     .legend-dot {
@@ -547,23 +547,23 @@
       text-align: center;
       margin-top: 1rem;
       font-size: 0.7rem;
-      color: var(--text3);
+      color: var(--mono-text);
     }
     .gitcolors-note a {
       font-weight: 700;
-      color: var(--text2);
+      color: var(--mono-text);
       text-decoration: underline;
     }
     .gitcolors-note a:hover { color: var(--text); }
 
     .about-section {
       margin-top: 2.5rem; padding-top: 0;
-      font-size: 0.75rem; color: var(--text3);
+      font-size: 0.75rem; color: var(--mono-text);
       display: flex; justify-content: center;
       align-items: center; flex-wrap: wrap; gap: 0.5rem;
       text-align: center;
     }
-    .about-section a { color: var(--text2); text-decoration: none; }
+    .about-section a { color: var(--mono-text); text-decoration: none; }
     .about-section a:hover { color: var(--text); }
 
     @media (max-width: 812px) {
@@ -760,7 +760,7 @@ async function loadDemo() {
 
     if (data.error) {
       document.getElementById('result').innerHTML =
-        `<p class="md-p" style="color:var(--text3);font-size:0.78rem;">↑ enter your username to see your garden</p>`;
+        `<p class="md-p" style="color:var(--mono-text);font-size:0.78rem;">↑ enter your username to see your garden</p>`;
       return;
     }
 
@@ -768,7 +768,7 @@ async function loadDemo() {
 
   } catch (err) {
     document.getElementById('result').innerHTML =
-      `<p class="md-p" style="color:var(--text3);font-size:0.78rem;">↑ enter your username to see your garden</p>`;
+      `<p class="md-p" style="color:var(--mono-text);font-size:0.78rem;">↑ enter your username to see your garden</p>`;
   }
 }
 
