@@ -5,9 +5,9 @@ Turn your GitHub activity into a garden where commits bloom into flowers 🌸 an
 
 <a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
 <picture>
-  <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=dark" media="(prefers-color-scheme: dark)" width="846" height="132" style="height:auto"/>
-  <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" media="(prefers-color-scheme: light)" width="846" height="132" style="height:auto"/>
-  <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=light" width="846" height="132" style="height:auto" loading="eager"/>
+  <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=kawaii-dark" media="(prefers-color-scheme: dark)" width="846" height="132" style="height:auto"/>
+  <source srcset="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=kawaii" media="(prefers-color-scheme: light)" width="846" height="132" style="height:auto"/>
+  <img src="https://sakura-garden.vercel.app/api/svg?username=a104437ana&theme=kawaii" width="846" height="132" style="height:auto" loading="eager"/>
 </picture>
 </a>
 
@@ -35,9 +35,9 @@ See your garden here: https://sakura-garden.vercel.app
 ```markdown
 <a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
   <picture>
-    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=dark" media="(prefers-color-scheme: dark)" width="846" height="132" style="height:auto"/>
-    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" media="(prefers-color-scheme: light)" width="846" height="132" style="height:auto"/>
-    <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=light" width="846" height="132" style="height:auto"/>
+    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=kawaii-dark" media="(prefers-color-scheme: dark)" width="846" height="132" style="height:auto"/>
+    <source srcset="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=kawaii" media="(prefers-color-scheme: light)" width="846" height="132" style="height:auto"/>
+    <img src="https://sakura-garden.vercel.app/api/svg?username=your-github-username&theme=kawaii" width="846" height="132" style="height:auto"/>
   </picture>
 </a>
 ```
