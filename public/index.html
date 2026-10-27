@@ -927,20 +927,14 @@ function fitGraphToContainer() {
   const container = document.querySelector('.graph-container');
   const scrollEl = container && container.querySelector('.graph-scroll');
   if (!container || !scrollEl) return;
-  scrollEl.style.transform = '';
-  scrollEl.style.marginBottom = '';
-  container.style.overflowX = '';
+  scrollEl.style.zoom = '';
   const pad = 32; // matches .graph-container's left+right padding (1rem each)
   const available = container.clientWidth - pad;
   const natural = scrollEl.scrollWidth;
   if (natural > available && available > 0) {
-    const scale = available / natural;
-    scrollEl.style.transformOrigin = 'top left';
-    scrollEl.style.transform = `scale(${scale})`;
-    scrollEl.style.marginBottom = `${-scrollEl.scrollHeight * (1 - scale)}px`;
-    // transform doesn't shrink the layout box, so the container would still
-    // think it overflows and offer a scrollbar that reveals nothing — disable it.
-    container.style.overflowX = 'hidden';
+    // zoom reflows text at the new size instead of stretching a cached bitmap
+    // like transform: scale() does, so labels stay crisp instead of blurring.
+    scrollEl.style.zoom = available / natural;
   }
 }
 
