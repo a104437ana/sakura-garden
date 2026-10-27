@@ -15,7 +15,8 @@ function getLevel(count) {
 
 function generateSVG(weeks, theme, username, total, year, animate, levels, labels) {
   const isKawaii = theme === 'kawaii';
-  const isDark = theme === 'dark' || theme === 'kawaii-dark';
+  const isKawaiiDark = theme === 'kawaii-dark';
+  const isDark = theme === 'dark' || isKawaiiDark;
   const isAuto = theme === 'auto';
   const isAutoGreen = theme === 'auto-green';
   // paletas "auto": nem claras nem escuras, lêem-se em qualquer fundo (1 só SVG, sem <picture>)
@@ -26,7 +27,9 @@ function generateSVG(weeks, theme, username, total, year, animate, levels, label
   const autoGreenEmptyOpacity = 0.6;
   // kawaii: mesma paleta escura do original (quem já usa dark fica igual) — só o light mode
   // muda, com um verde-menta cute e níveis que são variações próximas do rosa do L3 original
-  // (#ff3d7f), em vez de ir de um rosa quase invisível a um magenta escuro demais
+  // (#ff3d7f), em vez de ir de um rosa quase invisível a um magenta escuro demais. O L4 do
+  // dark original (#c2005a) quase desaparece num fundo escuro, por isso o kawaii-dark troca
+  // só esse nível por um rosa mais vivo que se vê bem.
   const kawaiiEmptyStroke = '#2dd256';
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
@@ -36,9 +39,13 @@ function generateSVG(weeks, theme, username, total, year, animate, levels, label
 
   const flowerPetal = isKawaii
     ? ['', '#ff85ad', '#ff5c92', '#ff3d7f', '#ff0055']
+    : isKawaiiDark
+    ? ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#ff0055']
     : ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
   const flowerCenter = isKawaii
     ? ['', '#ffcede', '#ffbed3', '#ffb1cc', '#ff99bb']
+    : isKawaiiDark
+    ? ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff99bb']
     : ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
   const UNIFORM_PETAL = isKawaii ? '#ff3d7f' : '#ff2f7e';
   const UNIFORM_CENTER = isKawaii ? '#ffb1cc' : '#ffcfe2';

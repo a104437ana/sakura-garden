@@ -29,13 +29,18 @@ function flower(cx, cy, level, flowerPetal, flowerCenter, wi, dow) {
 
 function generateSVG(weeks, theme) {
   const isKawaii = theme === 'kawaii';
-  const isDark = theme === 'dark' || theme === 'kawaii-dark';
+  const isKawaiiDark = theme === 'kawaii-dark';
+  const isDark = theme === 'dark' || isKawaiiDark;
 
   const flowerPetal = isKawaii
     ? ['', '#ff85ad', '#ff5c92', '#ff3d7f', '#ff0055']
+    : isKawaiiDark
+    ? ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#ff0055']
     : ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
   const flowerCenter = isKawaii
     ? ['', '#ffcede', '#ffbed3', '#ffb1cc', '#ff99bb']
+    : isKawaiiDark
+    ? ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff99bb']
     : ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
   const emptyStroke = isKawaii ? '#2dd256' : isDark ? '#4a7a44' : '#52c41a';
 

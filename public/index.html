@@ -682,14 +682,13 @@ function toggleLabels() {
   if (currentUsername) updateEmbedCode();
 }
 
-// Paleta sakura fixa — igual em dark e light mode (mesma paleta usada no api/svg.js)
-const SAKURA_PETAL = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
-const SAKURA_CENTER = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
-
 // Paleta kawaii — só muda o light mode (verde-menta + ramo de rosas mais vivo);
-// o dark mode é igual ao sakura original (mesma paleta usada no api/svg.js)
+// o dark mode é quase igual ao sakura original, só o L4 troca (o #c2005a original
+// quase desaparece num fundo escuro, por isso usa-se um rosa mais vivo aqui)
 const KAWAII_PETAL = ['', '#ff85ad', '#ff5c92', '#ff3d7f', '#ff0055'];
 const KAWAII_CENTER = ['', '#ffcede', '#ffbed3', '#ffb1cc', '#ff99bb'];
+const KAWAII_DARK_PETAL = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#ff0055'];
+const KAWAII_DARK_CENTER = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff99bb'];
 
 const THEMES = {
   kawaii: {
@@ -698,8 +697,8 @@ const THEMES = {
     getCellColor(wi, total, level) {
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
       if (level === 0) return { fill: 'transparent', stroke: isLight ? '#2dd256' : '#4a7a44', hex: '#ff3d7f' };
-      const hex = isLight ? KAWAII_PETAL[level] : SAKURA_PETAL[level];
-      const center = isLight ? KAWAII_CENTER[level] : SAKURA_CENTER[level];
+      const hex = isLight ? KAWAII_PETAL[level] : KAWAII_DARK_PETAL[level];
+      const center = isLight ? KAWAII_CENTER[level] : KAWAII_DARK_CENTER[level];
       return { fill: hex, stroke: hex, hex, center };
     },
   },
