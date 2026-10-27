@@ -800,7 +800,7 @@ function buildGraph(weeks) {
       const m = date.getMonth();
       const d = date.getDate();
       if (m !== lastMonth && d <= 7 && (wi - lastLabelWeek) > 2) {
-        monthHtml += `<span class="month-label" style="left:${wi*STEP}px">${MONTHS[m]}</span>`;
+        monthHtml += `<span class="month-label" style="left:${24 + wi*STEP}px">${MONTHS[m]}</span>`;
         lastMonth = m;
         lastLabelWeek = wi;
       }
