@@ -28,10 +28,16 @@ function flower(cx, cy, level, flowerPetal, flowerCenter, wi, dow) {
 }
 
 function generateSVG(weeks, theme) {
-  const isDark = theme === 'dark';
+  const isKawaii = theme === 'kawaii';
+  const isDark = theme === 'dark' || theme === 'kawaii-dark';
 
-  const flowerPetal = ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
-  const flowerCenter = ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
+  const flowerPetal = isKawaii
+    ? ['', '#ff85ad', '#ff5c92', '#ff3d7f', '#ff0055']
+    : ['', '#ffb3cc', '#ff85b3', '#ff3d7f', '#c2005a'];
+  const flowerCenter = isKawaii
+    ? ['', '#ffcede', '#ffbed3', '#ffb1cc', '#ff99bb']
+    : ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
+  const emptyStroke = isKawaii ? '#2dd256' : isDark ? '#4a7a44' : '#52c41a';
 
   const cellSize = 11, gap = 2, step = cellSize + gap;
   const paddingLeft = 24, paddingTop = 16, paddingRight = 10, paddingBottom = 6;
@@ -63,7 +69,7 @@ function generateSVG(weeks, theme) {
       if (day.contributionCount > 0) {
         cells += flower(x + cellSize / 2, y + cellSize / 2, getLevel(day.contributionCount), flowerPetal, flowerCenter, wi, dow);
       } else {
-        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44' : '#52c41a'}" stroke-width="0.8" />`;
+        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${emptyStroke}" stroke-width="0.8" />`;
       }
     });
   });
@@ -169,8 +175,8 @@ async function main() {
   // os SVGs são gerados na raiz do repo do utilizador (GITHUB_WORKSPACE)
   const workspace = process.env.GITHUB_WORKSPACE ?? resolve(__dirname, '../..');
 
-  writeFileSync(resolve(workspace, 'sakura-garden.svg'), generateSVG(cal.weeks, 'light'));
-  writeFileSync(resolve(workspace, 'sakura-garden-dark.svg'), generateSVG(cal.weeks, 'dark'));
+  writeFileSync(resolve(workspace, 'sakura-garden.svg'), generateSVG(cal.weeks, 'kawaii'));
+  writeFileSync(resolve(workspace, 'sakura-garden-dark.svg'), generateSVG(cal.weeks, 'kawaii-dark'));
 
   console.log('Done! Generated sakura-garden.svg and sakura-garden-dark.svg');
 }
