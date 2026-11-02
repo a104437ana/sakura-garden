@@ -1,5 +1,5 @@
 <picture>
-<img align="right" width="auto" height="80" alt="image" src="public/sakura-flower-pixel.png"/>
+<img align="right" width="auto" height="110" alt="image" src="public/sakura-flower-pixel.png"/>
 </picture>
 
 # 🌸 sakura garden
