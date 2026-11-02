@@ -43,6 +43,7 @@ function generateSVG(weeks, theme) {
     ? ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff99bb']
     : ['', '#ffe0ee', '#ffcce0', '#ffaacc', '#ff80aa'];
   const emptyStroke = isKawaii ? '#2dd256' : isDark ? '#4a7a44' : '#52c41a';
+  const emptyStrokeOpacity = isKawaii ? 0.6 : 1;
 
   const cellSize = 11, gap = 2, step = cellSize + gap;
   const paddingLeft = 24, paddingTop = 16, paddingRight = 10, paddingBottom = 6;
@@ -74,7 +75,7 @@ function generateSVG(weeks, theme) {
       if (day.contributionCount > 0) {
         cells += flower(x + cellSize / 2, y + cellSize / 2, getLevel(day.contributionCount), flowerPetal, flowerCenter, wi, dow);
       } else {
-        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${emptyStroke}" stroke-width="0.8" />`;
+        cells += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${emptyStroke}" stroke-opacity="${emptyStrokeOpacity}" stroke-width="0.8" />`;
       }
     });
   });

@@ -31,6 +31,7 @@ function generateSVG(weeks, theme, username, total, year, animate, levels, label
   // dark original (#c2005a) quase desaparece num fundo escuro, por isso o kawaii-dark troca
   // só esse nível por um rosa mais vivo que se vê bem.
   const kawaiiEmptyStroke = '#2dd256';
+  const kawaiiEmptyOpacity = 0.6;
   const colors = isDark
     ? { bg: 'transparent', text: '#fdf0f5', text2: '#ffffffff', accent: '#ff6b9d',
         c0: '#1a0d12', c1: '#6b1f35', c2: '#c2185b', c3: '#e8547a', c4: '#ff8fab', border: '#2a1520' }
@@ -102,7 +103,7 @@ function generateSVG(weeks, theme, username, total, year, animate, levels, label
           : isAutoGreen
           ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${autoGreenEmptyStroke}" stroke-opacity="${autoGreenEmptyOpacity}" stroke-width="0.8" />`
           : isKawaii
-          ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${kawaiiEmptyStroke}" stroke-width="1" />`
+          ? `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${kawaiiEmptyStroke}" stroke-opacity="${kawaiiEmptyOpacity}" stroke-width="1" />`
           : `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="2" fill="transparent" stroke="${isDark ? '#4a7a44' : '#52c41a'}" stroke-width="0.8" />`;
       }
     });
