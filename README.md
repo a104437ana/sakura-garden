@@ -1,3 +1,7 @@
+<picture>
+<img align="right" width="auto" height="100" alt="image" src="public/sakura-flower-pixel.png"/>
+</picture>
+
 # 🌸 sakura garden
 ## A GitHub contributions garden for your README
 
