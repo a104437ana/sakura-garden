@@ -1,10 +1,8 @@
 <picture>
 <img align="right" width="auto" height="105" alt="image" src="public/sakura-flower-pixel.png"/>
 </picture>
-
-# 🌸 sakura garden
-## A GitHub contributions garden for your README
-
+<h1>🌸 sakura garden</h1>
+<h2>A GitHub contributions garden for your README</h2>
 Turn your GitHub activity into a garden where commits bloom into flowers 🌸 and empty days stay green 🌿
 
 <a href="https://sakura-garden.vercel.app" target="_blank" rel="noopener">
